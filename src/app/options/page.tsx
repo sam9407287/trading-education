@@ -121,8 +121,8 @@ export default function OptionsPage() {
         <div className="absolute top-20 left-1/4 w-72 h-72 bg-amber-500/5 dark:bg-amber-500/10 rounded-full blur-3xl"></div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-[var(--text-muted)] mb-8">
+          {/* Breadcrumb - Centered */}
+          <nav className="flex items-center justify-center gap-2 text-sm text-[var(--text-muted)] mb-8">
             <Link href="/" className="hover:text-[var(--accent-gold)]">首頁</Link>
             <span>/</span>
             <span className="text-[var(--text-primary)]">期權教學</span>
@@ -134,13 +134,15 @@ export default function OptionsPage() {
               <span className="text-sm text-[var(--accent-gold)]">Options Trading</span>
             </div>
             
-            <h1 className="text-4xl sm:text-5xl font-bold text-[var(--text-primary)] mb-6">
+            <h1 className="text-4xl sm:text-5xl font-bold text-[var(--text-primary)] mb-6 text-center w-full">
               期權教學
             </h1>
             
-            <p className="text-lg text-[var(--text-secondary)] mb-8 max-w-2xl mx-auto">
-              系統性學習期權交易的完整課程，從基礎概念到進階策略，
-              搭配互動式損益圖與實例分析，讓你真正理解期權的運作原理。
+            <p 
+              className="text-lg text-[var(--text-secondary)] mb-8 max-w-2xl mx-auto text-center w-full"
+              style={{ textWrap: 'balance' }}
+            >
+              系統性學習期權交易的完整課程，從基礎概念到進階策略，搭配互動式損益圖與實例分析，讓你真正理解期權的運作原理。
             </p>
           </div>
         </div>
@@ -155,7 +157,7 @@ export default function OptionsPage() {
           課程內容
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
           {optionsCourses.map((course) => (
             <Link
               key={course.id}

@@ -139,8 +139,8 @@ export default function TechnicalAnalysisPage() {
         <div className="absolute top-20 right-1/4 w-72 h-72 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl"></div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-[var(--text-muted)] mb-8">
+          {/* Breadcrumb - Centered */}
+          <nav className="flex items-center justify-center gap-2 text-sm text-[var(--text-muted)] mb-8">
             <Link href="/" className="hover:text-[var(--accent-gold)]">首頁</Link>
             <span>/</span>
             <span className="text-[var(--text-primary)]">技術分析</span>
@@ -152,13 +152,12 @@ export default function TechnicalAnalysisPage() {
               <span className="text-sm text-blue-400">Technical Analysis</span>
             </div>
             
-            <h1 className="text-4xl sm:text-5xl font-bold text-[var(--text-primary)] mb-6">
+            <h1 className="text-4xl sm:text-5xl font-bold text-[var(--text-primary)] mb-6 text-center w-full">
               技術分析教學
             </h1>
             
-            <p className="text-lg text-[var(--text-secondary)] mb-8 max-w-2xl mx-auto">
-              從基礎指標到進階理論，系統性學習技術分析的完整知識體系。
-              掌握圖表判讀、形態識別與週期分析，建立專業的市場分析能力。
+            <p className="text-lg text-[var(--text-secondary)] mb-8 max-w-2xl mx-auto text-center w-full" style={{ textWrap: 'balance' }}>
+              從基礎指標到進階理論，系統性學習技術分析的完整知識體系。掌握圖表判讀、形態識別與週期分析，建立專業的市場分析能力。
             </p>
           </div>
         </div>
