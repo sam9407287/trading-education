@@ -256,7 +256,7 @@ export default function IndicatorChart({
     switch (indicator) {
       case 'rsi': {
         const rsiData = calculateRSI(ohlcData);
-        const rsiSeries = chart.addLineSeries({
+        const rsiSeries = (chart as any).addLineSeries({
           color: '#f59e0b',
           lineWidth: 2,
           title: 'RSI',
@@ -290,21 +290,21 @@ export default function IndicatorChart({
       case 'kdj': {
         const kdj = calculateKDJ(ohlcData);
         
-        const kSeries = chart.addLineSeries({
+        const kSeries = (chart as any).addLineSeries({
           color: '#f59e0b',
           lineWidth: 2,
           title: 'K',
         });
         kSeries.setData(kdj.k);
         
-        const dSeries = chart.addLineSeries({
+        const dSeries = (chart as any).addLineSeries({
           color: '#3b82f6',
           lineWidth: 2,
           title: 'D',
         });
         dSeries.setData(kdj.d);
         
-        const jSeries = chart.addLineSeries({
+        const jSeries = (chart as any).addLineSeries({
           color: '#8b5cf6',
           lineWidth: 1,
           title: 'J',
@@ -333,19 +333,19 @@ export default function IndicatorChart({
       case 'bollinger': {
         const bollinger = calculateBollinger(ohlcData);
         
-        chart.addLineSeries({
+        (chart as any).addLineSeries({
           color: '#f59e0b',
           lineWidth: 2,
           title: 'Middle',
         }).setData(bollinger.middle);
         
-        chart.addLineSeries({
+        (chart as any).addLineSeries({
           color: '#3b82f6',
           lineWidth: 1,
           title: 'Upper',
         }).setData(bollinger.upper);
         
-        chart.addLineSeries({
+        (chart as any).addLineSeries({
           color: '#3b82f6',
           lineWidth: 1,
           title: 'Lower',
@@ -355,7 +355,7 @@ export default function IndicatorChart({
       
       case 'atr': {
         const atrData = calculateATR(ohlcData);
-        chart.addLineSeries({
+        (chart as any).addLineSeries({
           color: '#f59e0b',
           lineWidth: 2,
           title: 'ATR',

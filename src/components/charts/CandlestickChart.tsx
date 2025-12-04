@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { createChart, IChartApi, ISeriesApi, CandlestickData, Time, LineStyle } from 'lightweight-charts';
+import { createChart, IChartApi, ISeriesApi, CandlestickData, Time, LineStyle, CandlestickSeriesPartialOptions } from 'lightweight-charts';
 
 interface CandlestickChartProps {
   data?: CandlestickData<Time>[];
@@ -121,7 +121,7 @@ export default function CandlestickChart({
     chartRef.current = chart;
 
     // 添加 K 線系列
-    const candlestickSeries = chart.addCandlestickSeries({
+    const candlestickSeries = (chart as any).addCandlestickSeries({
       upColor: '#10b981',
       downColor: '#ef4444',
       borderUpColor: '#10b981',
@@ -137,7 +137,7 @@ export default function CandlestickChart({
     if (showMA && maPeriods.length > 0) {
       maPeriods.forEach((period, index) => {
         const maData = calculateMA(chartData, period);
-        const maSeries = chart.addLineSeries({
+        const maSeries = (chart as any).addLineSeries({
           color: MA_COLORS[index % MA_COLORS.length],
           lineWidth: 1,
           title: `MA${period}`,
