@@ -138,8 +138,9 @@ export default function OptionsPage() {
               期權教學
             </h1>
             
-            <p className="text-lg text-[var(--text-secondary)] mb-8 max-w-2xl mx-auto" style={{ textWrap: 'balance' }}>
-              系統性學習期權交易的完整課程，從基礎概念到進階策略，搭配互動式損益圖與實例分析，讓你真正理解期權的運作原理。
+            <p className="text-lg text-[var(--text-secondary)] mb-8 max-w-2xl mx-auto text-center" style={{ textWrap: 'balance' }}>
+              系統性學習期權交易的完整課程，從基礎概念到進階策略，<br className="hidden sm:block" />
+              搭配互動式損益圖與實例分析，讓你真正理解期權的運作原理。
             </p>
           </div>
         </div>

@@ -156,8 +156,9 @@ export default function TechnicalAnalysisPage() {
               技術分析教學
             </h1>
             
-            <p className="text-lg text-[var(--text-secondary)] mb-8 max-w-2xl mx-auto" style={{ textWrap: 'balance' }}>
-              從基礎指標到進階理論，系統性學習技術分析的完整知識體系。掌握圖表判讀、形態識別與週期分析，建立專業的市場分析能力。
+            <p className="text-lg text-[var(--text-secondary)] mb-8 max-w-2xl mx-auto text-center" style={{ textWrap: 'balance' }}>
+              從基礎指標到進階理論，系統性學習技術分析的完整知識體系。<br className="hidden sm:block" />
+              掌握圖表判讀、形態識別與週期分析，建立專業的市場分析能力。
             </p>
           </div>
         </div>
