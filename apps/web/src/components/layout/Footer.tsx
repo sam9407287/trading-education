@@ -102,7 +102,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="mt-12 pt-8 border-t border-[var(--border-color)]">
           <p className="text-center text-sm text-[var(--text-muted)]">
-            © 2024 交易教育平台. 僅供教育目的，非投資建議。
+            © 2025 交易教育平台. 僅供教育目的，非投資建議。
           </p>
         </div>
       </div>
