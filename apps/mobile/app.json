@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "scheme": "trading-edu",
     "splash": {
       "image": "./assets/splash-icon.png",
@@ -23,7 +23,7 @@
         "backgroundColor": "#0a0e17"
       },
       "package": "com.tradingedu.mobile",
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": false
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -35,6 +35,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "f9f03cd6-dc18-41aa-b143-b3937f908409"
+      }
+    },
+    "owner": "sam9407287"
   }
 }
