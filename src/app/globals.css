@@ -31,31 +31,31 @@
 
 /* 亮色主題 */
 [data-theme="light"] {
-  --bg-primary: #f3f4f6; /* Gray-100 (加深背景，讓卡片更跳) */
-  --bg-secondary: #e5e7eb; /* Gray-200 */
+  --bg-primary: #fafafa; /* 更白更亮的背景 */
+  --bg-secondary: #f5f5f5; /* 非常淺的灰 */
   --bg-card: #ffffff;
-  --bg-card-hover: #f9fafb; /* Gray-50 */
+  --bg-card-hover: #fefefe;
   
-  --text-primary: #1f2937; /* Gray-800 (更柔和的黑) */
-  --text-secondary: #4b5563; /* Gray-600 */
-  --text-muted: #9ca3af; /* Gray-400 */
+  --text-primary: #1a1a1a; /* 清晰的深灰黑 */
+  --text-secondary: #525252; /* Gray-600 */
+  --text-muted: #a3a3a3; /* Gray-400 */
   
-  /* 調整金色為更深、更有質感的古銅橘金，避免螢光感 */
-  --accent-gold: #b45309; /* Amber-700 */
-  --accent-gold-light: #d97706; /* Amber-600 */
-  --accent-green: #059669;
-  --accent-red: #dc2626;
-  --accent-blue: #2563eb;
-  --accent-purple: #7c3aed;
+  /* 鮮艷活潑的金橙色 */
+  --accent-gold: #f97316; /* Orange-500 鮮艷橙金 */
+  --accent-gold-light: #fb923c; /* Orange-400 */
+  --accent-green: #10b981; /* Emerald-500 更鮮艷 */
+  --accent-red: #ef4444; /* Red-500 */
+  --accent-blue: #3b82f6; /* Blue-500 鮮艷藍 */
+  --accent-purple: #a855f7; /* Purple-500 */
   
-  --border-color: #f1f5f9; /* Gray-100 (更淡的邊框) */
-  --border-light: #e5e7eb; /* Gray-200 */
+  --border-color: #f0f0f0; /* 超淡邊框 */
+  --border-light: #e5e5e5;
   
-  --profit: #059669;
-  --loss: #dc2626;
-  --breakeven: #d97706;
+  --profit: #10b981;
+  --loss: #ef4444;
+  --breakeven: #f97316;
 
-  --header-bg: rgba(255, 255, 255, 0.95);
+  --header-bg: rgba(255, 255, 255, 0.98);
 }
 
 /* ===== 基礎樣式 ===== */

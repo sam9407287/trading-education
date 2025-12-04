@@ -116,9 +116,8 @@ export default function OptionsPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-x-hidden">
-        <div className="absolute inset-0 dark:bg-gradient-to-br dark:from-amber-500/5 dark:via-transparent dark:to-orange-500/5"></div>
-        <div className="absolute top-20 left-1/4 w-72 h-72 bg-amber-500/5 dark:bg-amber-500/10 rounded-full blur-3xl"></div>
+      <section className="relative overflow-x-hidden bg-gradient-to-br from-orange-50/40 via-amber-50/30 to-yellow-50/40 dark:from-amber-500/5 dark:via-transparent dark:to-orange-500/5">
+        <div className="absolute top-20 left-1/4 w-72 h-72 bg-orange-400/10 dark:bg-amber-500/10 rounded-full blur-3xl"></div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="text-center">

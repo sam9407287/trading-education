@@ -142,11 +142,10 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-x-hidden">
+      <section className="relative overflow-x-hidden bg-gradient-to-br from-orange-50/30 via-amber-50/20 to-yellow-50/30 dark:from-[var(--bg-primary)] dark:via-[var(--bg-secondary)] dark:to-[var(--bg-primary)]">
         {/* Background Effects */}
-        <div className="absolute inset-0 dark:bg-gradient-to-br dark:from-[var(--bg-primary)] dark:via-[var(--bg-secondary)] dark:to-[var(--bg-primary)]"></div>
-        <div className="absolute top-0 left-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-amber-500/5 dark:bg-amber-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 left-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-amber-400/10 dark:bg-amber-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-orange-400/10 dark:bg-blue-500/10 rounded-full blur-3xl"></div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-28">
           <div className="text-center">

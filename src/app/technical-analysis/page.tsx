@@ -134,9 +134,8 @@ export default function TechnicalAnalysisPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-x-hidden">
-        <div className="absolute inset-0 dark:bg-gradient-to-br dark:from-blue-500/5 dark:via-transparent dark:to-cyan-500/5"></div>
-        <div className="absolute top-20 right-1/4 w-72 h-72 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl"></div>
+      <section className="relative overflow-x-hidden bg-gradient-to-br from-blue-50/40 via-cyan-50/30 to-sky-50/40 dark:from-blue-500/5 dark:via-transparent dark:to-cyan-500/5">
+        <div className="absolute top-20 right-1/4 w-72 h-72 bg-blue-400/10 dark:bg-blue-500/10 rounded-full blur-3xl"></div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="text-center">
