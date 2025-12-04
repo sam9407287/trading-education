@@ -119,19 +119,19 @@ function CourseCard({
   return (
     <Link
       href={href}
-      className="group bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl p-4 sm:p-5 hover:border-[var(--accent-gold)]/50 transition-all animate-fade-in card-hover"
+      className="group bg-[var(--bg-card)] border border-[var(--border-color)] rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 hover:border-[var(--accent-gold)]/50 transition-all animate-fade-in card-hover active:scale-95"
       style={{ animationDelay: `${index * 0.05}s` }}
     >
       <div className="flex items-start gap-3 sm:gap-4">
-        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-[var(--bg-secondary)] flex items-center justify-center text-[var(--accent-gold)] group-hover:bg-[var(--accent-gold)] group-hover:text-[var(--bg-primary)] transition-all flex-shrink-0">
-          <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
+        <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg sm:rounded-xl bg-[var(--bg-secondary)] flex items-center justify-center text-[var(--accent-gold)] group-hover:bg-[var(--accent-gold)] group-hover:text-[var(--bg-primary)] transition-all flex-shrink-0">
+          <Icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-gold)] transition-colors text-sm sm:text-base">
+          <h3 className="font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-gold)] transition-colors text-sm sm:text-base md:text-lg mb-1">
             {title}
           </h3>
-          <p className="text-xs text-[var(--text-muted)] mb-1">{titleEn}</p>
-          <p className="text-xs sm:text-sm text-[var(--text-secondary)] line-clamp-2">{description}</p>
+          <p className="text-xs text-[var(--text-muted)] mb-2">{titleEn}</p>
+          <p className="text-xs sm:text-sm text-[var(--text-secondary)] line-clamp-2 leading-relaxed">{description}</p>
         </div>
       </div>
     </Link>
@@ -144,41 +144,42 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative overflow-x-hidden bg-gradient-to-br from-orange-50/30 via-amber-50/20 to-yellow-50/30 dark:from-[var(--bg-primary)] dark:via-[var(--bg-secondary)] dark:to-[var(--bg-primary)]">
         {/* Background Effects */}
-        <div className="absolute top-0 left-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-amber-400/10 dark:bg-amber-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-orange-400/10 dark:bg-blue-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 left-1/4 w-48 sm:w-64 md:w-80 lg:w-96 h-48 sm:h-64 md:h-80 lg:h-96 bg-amber-400/10 dark:bg-amber-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-48 sm:w-64 md:w-80 lg:w-96 h-48 sm:h-64 md:h-80 lg:h-96 bg-orange-400/10 dark:bg-blue-500/10 rounded-full blur-3xl"></div>
         
-        <div className="relative max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-28">
+        <div className="relative max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24 lg:py-28">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[var(--accent-gold)]/10 border border-[var(--accent-gold)]/20 mb-4 sm:mb-6">
-              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-[var(--accent-gold)]" />
-              <span className="text-xs sm:text-sm text-[var(--accent-gold)]">專業交易知識平台</span>
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[var(--accent-gold)]/10 border border-[var(--accent-gold)]/20 mb-6 sm:mb-8">
+              <Sparkles className="w-4 h-4 text-[var(--accent-gold)]" />
+              <span className="text-xs sm:text-sm font-medium text-[var(--accent-gold)]">專業交易知識平台</span>
             </div>
             
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 sm:mb-12 leading-relaxed text-center w-full">
-              <span className="text-[var(--text-primary)]">建立你的</span>
-              <br className="sm:hidden" />
-              <span className="text-[var(--accent-gold)]">交易知識體系</span>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight sm:leading-relaxed px-4">
+              <span className="block text-[var(--text-primary)] mb-2 sm:mb-0">建立你的</span>
+              <span className="block sm:inline text-[var(--accent-gold)]">交易知識體系</span>
             </h1>
           </div>
         </div>
       </section>
 
       {/* Technical Analysis Section */}
-      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
         <div className="flex items-center justify-between mb-6 sm:mb-8">
-          <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)]">技術分析課程</h2>
-            <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-1">Technical Analysis Courses</p>
+          <div className="flex-1">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[var(--text-primary)]">技術分析課程</h2>
+            <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-0.5 sm:mt-1">Technical Analysis Courses</p>
           </div>
           <Link
             href="/technical-analysis"
-            className="text-xs sm:text-sm text-[var(--accent-gold)] hover:underline flex items-center gap-1"
+            className="text-xs sm:text-sm text-[var(--accent-gold)] hover:underline flex items-center gap-1 flex-shrink-0"
           >
-            查看全部 <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span className="hidden sm:inline">查看全部</span>
+            <span className="sm:hidden">全部</span>
+            <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
           {technicalSubCategories.map((sub, index) => (
             <CourseCard key={sub.href} {...sub} index={index} />
           ))}
@@ -186,21 +187,23 @@ export default function HomePage() {
       </section>
 
       {/* Options Section */}
-      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 pb-12 sm:pb-16 md:pb-20">
         <div className="flex items-center justify-between mb-6 sm:mb-8">
-          <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)]">期權教學課程</h2>
-            <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-1">Options Trading Courses</p>
+          <div className="flex-1">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[var(--text-primary)]">期權教學課程</h2>
+            <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-0.5 sm:mt-1">Options Trading Courses</p>
           </div>
           <Link
             href="/options"
-            className="text-xs sm:text-sm text-[var(--accent-gold)] hover:underline flex items-center gap-1"
+            className="text-xs sm:text-sm text-[var(--accent-gold)] hover:underline flex items-center gap-1 flex-shrink-0"
           >
-            查看全部 <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span className="hidden sm:inline">查看全部</span>
+            <span className="sm:hidden">全部</span>
+            <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
           {optionsSubCategories.map((sub, index) => (
             <CourseCard key={sub.href} {...sub} index={index} />
           ))}
