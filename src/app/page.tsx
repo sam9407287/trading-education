@@ -155,13 +155,11 @@ export default function HomePage() {
               <span className="text-xs sm:text-sm text-[var(--accent-gold)]">專業交易知識平台</span>
             </div>
             
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-relaxed text-center w-full">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 sm:mb-12 leading-relaxed text-center w-full">
               <span className="text-[var(--text-primary)]">建立你的</span>
               <br className="sm:hidden" />
               <span className="text-[var(--accent-gold)]">交易知識體系</span>
             </h1>
-            
-            <p className="text-sm sm:text-base lg:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto mb-6 sm:mb-10 px-4 text-center w-full" style={{ textWrap: 'balance' }}>從技術分析到期權策略，系統性學習市場分析與交易技巧，<br className="hidden sm:block" />搭配互動式圖表，讓複雜概念變得清晰易懂</p>
           </div>
         </div>
       </section>

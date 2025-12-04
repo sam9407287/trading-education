@@ -134,11 +134,9 @@ export default function OptionsPage() {
               <span className="text-sm text-[var(--accent-gold)]">Options Trading</span>
             </div>
             
-            <h1 className="text-4xl sm:text-5xl font-bold text-[var(--text-primary)] mb-6">
+            <h1 className="text-4xl sm:text-5xl font-bold text-[var(--text-primary)] mb-8">
               期權教學
             </h1>
-            
-            <p className="text-lg text-[var(--text-secondary)] mb-8 max-w-2xl mx-auto text-center" style={{ textWrap: 'balance' }}>系統性學習期權交易的完整課程，從基礎概念到進階策略，<br className="hidden sm:block" />搭配互動式損益圖與實例分析，讓你真正理解期權的運作原理。</p>
           </div>
         </div>
       </section>
