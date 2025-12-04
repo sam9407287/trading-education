@@ -60,7 +60,7 @@ const navSections = [
   },
 ];
 
-// 章节标题组件
+// 章節標題組件
 function SectionHeader({ 
   id, 
   title, 
@@ -96,7 +96,7 @@ function SectionHeader({
   );
 }
 
-// 偏誤卡片组件
+// 偏誤卡片組件
 function BiasCard({
   id,
   title,
@@ -130,7 +130,7 @@ function BiasCard({
   return (
     <div id={id} className="scroll-mt-20 mb-6">
       <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl overflow-hidden hover:shadow-lg transition-all">
-        {/* 标题栏 */}
+        {/* 標題欄 */}
         <div className={`p-4 sm:p-5 bg-gradient-to-r ${config.gradient} bg-opacity-10`}>
           <div className="flex items-start gap-3">
             <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br ${config.gradient} flex items-center justify-center flex-shrink-0`}>
@@ -144,11 +144,11 @@ function BiasCard({
         </div>
 
         <div className="p-4 sm:p-6 space-y-4">
-          {/* 定义 */}
+          {/* 定義 */}
           <div className="bg-[var(--bg-secondary)] rounded-lg p-4">
             <h4 className="text-sm font-semibold text-[var(--text-primary)] mb-2 flex items-center gap-2">
               <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent-gold)]"></div>
-              定义
+              定義
             </h4>
             <p className="text-sm text-[var(--text-secondary)]">{definition}</p>
           </div>
@@ -159,9 +159,9 @@ function BiasCard({
             <p className="text-sm text-[var(--text-secondary)]">{marketExample}</p>
           </div>
 
-          {/* 技术分析影響 */}
+          {/* 技術分析影響 */}
           <div>
-            <h4 className="text-sm font-semibold text-[var(--text-primary)] mb-3">技术分析影響</h4>
+            <h4 className="text-sm font-semibold text-[var(--text-primary)] mb-3">技術分析影響</h4>
             <div className="grid sm:grid-cols-3 gap-3">
               <div className="bg-[var(--bg-secondary)] rounded-lg p-3">
                 <div className="flex items-center gap-2 mb-1">
@@ -173,14 +173,14 @@ function BiasCard({
               <div className="bg-[var(--bg-secondary)] rounded-lg p-3">
                 <div className="flex items-center gap-2 mb-1">
                   <TrendingUp className="w-4 h-4 text-[var(--accent-green)]" />
-                  <span className="text-xs font-semibold text-[var(--text-primary)]">价格</span>
+                  <span className="text-xs font-semibold text-[var(--text-primary)]">價格</span>
                 </div>
                 <p className="text-xs text-[var(--text-secondary)]">{impact.price}</p>
               </div>
               <div className="bg-[var(--bg-secondary)] rounded-lg p-3">
                 <div className="flex items-center gap-2 mb-1">
                   <TrendingDown className="w-4 h-4 text-[var(--accent-gold)]" />
-                  <span className="text-xs font-semibold text-[var(--text-primary)]">情绪</span>
+                  <span className="text-xs font-semibold text-[var(--text-primary)]">情緒</span>
                 </div>
                 <p className="text-xs text-[var(--text-secondary)]">{impact.sentiment}</p>
               </div>
@@ -201,11 +201,11 @@ export default function BehavioralFinancePage() {
         
         <div className="relative max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <nav className="flex items-center gap-2 text-sm text-[var(--text-muted)] mb-6">
-            <Link href="/" className="hover:text-[var(--accent-gold)]">首页</Link>
+            <Link href="/" className="hover:text-[var(--accent-gold)]">首頁</Link>
             <span>/</span>
-            <Link href="/technical-analysis" className="hover:text-[var(--accent-gold)]">技术分析</Link>
+            <Link href="/technical-analysis" className="hover:text-[var(--accent-gold)]">技術分析</Link>
             <span>/</span>
-            <span className="text-[var(--text-primary)]">行为金融学</span>
+            <span className="text-[var(--text-primary)]">行為金融學</span>
           </nav>
 
           <Link
@@ -213,7 +213,7 @@ export default function BehavioralFinancePage() {
             className="inline-flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--accent-gold)] mb-4"
           >
             <ArrowLeft className="w-4 h-4" />
-            返回技术分析
+            返回技術分析
           </Link>
 
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[var(--text-primary)] mb-4 leading-normal py-1">
@@ -481,12 +481,12 @@ export default function BehavioralFinancePage() {
               }}
             />
 
-            {/* ==================== 信息处理偏誤 ==================== */}
+            {/* ==================== 信息處理偏誤 ==================== */}
             <SectionHeader
               id="information-processing"
-              title="信息处理偏誤"
+              title="信息處理偏誤"
               titleEn="Information Processing Biases"
-              description="傾向於以不合逻辑或非理性的方式处理新信息，这往往是信念保持偏誤的前兆。这些偏誤帮助解释技术分析师觀察到的许多图表形态，如支撑与阻力区域的形成。"
+              description="傾向於以不合邏輯或非理性的方式處理新信息，這往往是信念保持偏誤的前兆。這些偏誤幫助解釋技術分析師觀察到的許多圖表形態，如支撐與阻力區域的形成。"
               icon={Zap}
               gradient="from-purple-500 to-pink-400"
             />
@@ -589,12 +589,12 @@ export default function BehavioralFinancePage() {
               }}
             />
 
-            {/* ==================== 情绪偏誤 ==================== */}
+            {/* ==================== 情緒偏誤 ==================== */}
             <SectionHeader
               id="emotional"
-              title="情绪偏誤"
+              title="情緒偏誤"
               titleEn="Emotional Biases"
-              description="情绪偏誤源于傾向於潜意识处理決策，而非更認知的努力。它们对投资者来说更难修正，因为情绪与通过直觉或冲动自发產生的心理状态相关，而不是通过有意识的努力。可能只能适應它们，而不是纠正它们。"
+              description="情緒偏誤源於傾向於潛意識處理決策，而非更認知的努力。它們對投資者來說更難修正，因為情緒與通過直覺或衝動自發產生的心理狀態相關，而不是通過有意識的努力。可能只能適應它們，而不是糾正它們。"
               icon={Heart}
               gradient="from-rose-500 to-red-400"
             />
@@ -711,10 +711,10 @@ export default function BehavioralFinancePage() {
               }}
             />
 
-            {/* ==================== 行为偏誤与图表形态 ==================== */}
+            {/* ==================== 行為偏誤與圖表形態 ==================== */}
             <SectionHeader
               id="chart-patterns"
-              title="行为偏誤与图表形态"
+              title="行為偏誤與圖表形態"
               titleEn="Behavioral Biases and Chart Patterns"
               icon={TrendingUp}
               gradient="from-amber-500 to-orange-400"
@@ -722,28 +722,28 @@ export default function BehavioralFinancePage() {
 
             <div className="prose prose-sm max-w-none space-y-6 text-[var(--text-secondary)]">
               <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl p-6">
-                <h3 className="text-lg font-bold text-[var(--text-primary)] mb-4">偏誤如何影響图表形态</h3>
+                <h3 className="text-lg font-bold text-[var(--text-primary)] mb-4">偏誤如何影響圖表形態</h3>
                 
                 <p className="mb-4">
-                  損失厭惡、心理帳戶、錨定和后见之明偏誤等行为现象与许多图表形态的發展高度相关，包括支撑与阻力区域、双顶和双底以及三角形。
+                  損失厭惡、心理帳戶、錨定和後見之明偏誤等行為現象與許多圖表形態的發展高度相關，包括支撐與阻力區域、雙頂和雙底以及三角形。
                 </p>
 
                 <div className="bg-[var(--accent-gold)]/10 border-l-4 border-[var(--accent-gold)] pl-4 py-3 mb-4">
-                  <p className="text-[var(--text-primary)] font-semibold mb-2">典型的投资者心理</p>
+                  <p className="text-[var(--text-primary)] font-semibold mb-2">典型的投資者心理</p>
                   <p className="text-sm italic">
-                    "我之前涨了那么多，現在正在虧損；如果它回到我买入的地方，我就卖出！"
+                    "我之前漲了那麼多，現在正在虧損；如果它回到我買入的地方，我就賣出！"
                   </p>
                 </div>
 
                 <p className="mb-4">
-                  投资者會有意识地记住他们个人的利润和損失，通常在经历了一段时间未實現的收益和損失后，投资者會傾向於做出盈虧平衡类型的決策。
+                  投資者會有意識地記住他們個人的利潤和損失，通常在經歷了一段時間未實現的收益和損失後，投資者會傾向於做出盈虧平衡類型的決策。
                 </p>
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
                     <h4 className="font-semibold text-[var(--text-primary)] mb-2 flex items-center gap-2">
                       <TrendingDown className="w-5 h-5 text-blue-400" />
-                      導致这些行为的偏誤
+                      導致這些行為的偏誤
                     </h4>
                     <ul className="text-sm space-y-1">
                       <li>• 心理帳戶</li>
@@ -755,10 +755,10 @@ export default function BehavioralFinancePage() {
                   <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
                     <h4 className="font-semibold text-[var(--text-primary)] mb-2 flex items-center gap-2">
                       <AlertTriangle className="w-5 h-5 text-purple-400" />
-                      導致投资者不作为的偏誤
+                      導致投資者不作為的偏誤
                     </h4>
                     <ul className="text-sm space-y-1">
-                      <li>• 现状偏誤</li>
+                      <li>• 現狀偏誤</li>
                       <li>• 過度自信</li>
                     </ul>
                   </div>
@@ -768,25 +768,25 @@ export default function BehavioralFinancePage() {
               <div className="bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/20 rounded-xl p-6">
                 <h4 className="font-semibold text-[var(--text-primary)] mb-3 flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-[var(--accent-gold)]" />
-                  技术分析中的关键觀察
+                  技術分析中的關鍵觀察
                 </h4>
                 <ul className="space-y-3 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="text-[var(--accent-gold)] font-bold">•</span>
-                    <span><strong>支撑变阻力</strong>：这些行为決策（心理帳戶、錨定、損失厭惡）傾向於表現为交易者所说的头顶供應。技术分析中的"曾经的支撑变成阻力"这句话，正是这些偏誤驱动的"盈虧平衡心态"決策的結果。</span>
+                    <span><strong>支撐變阻力</strong>：這些行為決策（心理帳戶、錨定、損失厭惡）傾向於表現為交易者所說的頭頂供應。技術分析中的「曾經的支撐變成阻力」這句話，正是這些偏誤驅動的「盈虧平衡心態」決策的結果。</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[var(--accent-gold)] font-bold">•</span>
-                    <span><strong>投降形态</strong>：当许多人对共同虧損頭寸的情绪反應以递增的速度增加时，最终導致技术分析师所说的投降形态。極端看跌的价格行为加上不断增加的成交量是由金融損失的情绪痛苦驱动的。</span>
+                    <span><strong>投降形態</strong>：當許多人對共同虧損頭寸的情緒反應以遞增的速度增加時，最終導致技術分析師所說的投降形態。極端看跌的價格行為加上不斷增加的成交量是由金融損失的情緒痛苦驅動的。</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[var(--accent-gold)] font-bold">•</span>
-                    <span><strong>顶部自满</strong>：相反，随着价格上涨成交量下降的模式表明一定程度的自满，投资者对上涨的价格感到满意。</span>
+                    <span><strong>頂部自滿</strong>：相反，隨著價格上漲成交量下降的模式表明一定程度的自滿，投資者對上漲的價格感到滿意。</span>
                   </li>
                 </ul>
               </div>
 
-              {/* TODO: 考虑添加自測题组件 */}
+              {/* TODO: 考慮添加自測題組件 */}
             </div>
           </div>
         </div>
