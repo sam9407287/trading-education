@@ -122,11 +122,11 @@ const categories = [
     icon: Activity,
     gradient: 'from-cyan-500 to-blue-400',
     topics: [
-      { name: '認知偏誤', href: '/technical-analysis/behavioral-finance/cognitive-bias' },
-      { name: '市場情緒', href: '/technical-analysis/behavioral-finance/market-sentiment' },
-      { name: '群體行為', href: '/technical-analysis/behavioral-finance/crowd-behavior' },
+      { name: '前景理論與損失厭惡', href: '/technical-analysis/behavioral-finance#prospect-theory' },
+      { name: '信念保持偏誤', href: '/technical-analysis/behavioral-finance#belief-preservation' },
+      { name: '信息處理偏誤', href: '/technical-analysis/behavioral-finance#information-processing' },
+      { name: '情緒偏誤', href: '/technical-analysis/behavioral-finance#emotional' },
     ],
-    status: 'coming-soon',
   },
 ];
 
