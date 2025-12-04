@@ -121,14 +121,14 @@ export default function OptionsPage() {
         <div className="absolute top-20 left-1/4 w-72 h-72 bg-amber-500/5 dark:bg-amber-500/10 rounded-full blur-3xl"></div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          {/* Breadcrumb - Centered */}
-          <nav className="flex items-center justify-center gap-2 text-sm text-[var(--text-muted)] mb-8">
-            <Link href="/" className="hover:text-[var(--accent-gold)]">首頁</Link>
-            <span>/</span>
-            <span className="text-[var(--text-primary)]">期權教學</span>
-          </nav>
-
           <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
+            {/* Breadcrumb */}
+            <nav className="flex items-center justify-center gap-2 text-sm text-[var(--text-muted)] mb-8">
+              <Link href="/" className="hover:text-[var(--accent-gold)]">首頁</Link>
+              <span>/</span>
+              <span className="text-[var(--text-primary)]">期權教學</span>
+            </nav>
+
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--accent-gold)]/10 border border-[var(--accent-gold)]/20 mb-6">
               <Layers className="w-4 h-4 text-[var(--accent-gold)]" />
               <span className="text-sm text-[var(--accent-gold)]">Options Trading</span>

@@ -139,14 +139,14 @@ export default function TechnicalAnalysisPage() {
         <div className="absolute top-20 right-1/4 w-72 h-72 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl"></div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          {/* Breadcrumb - Centered */}
-          <nav className="flex items-center justify-center gap-2 text-sm text-[var(--text-muted)] mb-8">
-            <Link href="/" className="hover:text-[var(--accent-gold)]">首頁</Link>
-            <span>/</span>
-            <span className="text-[var(--text-primary)]">技術分析</span>
-          </nav>
-
           <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
+            {/* Breadcrumb */}
+            <nav className="flex items-center justify-center gap-2 text-sm text-[var(--text-muted)] mb-8">
+              <Link href="/" className="hover:text-[var(--accent-gold)]">首頁</Link>
+              <span>/</span>
+              <span className="text-[var(--text-primary)]">技術分析</span>
+            </nav>
+
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6">
               <TrendingUp className="w-4 h-4 text-blue-400" />
               <span className="text-sm text-blue-400">Technical Analysis</span>
