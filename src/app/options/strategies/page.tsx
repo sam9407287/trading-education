@@ -286,7 +286,7 @@ export default function StrategiesPage() {
       </section>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex gap-8">
           {/* Left Navigation */}
           <AnchorNav sections={navSections} />
