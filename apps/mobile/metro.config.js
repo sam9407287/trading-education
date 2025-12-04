@@ -23,7 +23,7 @@ config.resolver.nodeModulesPaths = [
 // 禁用 symlinks（避免與 Expo 默認設置衝突）
 config.resolver.unstable_enableSymlinks = undefined;
 
-// 讓 Metro 能解析 monorepo 中的包
-config.resolver.disableHierarchicalLookup = true;
+// 讓 Metro 能解析 monorepo 中的包（EAS 要求設為 false）
+config.resolver.disableHierarchicalLookup = false;
 
 module.exports = withNativeWind(config, { input: './global.css' });
