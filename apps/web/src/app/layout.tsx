@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import ChatLayout from "@/components/chat/ChatLayout";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -59,11 +60,13 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icons/icon.svg" />
       </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased overflow-x-hidden`}>
-        <Header />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
+        <ChatLayout>
+          <Header />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer />
+        </ChatLayout>
       </body>
     </html>
   );
