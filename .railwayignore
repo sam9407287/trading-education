@@ -1,0 +1,13 @@
+# Railway ignore file
+# Files and directories to exclude from Railway deployment
+
+.git
+.gitignore
+.next
+node_modules
+.vscode
+.idea
+*.log
+.DS_Store
+README.md
+
