@@ -222,9 +222,12 @@ export default function OptionsPage() {
       {/* Learning Path */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-8">
-          <h2 className="text-xl font-bold text-[var(--text-primary)] mb-6">
-            建議學習路徑
-          </h2>
+          <div className="flex items-center gap-3 mb-6">
+            <BookOpen className="w-6 h-6 text-[var(--accent-gold)]" />
+            <h2 className="text-xl font-bold text-[var(--text-primary)]">
+              建議學習路徑
+            </h2>
+          </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
