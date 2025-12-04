@@ -233,19 +233,16 @@ export default function TechnicalAnalysisPage() {
       {/* Learning Path */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <BookOpen className="w-6 h-6 text-[var(--accent-gold)]" />
-            <h2 className="text-xl font-bold text-[var(--text-primary)]">
-              建議學習路徑
-            </h2>
-          </div>
+          <h2 className="text-xl font-bold text-[var(--text-primary)] mb-6">
+            建議學習路徑
+          </h2>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { step: 1, title: '圖表基礎', desc: '學習 K 線圖的基本判讀', category: 'chart-reading' },
-              { step: 2, title: '技術指標', desc: '掌握常用指標的應用', category: 'indicators' },
-              { step: 3, title: '形態分析', desc: '識別價格形態與 K 線組合', category: 'patterns' },
-              { step: 4, title: '理論框架', desc: '建立完整的分析體系', category: 'theories' },
+              { step: 1, title: '圖表基礎', desc: '學習 K 線圖的基本判讀' },
+              { step: 2, title: '技術指標', desc: '掌握常用指標的應用' },
+              { step: 3, title: '形態分析', desc: '識別價格形態與 K 線組合' },
+              { step: 4, title: '理論框架', desc: '建立完整的分析體系' },
             ].map((item) => (
               <div key={item.step} className="relative p-4 bg-[var(--bg-secondary)] rounded-xl">
                 <div className="w-8 h-8 rounded-full bg-[var(--accent-gold)] flex items-center justify-center text-[var(--bg-primary)] font-bold text-sm mb-3">

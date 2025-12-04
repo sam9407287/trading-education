@@ -226,28 +226,21 @@ export default function OptionsPage() {
             建議學習路徑
           </h2>
 
-          <div className="relative">
-            {/* Connection line */}
-            <div className="absolute left-6 top-8 bottom-8 w-0.5 bg-[var(--border-color)] hidden sm:block"></div>
-
-            <div className="space-y-6">
-              {[
-                { step: 1, title: '期權基礎', desc: '先了解期權的基本概念與術語' },
-                { step: 2, title: '希臘字母', desc: '理解影響期權價格的關鍵因素' },
-                { step: 3, title: 'IV 分析', desc: '學會判斷波動率環境' },
-                { step: 4, title: '期權策略', desc: '根據市場觀點選擇合適的策略' },
-              ].map((item) => (
-                <div key={item.step} className="flex items-start gap-4 relative">
-                  <div className="w-12 h-12 rounded-full bg-[var(--accent-gold)] flex items-center justify-center text-[var(--bg-primary)] font-bold flex-shrink-0 z-10">
-                    {item.step}
-                  </div>
-                  <div className="pt-2">
-                    <h3 className="font-semibold text-[var(--text-primary)]">{item.title}</h3>
-                    <p className="text-sm text-[var(--text-muted)]">{item.desc}</p>
-                  </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { step: 1, title: '期權基礎', desc: '先了解期權的基本概念與術語' },
+              { step: 2, title: '希臘字母', desc: '理解影響期權價格的關鍵因素' },
+              { step: 3, title: 'IV 分析', desc: '學會判斷波動率環境' },
+              { step: 4, title: '期權策略', desc: '根據市場觀點選擇合適的策略' },
+            ].map((item) => (
+              <div key={item.step} className="relative p-4 bg-[var(--bg-secondary)] rounded-xl">
+                <div className="w-8 h-8 rounded-full bg-[var(--accent-gold)] flex items-center justify-center text-[var(--bg-primary)] font-bold text-sm mb-3">
+                  {item.step}
                 </div>
-              ))}
-            </div>
+                <h3 className="font-semibold text-[var(--text-primary)] mb-1">{item.title}</h3>
+                <p className="text-sm text-[var(--text-muted)]">{item.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
