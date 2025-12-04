@@ -12,7 +12,12 @@ import {
   Sparkles,
   BookOpen,
   Calculator,
-  Activity
+  Activity,
+  Smartphone,
+  Download,
+  Share2,
+  Plus,
+  ExternalLink
 } from 'lucide-react';
 
 // 技術分析子分類
@@ -210,7 +215,78 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section - Removed */}
+      {/* Download App Section */}
+      <section className="border-t border-[var(--border-color)] bg-gradient-to-b from-transparent to-[var(--bg-secondary)]/30">
+        <div className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
+          <div className="text-center mb-10 sm:mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--accent-gold)]/10 border border-[var(--accent-gold)]/20 mb-4">
+              <Smartphone className="w-4 h-4 text-[var(--accent-gold)]" />
+              <span className="text-xs sm:text-sm font-medium text-[var(--accent-gold)]">行動應用</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-3">
+              📱 下載行動應用
+            </h2>
+            <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-xl mx-auto">
+              隨時隨地學習交易知識，支援離線閱讀
+            </p>
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-4 sm:gap-6 justify-center items-stretch max-w-3xl mx-auto">
+            {/* Android Download */}
+            <div className="flex-1 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl sm:rounded-2xl p-6 sm:p-8 text-center hover:border-[var(--accent-green)]/50 transition-all">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[var(--accent-green)]/10 flex items-center justify-center mx-auto mb-4 sm:mb-5">
+                <span className="text-3xl sm:text-4xl">🤖</span>
+              </div>
+              <h3 className="font-bold text-lg sm:text-xl text-[var(--text-primary)] mb-2">Android</h3>
+              <p className="text-xs sm:text-sm text-[var(--text-muted)] mb-4 sm:mb-5">APK 直接安裝，無需商店</p>
+              <a 
+                href="/downloads/trading-education.apk"
+                className="inline-flex items-center gap-2 bg-[var(--accent-green)] text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium hover:opacity-90 transition-opacity text-sm sm:text-base"
+              >
+                <Download className="w-4 h-4 sm:w-5 sm:h-5" />
+                下載 APK
+              </a>
+              <p className="text-xs text-[var(--text-muted)] mt-3 sm:mt-4">
+                版本 1.0.0 · 約 25MB
+              </p>
+            </div>
+
+            {/* iOS Instructions */}
+            <div className="flex-1 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl sm:rounded-2xl p-6 sm:p-8 text-center">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-blue-500/10 flex items-center justify-center mx-auto mb-4 sm:mb-5">
+                <span className="text-3xl sm:text-4xl">🍎</span>
+              </div>
+              <h3 className="font-bold text-lg sm:text-xl text-[var(--text-primary)] mb-2">iOS</h3>
+              <p className="text-xs sm:text-sm text-[var(--text-muted)] mb-4 sm:mb-5">使用 PWA 添加到主畫面</p>
+              
+              <div className="bg-[var(--bg-secondary)] rounded-lg p-4 text-left mb-4">
+                <p className="text-xs text-[var(--text-secondary)] mb-3">
+                  由於 Apple 政策，iOS 無法直接下載安裝 App。<br/>
+                  請使用以下方式：
+                </p>
+                <ol className="text-xs sm:text-sm text-[var(--text-secondary)] space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center flex-shrink-0 text-xs font-medium">1</span>
+                    <span>使用 <strong className="text-[var(--text-primary)]">Safari</strong> 開啟此網站</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center flex-shrink-0 text-xs font-medium">2</span>
+                    <span>點擊底部 <Share2 className="w-3 h-3 inline text-blue-400" /> 分享按鈕</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center flex-shrink-0 text-xs font-medium">3</span>
+                    <span>選擇「<Plus className="w-3 h-3 inline text-blue-400" /> 加入主畫面」</span>
+                  </li>
+                </ol>
+              </div>
+              
+              <p className="text-xs text-[var(--text-muted)]">
+                📌 PWA 支援離線使用，體驗與 App 相同
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

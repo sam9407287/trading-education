@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0e17"/>
+      <stop offset="100%" style="stop-color:#1a1f2e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24"/>
+      <stop offset="100%" style="stop-color:#f59e0b"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  
+  <!-- Chart Line -->
+  <path d="M80 380 L160 320 L240 350 L320 200 L400 240 L432 160" 
+        stroke="url(#gold)" 
+        stroke-width="24" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none"/>
+  
+  <!-- Arrow up -->
+  <path d="M432 160 L432 120 L392 160" 
+        stroke="url(#gold)" 
+        stroke-width="24" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none"/>
+  
+  <!-- Dots -->
+  <circle cx="160" cy="320" r="16" fill="#f59e0b"/>
+  <circle cx="240" cy="350" r="16" fill="#f59e0b"/>
+  <circle cx="320" cy="200" r="16" fill="#f59e0b"/>
+  <circle cx="400" cy="240" r="16" fill="#f59e0b"/>
+</svg>
+
