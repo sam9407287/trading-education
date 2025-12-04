@@ -31,11 +31,32 @@ export default function ChatSidebar() {
     addMessage('user', userMessage);
     setIsLoading(true);
 
-    // 暫時模擬回應（階段 2 會接真正的 API）
-    setTimeout(() => {
-      addMessage('assistant', `收到你的問題：「${userMessage}」\n\n這是模擬回應，API 整合後會有真正的 AI 回答！`);
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: userMessage,
+          history: messages,
+          currentPage: typeof window !== 'undefined' ? window.location.pathname : '/',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || '發生錯誤');
+      }
+
+      addMessage('assistant', data.reply);
+    } catch (error) {
+      console.error('Chat error:', error);
+      addMessage('assistant', '抱歉，發生錯誤。請稍後再試。');
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
