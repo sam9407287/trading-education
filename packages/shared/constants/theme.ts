@@ -85,3 +85,33 @@ export const fontSize = {
   '4xl': 36,
 };
 
+/**
+ * 主題顏色常量 - 用於 React Native StyleSheet
+ * 默認使用暗色主題
+ */
+export const THEME_COLORS = {
+  bgPrimary: '#0a0e17',
+  bgSecondary: '#111827',
+  bgCard: '#1a1f2e',
+  bgCardHover: '#232a3b',
+  
+  textPrimary: '#f1f5f9',
+  textSecondary: '#94a3b8',
+  textMuted: '#64748b',
+  
+  accentGold: '#f59e0b',
+  accentGoldLight: '#fbbf24',
+  accentGreen: '#10b981',
+  accentRed: '#ef4444',
+  accentBlue: '#3b82f6',
+  accentPurple: '#8b5cf6',
+  accentCyan: '#06b6d4',
+  
+  borderColor: '#1e293b',
+  borderLight: '#334155',
+  
+  profit: '#10b981',
+  loss: '#ef4444',
+  breakeven: '#f59e0b',
+};
+
