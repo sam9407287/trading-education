@@ -9,15 +9,40 @@
 
 ---
 
-## 期權教學 (Options)
+## 📱 Mobile App (Expo React Native)
+
+| 頁面 | 狀態 | 功能 | 備註 |
+|-----|------|------|------|
+| 首頁 | 🟢 | 100% | 課程分類、導航完成 |
+| 技術分析列表 | 🟢 | 100% | 課程列表完成 |
+| 期權列表 | 🟢 | 100% | 課程列表完成 |
+| 行為金融學 | 🟢 | 100% | 21 個偏誤 + 圖表形態章節 |
+| 期權基礎 | 🟢 | 100% | 基礎概念完成 |
+| 希臘字母 | 🟢 | 100% | 互動圖表 + 詳細解說 |
+| 期權策略 | 🟢 | 100% | 24 個策略 + 互動損益圖 |
+| IV 分析 | 🟢 | 100% | IV 概念完成 |
+
+### Mobile 互動功能
+
+| 功能 | 狀態 | 備註 |
+|-----|------|------|
+| Greeks 視覺化圖表 | 🟢 | 數字輸入 + 預設按鈕 |
+| 策略損益圖表 | 🟢 | 可調整行權價/權利金 |
+| 展開/收起策略卡片 | 🟢 | 可同時展開多個 |
+
+---
+
+## 🌐 Web App (Next.js)
+
+### 期權教學 (Options)
 
 | 頁面路徑 | 狀態 | 內容完成度 | 備註 |
 |---------|------|-----------|------|
 | `/options` | 🟢 | 100% | 入口頁面完成 |
-| `/options/strategies` | 🟢 | 90% | 主要策略已完成，可擴充更多進階組合 |
-| `/options/basics` | ⬜ | 0% | 待開發 |
-| `/options/greeks` | ⬜ | 0% | 待開發 |
-| `/options/iv-analysis` | ⬜ | 0% | 待開發 |
+| `/options/strategies` | 🟢 | 95% | 24 個策略已完成 |
+| `/options/basics` | 🟢 | 100% | 期權基礎完成 |
+| `/options/greeks` | 🟢 | 100% | 希臘字母詳解 + 互動圖表 |
+| `/options/iv-analysis` | 🟢 | 100% | IV 分析完成 |
 
 ### 期權策略詳細狀態
 
@@ -76,18 +101,29 @@
 
 ---
 
-## 技術分析 (Technical Analysis)
+### 技術分析 (Technical Analysis)
 
 | 頁面路徑 | 狀態 | 內容完成度 | 備註 |
 |---------|------|-----------|------|
 | `/technical-analysis` | 🟢 | 100% | 入口頁面完成 |
+| `/technical-analysis/behavioral-finance` | 🟢 | 100% | 21 個偏誤 + 圖表形態章節 |
 | `/technical-analysis/indicators` | ⬜ | 0% | 待開發 |
 | `/technical-analysis/chart-reading` | ⬜ | 0% | 待開發 |
 | `/technical-analysis/theories` | ⬜ | 0% | 待開發 |
 | `/technical-analysis/cycle-analysis` | ⬜ | 0% | 待開發 |
 | `/technical-analysis/patterns` | ⬜ | 0% | 待開發 |
 | `/technical-analysis/candlestick-patterns` | ⬜ | 0% | 待開發 |
-| `/technical-analysis/behavioral-finance` | ⬜ | 0% | 待開發 |
+
+### 行為金融學詳細狀態
+
+| 章節 | 偏誤數量 | 狀態 |
+|-----|---------|------|
+| 引言與前景理論 | 3 | 🟢 |
+| 信念保持偏誤 | 6 | 🟢 |
+| 資訊處理偏誤 | 7 | 🟢 |
+| 情緒偏誤 | 8 | 🟢 |
+| 偏誤與圖表形態 | 1 | 🟢 |
+| **總計** | **25** | **🟢** |
 
 ### 技術指標詳細狀態
 
@@ -130,9 +166,9 @@
 ## 待補充內容清單
 
 ### 期權
-1. [ ] 期權基礎介紹頁面
-2. [ ] 希臘字母詳細解說與視覺化
-3. [ ] IV 分析與歷史 IV 使用時機
+1. [x] 期權基礎介紹頁面
+2. [x] 希臘字母詳細解說與視覺化
+3. [x] IV 分析與使用時機
 4. [ ] Calendar Spread 的時間價值圖表
 5. [ ] Double Diagonal 的多到期日圖表
 
@@ -148,8 +184,13 @@
 ## 更新日誌
 
 ### 2024-12-04
+- 完成 Mobile App 期權策略頁面（24 個策略 + 互動損益圖）
+- 完成 Mobile App 行為金融頁面（21 個偏誤）
+- 完成 Mobile App Greeks 視覺化互動圖表
+- 新增 THEME_COLORS 導出到 shared 包
+- 建立 Monorepo 架構（Web + Mobile + Shared）
+
+### 2024-12-03
 - 建立內容追蹤文件
 - 完成期權策略頁面（20+ 策略）
 - 完成首頁與入口頁面
-
-
