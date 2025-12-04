@@ -146,7 +146,7 @@ export default function TechnicalAnalysisPage() {
             <span className="text-[var(--text-primary)]">技術分析</span>
           </nav>
 
-          <div className="max-w-3xl">
+          <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6">
               <TrendingUp className="w-4 h-4 text-blue-400" />
               <span className="text-sm text-blue-400">Technical Analysis</span>
@@ -156,7 +156,7 @@ export default function TechnicalAnalysisPage() {
               技術分析教學
             </h1>
             
-            <p className="text-lg text-[var(--text-secondary)] mb-8">
+            <p className="text-lg text-[var(--text-secondary)] mb-8 max-w-2xl mx-auto">
               從基礎指標到進階理論，系統性學習技術分析的完整知識體系。
               掌握圖表判讀、形態識別與週期分析，建立專業的市場分析能力。
             </p>
@@ -170,7 +170,7 @@ export default function TechnicalAnalysisPage() {
           {categories.map((category) => (
             <div
               key={category.id}
-              className="group relative overflow-hidden rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] hover:border-[var(--border-light)] transition-all"
+              className="group relative overflow-hidden rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] hover:border-[var(--border-light)] transition-all hover:shadow-lg hover:-translate-y-1"
             >
               {/* Status badge */}
               {category.status === 'coming-soon' && (
@@ -260,24 +260,7 @@ export default function TechnicalAnalysisPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-4">
-            也想學習期權交易？
-          </h2>
-          <p className="text-[var(--text-secondary)] mb-8">
-            結合技術分析與期權策略，打造更完整的交易系統
-          </p>
-          <Link
-            href="/options"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl gradient-gold text-[var(--bg-primary)] font-semibold hover:opacity-90 transition-opacity"
-          >
-            探索期權教學
-            <ArrowRight className="w-5 h-5" />
-          </Link>
-        </div>
-      </section>
+      {/* CTA - Removed */}
     </div>
   );
 }

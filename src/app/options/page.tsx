@@ -128,7 +128,7 @@ export default function OptionsPage() {
             <span className="text-[var(--text-primary)]">期權教學</span>
           </nav>
 
-          <div className="max-w-3xl">
+          <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--accent-gold)]/10 border border-[var(--accent-gold)]/20 mb-6">
               <Layers className="w-4 h-4 text-[var(--accent-gold)]" />
               <span className="text-sm text-[var(--accent-gold)]">Options Trading</span>
@@ -138,7 +138,7 @@ export default function OptionsPage() {
               期權教學
             </h1>
             
-            <p className="text-lg text-[var(--text-secondary)] mb-8">
+            <p className="text-lg text-[var(--text-secondary)] mb-8 max-w-2xl mx-auto">
               系統性學習期權交易的完整課程，從基礎概念到進階策略，
               搭配互動式損益圖與實例分析，讓你真正理解期權的運作原理。
             </p>
@@ -160,14 +160,12 @@ export default function OptionsPage() {
             <Link
               key={course.id}
               href={course.href}
-              className={`group relative overflow-hidden rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] p-6 hover:border-[var(--accent-gold)]/50 transition-all ${
-                course.featured ? 'md:col-span-2' : ''
-              }`}
+              className="group relative overflow-hidden rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] p-6 hover:border-[var(--accent-gold)]/50 transition-all hover:shadow-lg hover:-translate-y-1"
             >
-              {/* Featured badge */}
+              {/* Featured badge - Optional, keep standard size */}
               {course.featured && (
-                <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-[var(--accent-gold)] text-[var(--bg-primary)] text-xs font-medium">
-                  重點推薦
+                <div className="absolute top-4 right-4 px-2.5 py-0.5 rounded-full bg-[var(--accent-gold)]/10 text-[var(--accent-gold)] text-xs font-medium border border-[var(--accent-gold)]/20">
+                  推薦
                 </div>
               )}
 
@@ -204,7 +202,7 @@ export default function OptionsPage() {
                 </div>
 
                 {/* Topics */}
-                <div className={`grid ${course.featured ? 'sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-2'} gap-2 mb-4`}>
+                <div className="grid grid-cols-2 gap-2 mb-4">
                   {course.topics.map((topic) => (
                     <div
                       key={topic}

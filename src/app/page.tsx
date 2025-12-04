@@ -165,23 +165,6 @@ export default function HomePage() {
               從技術分析到期權策略，系統性學習市場分析與交易技巧，
               搭配互動式圖表，讓複雜概念變得清晰易懂
             </p>
-
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
-              <Link
-                href="/technical-analysis"
-                className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-400 text-white font-medium hover:opacity-90 transition-opacity text-sm sm:text-base"
-              >
-                <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
-                開始學習技術分析
-              </Link>
-              <Link
-                href="/options"
-                className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg gradient-gold text-[var(--bg-primary)] font-medium hover:opacity-90 transition-opacity text-sm sm:text-base"
-              >
-                <Layers className="w-4 h-4 sm:w-5 sm:h-5" />
-                探索期權策略
-              </Link>
-            </div>
           </div>
         </div>
       </section>
