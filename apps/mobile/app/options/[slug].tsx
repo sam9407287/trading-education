@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import OptionsBasicsPage from '@/components/pages/OptionsBasicsPage';
 import GreeksPage from '@/components/pages/GreeksPage';
 import StrategiesPage from '@/components/pages/StrategiesPage';
+import IVAnalysisPage from '@/components/pages/IVAnalysisPage';
 
 // 頁面標題映射
 const pageTitles: Record<string, string> = {
@@ -27,7 +28,7 @@ export default function OptionsDetailScreen() {
       case 'strategies':
         return <StrategiesPage />;
       case 'iv-analysis':
-        return <PlaceholderPage title="IV 分析" />;
+        return <IVAnalysisPage />;
       default:
         return <PlaceholderPage title={title} />;
     }
