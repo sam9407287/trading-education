@@ -162,8 +162,7 @@ export default function HomePage() {
             </h1>
             
             <p className="text-sm sm:text-base lg:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto mb-6 sm:mb-10 px-4 text-center w-full" style={{ textWrap: 'balance' }}>
-              從技術分析到期權策略，系統性學習市場分析與交易技巧，<br className="hidden sm:block" />
-              搭配互動式圖表，讓複雜概念變得清晰易懂
+              從技術分析到期權策略，系統性學習市場分析與交易技巧，搭配互動式圖表，讓複雜概念變得清晰易懂
             </p>
           </div>
         </div>
