@@ -383,3 +383,4 @@ export default function PatternDiagram({
 export const availablePatterns = Object.keys(patternConfigs) as PatternType[];
 export type { PatternType };
 
+

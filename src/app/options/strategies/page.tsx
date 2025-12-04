@@ -257,7 +257,7 @@ export default function StrategiesPage() {
       <section className="relative overflow-x-hidden border-b border-[var(--border-color)]">
         <div className="absolute inset-0 dark:bg-gradient-to-br dark:from-amber-500/5 dark:via-transparent dark:to-orange-500/5"></div>
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="relative max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-sm text-[var(--text-muted)] mb-6">
             <Link href="/" className="hover:text-[var(--accent-gold)]">首頁</Link>

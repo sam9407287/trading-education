@@ -9,7 +9,7 @@ export default function OptionsBasicsPage() {
       <section className="relative overflow-x-hidden border-b border-[var(--border-color)]">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-teal-500/5"></div>
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="relative max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <nav className="flex items-center gap-2 text-sm text-[var(--text-muted)] mb-6">
             <Link href="/" className="hover:text-[var(--accent-gold)]">首頁</Link>
             <span>/</span>
@@ -43,7 +43,7 @@ export default function OptionsBasicsPage() {
       </section>
 
       {/* What is an Option */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">什麼是期權？</h2>
         
         <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl p-6 mb-8">
@@ -100,7 +100,7 @@ export default function OptionsBasicsPage() {
       </section>
 
       {/* Option Components */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">期權合約要素</h2>
         
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -145,7 +145,7 @@ export default function OptionsBasicsPage() {
       </section>
 
       {/* Moneyness */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">
           價內/價平/價外 (ITM/ATM/OTM)
         </h2>
@@ -199,7 +199,7 @@ export default function OptionsBasicsPage() {
       </section>
 
       {/* Intrinsic vs Time Value */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">內在價值與時間價值</h2>
         
         <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl p-6">

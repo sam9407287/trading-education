@@ -8,7 +8,7 @@ export default function TechnicalIndicatorsPage() {
       <section className="relative overflow-x-hidden border-b border-[var(--border-color)]">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-cyan-500/5"></div>
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="relative max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <nav className="flex items-center gap-2 text-sm text-[var(--text-muted)] mb-6">
             <Link href="/" className="hover:text-[var(--accent-gold)]">首頁</Link>
             <span>/</span>
@@ -38,7 +38,7 @@ export default function TechnicalIndicatorsPage() {
       </section>
 
       {/* Under Development */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="flex flex-col items-center justify-center text-center">
           <div className="w-24 h-24 rounded-full bg-[var(--accent-gold)]/10 flex items-center justify-center mb-6">
             <Construction className="w-12 h-12 text-[var(--accent-gold)]" />

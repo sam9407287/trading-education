@@ -119,7 +119,7 @@ export default function OptionsPage() {
       <section className="relative overflow-x-hidden bg-gradient-to-br from-orange-50/40 via-amber-50/30 to-yellow-50/40 dark:from-amber-500/5 dark:via-transparent dark:to-orange-500/5">
         <div className="absolute top-20 left-1/4 w-72 h-72 bg-orange-400/10 dark:bg-amber-500/10 rounded-full blur-3xl"></div>
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div className="relative max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="text-center">
             {/* Breadcrumb */}
             <nav className="flex items-center justify-center gap-2 text-sm text-[var(--text-muted)] mb-8">
@@ -144,7 +144,7 @@ export default function OptionsPage() {
 
 
       {/* Courses Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-8">
           課程內容
         </h2>
@@ -219,7 +219,7 @@ export default function OptionsPage() {
       </section>
 
       {/* Learning Path */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-8">
           <div className="flex items-center gap-3 mb-6">
             <BookOpen className="w-6 h-6 text-[var(--accent-gold)]" />

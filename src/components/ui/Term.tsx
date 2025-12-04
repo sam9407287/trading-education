@@ -22,3 +22,4 @@ export default function Term({ cn, en, highlight = false }: TermProps) {
   );
 }
 
+

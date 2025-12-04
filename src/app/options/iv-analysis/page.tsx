@@ -9,7 +9,7 @@ export default function IVAnalysisPage() {
       <section className="relative overflow-x-hidden border-b border-[var(--border-color)]">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-pink-500/5"></div>
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="relative max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <nav className="flex items-center gap-2 text-sm text-[var(--text-muted)] mb-6">
             <Link href="/" className="hover:text-[var(--accent-gold)]">首頁</Link>
             <span>/</span>
@@ -44,7 +44,7 @@ export default function IVAnalysisPage() {
       </section>
 
       {/* What is IV */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">什麼是隱含波動率？</h2>
         
         <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl p-6 mb-8">
@@ -70,7 +70,7 @@ export default function IVAnalysisPage() {
       </section>
 
       {/* IV vs HV */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">IV vs 歷史波動率</h2>
         
         <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl overflow-hidden">
@@ -111,7 +111,7 @@ export default function IVAnalysisPage() {
       </section>
 
       {/* IV Rank & Percentile */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">IV Rank 與 IV Percentile</h2>
         
         <div className="grid md:grid-cols-2 gap-6">
@@ -144,7 +144,7 @@ export default function IVAnalysisPage() {
       </section>
 
       {/* Strategy Selection */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">IV 與策略選擇</h2>
         
         <div className="grid md:grid-cols-2 gap-6">
@@ -215,7 +215,7 @@ export default function IVAnalysisPage() {
       </section>
 
       {/* IV Events */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">影響 IV 的事件</h2>
         
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -246,7 +246,7 @@ export default function IVAnalysisPage() {
       </section>
 
       {/* IV Crush */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-gradient-to-br from-[var(--bg-card)] to-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl p-6">
           <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">
             IV Crush - 波動率崩塌
