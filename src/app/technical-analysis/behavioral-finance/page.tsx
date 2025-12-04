@@ -9,54 +9,59 @@ const navSections = [
   {
     id: 'introduction',
     label: '引言與前景理論',
+    labelEn: 'Introduction & Prospect Theory',
     children: [
-      { id: 'intro', label: '行為金融學簡介' },
-      { id: 'prospect-theory', label: '前景理論' },
-      { id: 'loss-aversion', label: '損失厭惡' },
+      { id: 'intro', label: '行為金融學簡介', labelEn: 'Behavioral Finance Introduction' },
+      { id: 'prospect-theory', label: '前景理論', labelEn: 'Prospect Theory' },
+      { id: 'loss-aversion', label: '損失厭惡', labelEn: 'Loss Aversion' },
     ],
   },
   {
     id: 'belief-preservation',
     label: '信念保持偏誤',
+    labelEn: 'Belief Preservation Biases',
     children: [
-      { id: 'conservatism', label: '保守主義' },
-      { id: 'confirmation', label: '確認偏誤' },
-      { id: 'representativeness', label: '代表性偏誤' },
-      { id: 'illusion-of-control', label: '控制錯覺' },
-      { id: 'hindsight', label: '後見之明' },
-      { id: 'cognitive-dissonance', label: '認知失調' },
+      { id: 'conservatism', label: '保守主義', labelEn: 'Conservatism' },
+      { id: 'confirmation', label: '確認偏誤', labelEn: 'Confirmation Bias' },
+      { id: 'representativeness', label: '代表性偏誤', labelEn: 'Representativeness Bias' },
+      { id: 'illusion-of-control', label: '控制錯覺', labelEn: 'Illusion of Control' },
+      { id: 'hindsight', label: '後見之明', labelEn: 'Hindsight Bias' },
+      { id: 'cognitive-dissonance', label: '認知失調', labelEn: 'Cognitive Dissonance' },
     ],
   },
   {
     id: 'information-processing',
-    label: '信息處理偏誤',
+    label: '資訊處理偏誤',
+    labelEn: 'Information Processing Biases',
     children: [
-      { id: 'anchoring', label: '錨定效應' },
-      { id: 'availability', label: '可得性偏誤' },
-      { id: 'self-attribution', label: '自我歸因' },
-      { id: 'framing', label: '框架效應' },
-      { id: 'mental-accounting', label: '心理帳戶' },
-      { id: 'recency', label: '近因效應' },
-      { id: 'outcome', label: '結果偏誤' },
+      { id: 'anchoring', label: '錨定效應', labelEn: 'Anchoring Bias' },
+      { id: 'availability', label: '可得性偏誤', labelEn: 'Availability Bias' },
+      { id: 'self-attribution', label: '自我歸因', labelEn: 'Self-Attribution Bias' },
+      { id: 'framing', label: '框架效應', labelEn: 'Framing Bias' },
+      { id: 'mental-accounting', label: '心理帳戶', labelEn: 'Mental Accounting' },
+      { id: 'recency', label: '近因效應', labelEn: 'Recency Bias' },
+      { id: 'outcome', label: '結果偏誤', labelEn: 'Outcome Bias' },
     ],
   },
   {
     id: 'emotional',
     label: '情緒偏誤',
+    labelEn: 'Emotional Biases',
     children: [
-      { id: 'loss-aversion-bias', label: '損失厭惡偏誤' },
-      { id: 'endowment', label: '稟賦效應' },
-      { id: 'overconfidence', label: '過度自信' },
-      { id: 'regret-aversion', label: '後悔厭惡' },
-      { id: 'conjunction-fallacy', label: '合取謬誤' },
-      { id: 'self-control', label: '自我控制' },
-      { id: 'status-quo', label: '現狀偏誤' },
-      { id: 'affinity', label: '親和偏誤' },
+      { id: 'loss-aversion-bias', label: '損失厭惡偏誤', labelEn: 'Loss Aversion Bias' },
+      { id: 'endowment', label: '稟賦效應', labelEn: 'Endowment Bias' },
+      { id: 'overconfidence', label: '過度自信', labelEn: 'Overconfidence Bias' },
+      { id: 'regret-aversion', label: '後悔厭惡', labelEn: 'Regret Aversion' },
+      { id: 'conjunction-fallacy', label: '合取謬誤', labelEn: 'Conjunction Fallacy' },
+      { id: 'self-control', label: '自我控制', labelEn: 'Self-Control Bias' },
+      { id: 'status-quo', label: '現狀偏誤', labelEn: 'Status Quo Bias' },
+      { id: 'affinity', label: '親和偏誤', labelEn: 'Affinity Bias' },
     ],
   },
   {
     id: 'chart-patterns',
     label: '偏誤與圖表形態',
+    labelEn: 'Biases and Chart Patterns',
   },
 ];
 
@@ -392,7 +397,7 @@ export default function BehavioralFinancePage() {
               id="belief-preservation"
               title="信念保持偏誤"
               titleEn="Belief Preservation Biases"
-              description="傾向於固守已有信念，即使這些信念可能不合邏輯或非理性。這類偏誤往往導致交易量減少，因為投資者傾向於維持現有頭寸而非根據新信息調整。"
+              description="傾向於固守已有信念，即使這些信念可能不合邏輯或非理性。這類偏誤往往導致交易量減少，因為投資者傾向於維持現有頭寸而非根據新資訊調整。"
               icon={Brain}
               gradient="from-blue-500 to-cyan-400"
             />
@@ -402,7 +407,7 @@ export default function BehavioralFinancePage() {
               title="保守主義"
               titleEn="Conservatism"
               type="belief"
-              definition="傾向於過度重視當前信念，低估新信息的價值。投資者由於在接收新信息時更保守地改變預測，從而低估某一結果的機率。"
+              definition="傾向於過度重視當前信念，低估新資訊的價值。投資者由於在接收新資訊時更保守地改變預測，從而低估某一結果的機率。"
               marketExample="你持續看好某科技股三個月，認為它會突破新高。然而最近公司公布營收不如預期，股價連續下跌並跌破重要支撐位。你仍堅持原本的看法，認為只是短期波動，忽略了基本面和技術面都已經轉弱的訊號。"
               impact={{
                 volume: "導致交易量減少",
@@ -416,7 +421,7 @@ export default function BehavioralFinancePage() {
               title="確認偏誤"
               titleEn="Confirmation Bias"
               type="belief"
-              definition="傾向於尋找和注意確認已有信念的信息，而忽視和低估與已有信念相矛盾的信息。忽略與當前觀點相反的證據，接受類似觀點而不考慮當前觀點可能是錯誤的。"
+              definition="傾向於尋找和注意確認已有信念的資訊，而忽視和低估與已有信念相矛盾的資訊。忽略與當前觀點相反的證據，接受類似觀點而不考慮當前觀點可能是錯誤的。"
               marketExample="你買入電動車股票後，只關注看好電動車產業的新聞和報導，對於產能過剩、競爭加劇的負面消息視而不見。社群媒體上有人分享看好電動車的文章你會轉發，但批評的聲音你直接略過。結果錯過了產業反轉的早期警訊。"
               impact={{
                 volume: "導致交易量減少",
@@ -430,7 +435,7 @@ export default function BehavioralFinancePage() {
               title="代表性偏誤"
               titleEn="Representativeness Bias"
               type="belief"
-              definition="傾向於根據過去的經驗和分類對新信息進行分類。還有傾向於過度依賴小樣本信息，這些樣本並不代表整體。根據以前的預測做出預測，而不對當前情況進行詳細分析，因為當前情況與以前的情況相似。這是季節性預測錯誤或小樣本經驗的典型表現。"
+              definition="傾向於根據過去的經驗和分類對新資訊進行分類。還有傾向於過度依賴小樣本資訊，這些樣本並不代表整體。根據以前的預測做出預測，而不對當前情況進行詳細分析，因為當前情況與以前的情況相似。這是季節性預測錯誤或小樣本經驗的典型表現。"
               marketExample="你注意到過去三年每到農曆新年前，生技股都會上漲。今年新年前你大舉買入生技股，期待重現往年行情。但你忽略了今年整體環境已經改變：Fed 持續升息、資金緊縮、產業面臨監管壓力。結果不僅沒漲反而大跌，你過度依賴小樣本的歷史經驗，沒考慮當前的宏觀環境。"
               impact={{
                 volume: "導致交易量減少",
@@ -472,7 +477,7 @@ export default function BehavioralFinancePage() {
               title="認知失調"
               titleEn="Cognitive Dissonance"
               type="belief"
-              definition="傾向於竭盡全力抑制和消除認知失調，即當新信息與預先存在的信息和理解衝突時感受到的心理不適。"
+              definition="傾向於竭盡全力抑制和消除認知失調，即當新資訊與預先存在的資訊和理解衝突時感受到的心理不適。"
               marketExample="你花了大量時間研究一檔 AI 概念股，認為它是未來十年的明星。但公司連續兩季虧損擴大，競爭對手推出更好的產品，你的股票持續下跌。你內心很掙扎：承認自己看錯很痛苦，但繼續持有又不斷虧錢。你開始找各種理由說服自己「長期一定會漲回來」，拒絕面對投資失敗的事實，最終越陷越深。"
               impact={{
                 volume: "導致交易量減少",
@@ -481,12 +486,12 @@ export default function BehavioralFinancePage() {
               }}
             />
 
-            {/* ==================== 信息處理偏誤 ==================== */}
+            {/* ==================== 資訊處理偏誤 ==================== */}
             <SectionHeader
               id="information-processing"
-              title="信息處理偏誤"
+              title="資訊處理偏誤"
               titleEn="Information Processing Biases"
-              description="傾向於以不合邏輯或非理性的方式處理新信息，這往往是信念保持偏誤的前兆。這些偏誤幫助解釋技術分析師觀察到的許多圖表形態，如支撐與阻力區域的形成。"
+              description="傾向於以不合邏輯或非理性的方式處理新資訊，這往往是信念保持偏誤的前兆。這些偏誤幫助解釋技術分析師觀察到的許多圖表形態，如支撐與阻力區域的形成。"
               icon={Zap}
               gradient="from-purple-500 to-pink-400"
             />
@@ -511,10 +516,10 @@ export default function BehavioralFinancePage() {
               titleEn="Availability Bias"
               type="information"
               definition="傾向於根據事件的易於回憶或理解程度來決定其機率。容易回憶和理解的結果被認為比那些更難回憶或理解的結果更有可能發生。"
-              marketExample="朋友最近在半導體股賺了大錢，你每天都聽他分享戰績。媒體也不斷報導晶片產業的榮景。於是你認為「現在投資半導體一定賺」，把大部分資金投入。但你忽略了其他產業的機會，也沒評估半導體是否已經過熱。只因為這些信息「容易取得」和「印象深刻」，就過度高估了獲利機率。"
+              marketExample="朋友最近在半導體股賺了大錢，你每天都聽他分享戰績。媒體也不斷報導晶片產業的榮景。於是你認為「現在投資半導體一定賺」，把大部分資金投入。但你忽略了其他產業的機會，也沒評估半導體是否已經過熱。只因為這些資訊「容易取得」和「印象深刻」，就過度高估了獲利機率。"
               impact={{
                 volume: "略微傾向於更活躍，但不顯著",
-                price: "往往導致糟糕的進出場決策，因為沒有考慮更徹底的分析。投資者往往在全球範圍內分散程度較低，因為他們傾向於投資在本地或容易獲得更多信息的資產",
+                price: "往往導致糟糕的進出場決策，因為沒有考慮更徹底的分析。投資者往往在全球範圍內分散程度較低，因為他們傾向於投資在本地或容易獲得更多資訊的資產",
                 sentiment: "情緒可能波動，因為意見可能因他人的影響而更快地改變。更多的羊群行為"
               }}
             />
@@ -538,8 +543,8 @@ export default function BehavioralFinancePage() {
               title="框架效應"
               titleEn="Framing Bias"
               type="information"
-              definition="傾向於根據問題的提問或框架方式來回答問題。受到與手頭決策無關的信息的影響。以負面方式呈現的無關信息會負面影響你的觀點，反之亦然。"
-              marketExample="你持有一檔股票，早上起床心情很好，看到公司公告「營收略低於預期但仍年增 5%」，你想「還不錯啊，繼續持有」。但如果早上剛跟家人吵架，心情煩躁，看到同樣的公告，你可能想「才成長 5%？太爛了，不如預期就是利空」而急著賣出。同樣的信息，因為你的情緒框架不同，做出完全相反的決策。"
+              definition="傾向於根據問題的提問或框架方式來回答問題。受到與手頭決策無關的資訊的影響。以負面方式呈現的無關資訊會負面影響你的觀點，反之亦然。"
+              marketExample="你持有一檔股票，早上起床心情很好，看到公司公告「營收略低於預期但仍年增 5%」，你想「還不錯啊，繼續持有」。但如果早上剛跟家人吵架，心情煩躁，看到同樣的公告，你可能想「才成長 5%？太爛了，不如預期就是利空」而急著賣出。同樣的資訊，因為你的情緒框架不同，做出完全相反的決策。"
               impact={{
                 volume: "對交易量沒有顯著影響",
                 price: "可能導致強烈的表現不佳期（因為風險承受能力往往判斷不佳）和可能次優的投資組合配置",

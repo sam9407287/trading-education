@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 interface Section {
   id: string;
   label: string;
-  children?: { id: string; label: string }[];
+  labelEn?: string;
+  children?: { id: string; label: string; labelEn?: string }[];
 }
 
 interface AnchorNavProps {
@@ -70,7 +71,12 @@ export default function AnchorNav({ sections }: AnchorNavProps) {
                   : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                 }`}
             >
-              {section.label}
+              <div className="flex flex-col">
+                <span>{section.label}</span>
+                {section.labelEn && (
+                  <span className="text-xs opacity-70 mt-0.5">{section.labelEn}</span>
+                )}
+              </div>
             </button>
             
             {/* 子項目 */}
@@ -86,7 +92,12 @@ export default function AnchorNav({ sections }: AnchorNavProps) {
                           : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
                         }`}
                     >
-                      {child.label}
+                      <div className="flex flex-col">
+                        <span>{child.label}</span>
+                        {child.labelEn && (
+                          <span className="text-[10px] opacity-70 mt-0.5">{child.labelEn}</span>
+                        )}
+                      </div>
                     </button>
                   </li>
                 ))}
