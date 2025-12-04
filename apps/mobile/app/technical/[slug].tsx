@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { useLocalSearchParams, Stack } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BehavioralFinancePage from '@/components/pages/BehavioralFinancePage';
@@ -37,7 +37,7 @@ export default function TechnicalDetailScreen() {
   return (
     <>
       <Stack.Screen options={{ headerTitle: title }} />
-      <SafeAreaView className="flex-1 bg-bg-primary" edges={['bottom']}>
+      <SafeAreaView style={styles.container} edges={['bottom']}>
         {renderContent()}
       </SafeAreaView>
     </>
@@ -47,12 +47,32 @@ export default function TechnicalDetailScreen() {
 // 佔位頁面組件
 function PlaceholderPage({ title }: { title: string }) {
   return (
-    <View className="flex-1 items-center justify-center px-4">
-      <Text className="text-text-primary text-xl font-bold mb-2">{title}</Text>
-      <Text className="text-text-secondary text-center">
-        此頁面正在開發中...
-      </Text>
+    <View style={styles.placeholderContainer}>
+      <Text style={styles.placeholderTitle}>{title}</Text>
+      <Text style={styles.placeholderText}>此頁面正在開發中...</Text>
     </View>
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#0a0e17',
+  },
+  placeholderContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+  },
+  placeholderTitle: {
+    color: '#f1f5f9',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  placeholderText: {
+    color: '#94a3b8',
+    textAlign: 'center',
+  },
+});

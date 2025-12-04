@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { TrendingUp, TrendingDown, Activity, ChevronDown, ChevronUp } from 'lucide-react-native';
 
@@ -138,25 +138,22 @@ function StrategyCard({ strategy }: { strategy: typeof strategies.basic.items[0]
   const outlook = outlookConfig[strategy.outlook as keyof typeof outlookConfig];
 
   return (
-    <View className="bg-bg-card border border-border-color rounded-xl mb-3 overflow-hidden">
+    <View style={styles.card}>
       <Pressable 
         onPress={() => setExpanded(!expanded)}
-        className="p-4 flex-row items-center justify-between"
+        style={styles.cardHeader}
       >
-        <View className="flex-1 mr-3">
-          <View className="flex-row items-center mb-1">
-            <Text className="text-text-primary font-semibold">{strategy.name}</Text>
-            <View 
-              className="ml-2 px-2 py-0.5 rounded flex-row items-center"
-              style={{ backgroundColor: `${outlook.color}20` }}
-            >
+        <View style={styles.cardHeaderContent}>
+          <View style={styles.cardTitleRow}>
+            <Text style={styles.cardTitle}>{strategy.name}</Text>
+            <View style={[styles.outlookBadge, { backgroundColor: `${outlook.color}20` }]}>
               <outlook.Icon size={12} color={outlook.color} />
-              <Text className="text-xs ml-1" style={{ color: outlook.color }}>
+              <Text style={[styles.outlookText, { color: outlook.color }]}>
                 {outlook.label}
               </Text>
             </View>
           </View>
-          <Text className="text-text-muted text-xs">{strategy.nameCn}</Text>
+          <Text style={styles.cardSubtitle}>{strategy.nameCn}</Text>
         </View>
         {expanded ? (
           <ChevronUp size={20} color="#64748b" />
@@ -166,23 +163,21 @@ function StrategyCard({ strategy }: { strategy: typeof strategies.basic.items[0]
       </Pressable>
 
       {expanded && (
-        <View className="px-4 pb-4 border-t border-border-color pt-3">
-          <Text className="text-text-secondary text-sm leading-5 mb-4">
-            {strategy.description}
-          </Text>
+        <View style={styles.cardBody}>
+          <Text style={styles.description}>{strategy.description}</Text>
           
-          <View className="bg-bg-secondary rounded-lg p-3">
-            <View className="flex-row justify-between mb-2">
-              <Text className="text-text-muted text-xs">最大獲利</Text>
-              <Text className="text-accent-green text-xs font-medium">{strategy.maxProfit}</Text>
+          <View style={styles.statsContainer}>
+            <View style={styles.statRow}>
+              <Text style={styles.statLabel}>最大獲利</Text>
+              <Text style={[styles.statValue, { color: '#10b981' }]}>{strategy.maxProfit}</Text>
             </View>
-            <View className="flex-row justify-between mb-2">
-              <Text className="text-text-muted text-xs">最大虧損</Text>
-              <Text className="text-accent-red text-xs font-medium">{strategy.maxLoss}</Text>
+            <View style={styles.statRow}>
+              <Text style={styles.statLabel}>最大虧損</Text>
+              <Text style={[styles.statValue, { color: '#ef4444' }]}>{strategy.maxLoss}</Text>
             </View>
-            <View className="flex-row justify-between">
-              <Text className="text-text-muted text-xs">損益平衡</Text>
-              <Text className="text-accent-gold text-xs font-medium">{strategy.breakeven}</Text>
+            <View style={[styles.statRow, { marginBottom: 0 }]}>
+              <Text style={styles.statLabel}>損益平衡</Text>
+              <Text style={[styles.statValue, { color: '#f59e0b' }]}>{strategy.breakeven}</Text>
             </View>
           </View>
         </View>
@@ -194,8 +189,8 @@ function StrategyCard({ strategy }: { strategy: typeof strategies.basic.items[0]
 // 策略分類組件
 function StrategySection({ title, items }: { title: string; items: typeof strategies.basic.items }) {
   return (
-    <View className="mb-6">
-      <Text className="text-text-primary font-bold text-lg mb-3">{title}</Text>
+    <View style={styles.section}>
+      <Text style={styles.sectionTitle}>{title}</Text>
       {items.map((strategy) => (
         <StrategyCard key={strategy.name} strategy={strategy} />
       ))}
@@ -205,23 +200,23 @@ function StrategySection({ title, items }: { title: string; items: typeof strate
 
 export default function StrategiesPage() {
   return (
-    <ScrollView className="flex-1 px-4" showsVerticalScrollIndicator={false}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* 頁面標題 */}
-      <View className="py-6">
-        <Text className="text-text-primary text-2xl font-bold mb-2">期權策略</Text>
-        <Text className="text-text-secondary text-sm leading-5">
+      <View style={styles.header}>
+        <Text style={styles.pageTitle}>期權策略</Text>
+        <Text style={styles.pageDescription}>
           從基礎到進階的完整期權策略庫，點擊展開查看詳情。
         </Text>
       </View>
 
       {/* 策略快速指南 */}
-      <View className="bg-accent-gold/10 border border-accent-gold/20 rounded-xl p-4 mb-6">
-        <Text className="text-text-primary font-semibold mb-2">📊 策略選擇指南</Text>
-        <Text className="text-text-secondary text-xs leading-5">
-          • <Text className="text-accent-green">看漲</Text>：預期股價上漲{'\n'}
-          • <Text className="text-accent-red">看跌</Text>：預期股價下跌{'\n'}
-          • <Text className="text-accent-gold">中性</Text>：預期股價橫盤或小幅波動{'\n'}
-          • <Text className="text-accent-purple">波動</Text>：預期大幅波動，方向不確定
+      <View style={styles.guideBox}>
+        <Text style={styles.guideTitle}>📊 策略選擇指南</Text>
+        <Text style={styles.guideText}>
+          • <Text style={{ color: '#10b981' }}>看漲</Text>：預期股價上漲{'\n'}
+          • <Text style={{ color: '#ef4444' }}>看跌</Text>：預期股價下跌{'\n'}
+          • <Text style={{ color: '#f59e0b' }}>中性</Text>：預期股價橫盤或小幅波動{'\n'}
+          • <Text style={{ color: '#8b5cf6' }}>波動</Text>：預期大幅波動，方向不確定
         </Text>
       </View>
 
@@ -232,8 +227,132 @@ export default function StrategiesPage() {
       <StrategySection title={strategies.synthetic.title} items={strategies.synthetic.items} />
 
       {/* 底部間距 */}
-      <View className="h-10" />
+      <View style={{ height: 40 }} />
     </ScrollView>
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#0a0e17',
+    paddingHorizontal: 16,
+  },
+  header: {
+    paddingVertical: 24,
+  },
+  pageTitle: {
+    color: '#f1f5f9',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  pageDescription: {
+    color: '#94a3b8',
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  guideBox: {
+    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+    borderWidth: 1,
+    borderColor: 'rgba(245, 158, 11, 0.2)',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 24,
+  },
+  guideTitle: {
+    color: '#f1f5f9',
+    fontWeight: '600',
+    marginBottom: 8,
+  },
+  guideText: {
+    color: '#94a3b8',
+    fontSize: 12,
+    lineHeight: 20,
+  },
+  section: {
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    color: '#f1f5f9',
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 12,
+  },
+  card: {
+    backgroundColor: '#1a1f2e',
+    borderWidth: 1,
+    borderColor: '#1e293b',
+    borderRadius: 12,
+    marginBottom: 12,
+    overflow: 'hidden',
+  },
+  cardHeader: {
+    padding: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  cardHeaderContent: {
+    flex: 1,
+    marginRight: 12,
+  },
+  cardTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  cardTitle: {
+    color: '#f1f5f9',
+    fontWeight: '600',
+    fontSize: 15,
+  },
+  outlookBadge: {
+    marginLeft: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  outlookText: {
+    fontSize: 11,
+    marginLeft: 4,
+    fontWeight: '500',
+  },
+  cardSubtitle: {
+    color: '#64748b',
+    fontSize: 12,
+  },
+  cardBody: {
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#1e293b',
+    paddingTop: 12,
+  },
+  description: {
+    color: '#94a3b8',
+    fontSize: 14,
+    lineHeight: 20,
+    marginBottom: 16,
+  },
+  statsContainer: {
+    backgroundColor: '#111827',
+    borderRadius: 8,
+    padding: 12,
+  },
+  statRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  statLabel: {
+    color: '#64748b',
+    fontSize: 12,
+  },
+  statValue: {
+    fontSize: 12,
+    fontWeight: '500',
+  },
+});

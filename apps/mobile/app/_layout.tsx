@@ -1,11 +1,10 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View } from 'react-native';
-import '../global.css';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function RootLayout() {
   return (
-    <View className="flex-1 bg-bg-primary">
+    <SafeAreaProvider>
       <StatusBar style="light" />
       <Stack
         screenOptions={{
@@ -40,7 +39,6 @@ export default function RootLayout() {
           }} 
         />
       </Stack>
-    </View>
+    </SafeAreaProvider>
   );
 }
-

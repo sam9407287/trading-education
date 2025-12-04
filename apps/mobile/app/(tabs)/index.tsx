@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Sparkles, TrendingUp } from 'lucide-react-native';
@@ -8,41 +8,37 @@ import SectionHeader from '@/components/ui/SectionHeader';
 
 export default function HomeScreen() {
   return (
-    <SafeAreaView className="flex-1 bg-bg-primary">
-      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Hero Section */}
         <LinearGradient
-          colors={['rgba(245, 158, 11, 0.1)', 'transparent']}
-          className="px-4 pt-8 pb-10"
+          colors={['rgba(245, 158, 11, 0.15)', 'transparent']}
+          style={styles.heroSection}
         >
           {/* Logo */}
-          <View className="flex-row items-center mb-6">
-            <View className="w-10 h-10 rounded-lg bg-accent-gold items-center justify-center mr-3">
+          <View style={styles.logoContainer}>
+            <View style={styles.logoIcon}>
               <TrendingUp size={24} color="#0a0e17" />
             </View>
             <View>
-              <Text className="text-accent-gold font-bold text-lg">交易教育平台</Text>
-              <Text className="text-text-muted text-xs">Trading Education</Text>
+              <Text style={styles.logoTitle}>交易教育平台</Text>
+              <Text style={styles.logoSubtitle}>Trading Education</Text>
             </View>
           </View>
 
           {/* Badge */}
-          <View className="flex-row items-center bg-accent-gold/10 border border-accent-gold/20 rounded-full px-3 py-1.5 self-start mb-4">
+          <View style={styles.badge}>
             <Sparkles size={14} color="#f59e0b" />
-            <Text className="text-accent-gold text-xs ml-1.5 font-medium">專業交易知識平台</Text>
+            <Text style={styles.badgeText}>專業交易知識平台</Text>
           </View>
 
           {/* Title */}
-          <Text className="text-text-primary text-3xl font-bold mb-1">
-            建立你的
-          </Text>
-          <Text className="text-accent-gold text-3xl font-bold">
-            交易知識體系
-          </Text>
+          <Text style={styles.heroTitle}>建立你的</Text>
+          <Text style={styles.heroTitleAccent}>交易知識體系</Text>
         </LinearGradient>
 
         {/* Technical Analysis Section */}
-        <View className="px-4 py-6">
+        <View style={styles.section}>
           <SectionHeader 
             title="技術分析課程" 
             titleEn="Technical Analysis Courses" 
@@ -54,7 +50,7 @@ export default function HomeScreen() {
         </View>
 
         {/* Options Section */}
-        <View className="px-4 py-6 pb-10">
+        <View style={[styles.section, styles.sectionLast]}>
           <SectionHeader 
             title="期權教學課程" 
             titleEn="Options Trading Courses" 
@@ -69,3 +65,76 @@ export default function HomeScreen() {
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#0a0e17',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  heroSection: {
+    paddingHorizontal: 16,
+    paddingTop: 32,
+    paddingBottom: 40,
+  },
+  logoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  logoIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+    backgroundColor: '#f59e0b',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  logoTitle: {
+    color: '#f59e0b',
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  logoSubtitle: {
+    color: '#64748b',
+    fontSize: 12,
+  },
+  badge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+    borderWidth: 1,
+    borderColor: 'rgba(245, 158, 11, 0.2)',
+    borderRadius: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    alignSelf: 'flex-start',
+    marginBottom: 16,
+  },
+  badgeText: {
+    color: '#f59e0b',
+    fontSize: 12,
+    marginLeft: 6,
+    fontWeight: '500',
+  },
+  heroTitle: {
+    color: '#f1f5f9',
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  heroTitleAccent: {
+    color: '#f59e0b',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  section: {
+    paddingHorizontal: 16,
+    paddingVertical: 24,
+  },
+  sectionLast: {
+    paddingBottom: 40,
+  },
+});

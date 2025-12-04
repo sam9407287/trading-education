@@ -1,36 +1,58 @@
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ChevronRight } from 'lucide-react-native';
 
 interface SectionHeaderProps {
   title: string;
   titleEn: string;
-  href?: string;
+  href: string;
 }
 
 export default function SectionHeader({ title, titleEn, href }: SectionHeaderProps) {
   const router = useRouter();
 
+  const handlePress = () => {
+    router.push(href as any);
+  };
+
   return (
-    <View className="flex-row items-center justify-between mb-4">
+    <View style={styles.container}>
       <View>
-        <Text className="text-text-primary font-bold text-xl">
-          {title}
-        </Text>
-        <Text className="text-text-muted text-xs mt-0.5">
-          {titleEn}
-        </Text>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.titleEn}>{titleEn}</Text>
       </View>
-      {href && (
-        <Pressable 
-          onPress={() => router.push(href as any)}
-          className="flex-row items-center"
-        >
-          <Text className="text-accent-gold text-sm mr-1">全部</Text>
-          <ChevronRight size={16} color="#f59e0b" />
-        </Pressable>
-      )}
+      <Pressable onPress={handlePress} style={styles.button}>
+        <Text style={styles.buttonText}>全部</Text>
+        <ChevronRight size={16} color="#f59e0b" />
+      </Pressable>
     </View>
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  title: {
+    color: '#f1f5f9',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 2,
+  },
+  titleEn: {
+    color: '#64748b',
+    fontSize: 12,
+  },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#f59e0b',
+    fontSize: 14,
+    marginRight: 4,
+  },
+});
