@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { ChevronRight, Send, Trash2, Bot, User, Loader2, Plus, MessageSquare, Pencil, Check } from 'lucide-react';
-import { useChat } from './ChatContext';
+import { ChevronRight, Send, Trash2, Bot, User, Loader2, Plus, MessageSquare, Pencil, ChevronDown, AlertCircle } from 'lucide-react';
+import { useChat, AI_MODE_CONFIG, AIMode } from './ChatContext';
 import TypingEffect from './TypingEffect';
 
 export default function ChatSidebar() {
@@ -21,6 +21,10 @@ export default function ChatSidebar() {
     switchConversation,
     deleteConversation,
     renameConversation,
+    aiMode,
+    setAIMode,
+    isStableLimitReached,
+    incrementStableUsage,
   } = useChat();
   
   const [input, setInput] = useState('');
@@ -29,8 +33,22 @@ export default function ChatSidebar() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState('');
   const [lastMessageId, setLastMessageId] = useState<string | null>(null);
+  const [showModeDropdown, setShowModeDropdown] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // 點擊外部關閉下拉選單
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowModeDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // 自動滾動到底部
   const scrollToBottom = () => {
@@ -71,15 +89,30 @@ export default function ChatSidebar() {
     }
   }, [messages, lastMessageId, typingMessageId]);
 
+  // 清除錯誤訊息
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => setErrorMessage(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmedInput = input.trim();
     if (!trimmedInput || isLoading) return;
 
+    // 檢查 Cloudflare 限制
+    if (aiMode === 'stable' && isStableLimitReached) {
+      setErrorMessage('因為此服務是免費提供，已達今日總使用上限。請切換其他模式或明天再來！');
+      return;
+    }
+
     const messageToSend = trimmedInput;
     
     setInput('');
     setInputKey(prev => prev + 1);
+    setErrorMessage(null);
     
     setTimeout(() => {
       setInput('');
@@ -88,7 +121,6 @@ export default function ChatSidebar() {
       }
     }, 50);
     
-    // 保存對話 ID，確保 AI 回覆加到同一個對話
     const convId = addMessage('user', messageToSend);
     setIsLoading(true);
 
@@ -102,25 +134,35 @@ export default function ChatSidebar() {
           message: messageToSend,
           history: messages,
           currentPage: typeof window !== 'undefined' ? window.location.pathname : '/',
+          mode: aiMode,
         }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || '發生錯誤');
+        if (data.rateLimited) {
+          setErrorMessage(data.error);
+          addMessageToConversation(convId, 'assistant', '⚠️ ' + data.error);
+        } else {
+          throw new Error(data.error || '發生錯誤');
+        }
+        return;
       }
 
-      // 設置打字效果
+      // 如果是 stable 模式，增加用量計數
+      if (aiMode === 'stable') {
+        incrementStableUsage();
+      }
+
       const newMessageId = Date.now().toString();
       setTypingMessageId(newMessageId);
       setLastMessageId(newMessageId);
-      // 使用保存的對話 ID，確保 AI 回覆加到正確的對話
       addMessageToConversation(convId, 'assistant', data.reply);
     } catch (error) {
       console.error('Chat error:', error);
-      // 使用保存的對話 ID
-      addMessageToConversation(convId, 'assistant', '抱歉，發生錯誤。請稍後再試。');
+      const errorMsg = error instanceof Error ? error.message : '發生錯誤，請稍後再試。';
+      addMessageToConversation(convId, 'assistant', '⚠️ ' + errorMsg);
     } finally {
       setIsLoading(false);
     }
@@ -146,9 +188,13 @@ export default function ChatSidebar() {
     setEditTitle('');
   };
 
-  // 判斷是否應該顯示打字效果
   const shouldShowTypingEffect = (messageId: string) => {
     return typingMessageId === lastMessageId && messageId === lastMessageId;
+  };
+
+  const handleModeChange = (mode: AIMode) => {
+    setAIMode(mode);
+    setShowModeDropdown(false);
   };
 
   if (!isOpen) return null;
@@ -161,7 +207,7 @@ export default function ChatSidebar() {
         onClick={() => setIsOpen(false)}
       />
       
-      {/* 側邊欄 - 左右兩欄佈局 */}
+      {/* 側邊欄 */}
       <aside className="fixed lg:relative right-2 sm:right-4 lg:right-0 bottom-0 lg:bottom-auto lg:top-0 h-[70vh] sm:h-[80vh] lg:h-full w-[calc(100%-16px)] sm:w-[520px] lg:w-full bg-[var(--bg-primary)] border-2 border-[var(--accent-gold)]/30 z-50 lg:z-auto flex shadow-2xl shadow-black/20 rounded-2xl lg:rounded-xl overflow-hidden">
         
         {/* 左側：對話列表 */}
@@ -221,11 +267,9 @@ export default function ChatSidebar() {
                     </div>
                   ) : (
                     <>
-                      {/* 標題 */}
                       <p className="text-sm text-[var(--text-primary)] truncate leading-relaxed mb-2">
                         {conv.title}
                       </p>
-                      {/* 訊息數 + 操作按鈕 */}
                       <div className="flex items-center justify-between">
                         <p className="text-xs text-[var(--text-muted)]">
                           {conv.messages.length}則
@@ -271,7 +315,45 @@ export default function ChatSidebar() {
               </div>
               <div>
                 <h3 className="font-semibold text-[var(--text-primary)] text-sm">AI 助教</h3>
-                <p className="text-xs text-[var(--text-muted)]">技術分析專家</p>
+                {/* 模式選擇器 */}
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={() => setShowModeDropdown(!showModeDropdown)}
+                    className="flex items-center gap-1 text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+                  >
+                    <span className={AI_MODE_CONFIG[aiMode].color}>
+                      {AI_MODE_CONFIG[aiMode].label}
+                    </span>
+                    <ChevronDown className={`w-3 h-3 transition-transform ${showModeDropdown ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  {/* 下拉選單 */}
+                  {showModeDropdown && (
+                    <div className="absolute top-full left-0 mt-1 w-40 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-lg shadow-xl z-50 overflow-hidden">
+                      {(Object.keys(AI_MODE_CONFIG) as AIMode[]).map((mode) => (
+                        <button
+                          key={mode}
+                          onClick={() => handleModeChange(mode)}
+                          className={`w-full px-3 py-2.5 text-left text-sm hover:bg-[var(--bg-secondary)] transition-colors flex items-center justify-between ${
+                            aiMode === mode ? 'bg-[var(--bg-secondary)]' : ''
+                          }`}
+                        >
+                          <div>
+                            <span className={AI_MODE_CONFIG[mode].color}>
+                              {AI_MODE_CONFIG[mode].label}
+                            </span>
+                            <p className="text-[10px] text-[var(--text-muted)]">
+                              {AI_MODE_CONFIG[mode].description}
+                            </p>
+                          </div>
+                          {aiMode === mode && (
+                            <div className="w-2 h-2 rounded-full bg-[var(--accent-gold)]" />
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             <div className="flex items-center gap-1">
@@ -291,6 +373,14 @@ export default function ChatSidebar() {
               </button>
             </div>
           </div>
+
+          {/* 錯誤訊息 */}
+          {errorMessage && (
+            <div className="mx-3 mt-3 p-3 bg-red-500/10 border border-red-500/30 rounded-lg flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-red-400">{errorMessage}</p>
+            </div>
+          )}
 
           {/* 對話區域 */}
           <div 
@@ -377,7 +467,6 @@ export default function ChatSidebar() {
                     </div>
                   </div>
                 )}
-                {/* 底部空白間距 */}
                 <div className="h-4" />
               </>
             )}

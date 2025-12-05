@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Groq from 'groq-sdk';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { searchRelevantContent, formatContextForAI, shouldUseRAG } from '@/lib/rag/search';
+
+// AI 模式類型
+type AIMode = 'smart' | 'fast' | 'stable';
 
 // System Prompt - 定義 AI 助教的專業身份
 const SYSTEM_PROMPT = `你是一位專業的技術分析與期權交易教育導師，擁有豐富的金融市場實戰經驗。
@@ -44,9 +48,90 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
+// 初始化 Google AI 客戶端
+const googleAI = process.env.GOOGLE_AI_API_KEY 
+  ? new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY)
+  : null;
+
+// Cloudflare Workers AI 配置
+const CF_ACCOUNT_ID = process.env.CF_ACCOUNT_ID;
+const CF_API_TOKEN = process.env.CF_API_TOKEN;
+
+// 使用 Google Gemini (聰明模式)
+async function callGoogleAI(prompt: string, history: { role: string; content: string }[]): Promise<string> {
+  if (!googleAI) {
+    throw new Error('Google AI not configured');
+  }
+
+  const model = googleAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+  
+  // 構建對話歷史
+  const chatHistory = history.map(msg => ({
+    role: msg.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: msg.content }],
+  }));
+
+  const chat = model.startChat({
+    history: chatHistory,
+    generationConfig: {
+      maxOutputTokens: 2048,
+      temperature: 0.7,
+    },
+  });
+
+  const result = await chat.sendMessage(prompt);
+  return result.response.text();
+}
+
+// 使用 Groq (快速模式)
+async function callGroqAI(messages: { role: 'system' | 'user' | 'assistant'; content: string }[]): Promise<string> {
+  const completion = await groq.chat.completions.create({
+    model: 'llama-3.3-70b-versatile',
+    messages,
+    temperature: 0.7,
+    max_tokens: 2048,
+    top_p: 0.9,
+  });
+
+  return completion.choices[0]?.message?.content || '抱歉，我無法生成回應。';
+}
+
+// 使用 Cloudflare Workers AI (穩定模式)
+async function callCloudflareAI(messages: { role: string; content: string }[]): Promise<string> {
+  if (!CF_ACCOUNT_ID || !CF_API_TOKEN) {
+    throw new Error('Cloudflare AI not configured');
+  }
+
+  const response = await fetch(
+    `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-70b-instruct`,
+    {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${CF_API_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        messages,
+        max_tokens: 2048,
+        temperature: 0.7,
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    const error = await response.text();
+    console.error('Cloudflare AI error:', error);
+    throw new Error(`Cloudflare AI error: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.result?.response || '抱歉，我無法生成回應。';
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const { message, history, currentPage } = await request.json();
+    const { message, history, currentPage, mode = 'fast' } = await request.json();
+    const aiMode = mode as AIMode;
 
     if (!message || typeof message !== 'string') {
       return NextResponse.json(
@@ -55,11 +140,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 檢查 API Key
-    if (!process.env.GROQ_API_KEY) {
-      console.error('GROQ_API_KEY is not set');
+    // 檢查對應的 API Key
+    const apiKeyCheck = {
+      smart: !!process.env.GOOGLE_AI_API_KEY,
+      fast: !!process.env.GROQ_API_KEY,
+      stable: !!(CF_ACCOUNT_ID && CF_API_TOKEN),
+    };
+
+    if (!apiKeyCheck[aiMode]) {
+      console.error(`API key not configured for mode: ${aiMode}`);
       return NextResponse.json(
-        { error: 'AI 服務暫時不可用' },
+        { error: 'AI 服務暫時不可用，請切換其他模式' },
         { status: 500 }
       );
     }
@@ -84,7 +175,6 @@ export async function POST(request: NextRequest) {
           console.log(`[RAG] 找到 ${relevantContent.length} 個相關內容`);
         }
       } catch (error) {
-        // RAG 失敗不影響主流程，只記錄日誌
         console.warn('[RAG] 搜索失敗，使用純 LLM 回答:', error);
       }
     }
@@ -121,32 +211,55 @@ export async function POST(request: NextRequest) {
     // 添加當前訊息
     messages.push({ role: 'user', content: message });
 
-    // 調用 Groq API
-    const completion = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
-      messages,
-      temperature: 0.7,
-      max_tokens: 2048,
-      top_p: 0.9,
-    });
+    let reply: string;
 
-    const reply = completion.choices[0]?.message?.content || '抱歉，我無法生成回應。';
+    // 根據模式調用不同的 AI
+    console.log(`[AI] 使用模式: ${aiMode}`);
+    
+    switch (aiMode) {
+      case 'smart':
+        // Google Gemini - 構建 prompt
+        const fullPrompt = messages.map(m => {
+          if (m.role === 'system') return `[系統指令] ${m.content}`;
+          if (m.role === 'user') return `用戶: ${m.content}`;
+          return `助手: ${m.content}`;
+        }).join('\n\n');
+        
+        const historyForGoogle = history?.slice(-10).map((msg: { role: string; content: string }) => ({
+          role: msg.role,
+          content: msg.content,
+        })) || [];
+        
+        reply = await callGoogleAI(fullPrompt, historyForGoogle);
+        break;
 
-    return NextResponse.json({ reply });
+      case 'fast':
+        reply = await callGroqAI(messages);
+        break;
+
+      case 'stable':
+        reply = await callCloudflareAI(messages);
+        break;
+
+      default:
+        reply = await callGroqAI(messages);
+    }
+
+    return NextResponse.json({ reply, mode: aiMode });
   } catch (error) {
     console.error('Chat API Error:', error);
     
     // 更詳細的錯誤處理
     if (error instanceof Error) {
-      if (error.message.includes('rate limit')) {
+      if (error.message.includes('rate limit') || error.message.includes('429')) {
         return NextResponse.json(
-          { error: '請求太頻繁，請稍後再試' },
+          { error: '因為此服務是免費提供，已達今日總使用上限。請切換其他模式或明天再來！', rateLimited: true },
           { status: 429 }
         );
       }
-      if (error.message.includes('invalid_api_key')) {
+      if (error.message.includes('invalid_api_key') || error.message.includes('not configured')) {
         return NextResponse.json(
-          { error: 'AI 服務配置錯誤' },
+          { error: 'AI 服務配置錯誤，請切換其他模式' },
           { status: 500 }
         );
       }
