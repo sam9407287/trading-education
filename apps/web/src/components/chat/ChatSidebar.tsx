@@ -7,7 +7,6 @@ import { useChat } from './ChatContext';
 export default function ChatSidebar() {
   const { isOpen, setIsOpen, messages, addMessage, clearMessages, isLoading, setIsLoading } = useChat();
   const [input, setInput] = useState('');
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -33,8 +32,9 @@ export default function ChatSidebar() {
     // 立即清空輸入框
     setInput('');
     
-    // 重置 textarea 高度
+    // 強制清空 textarea 並重置高度
     if (inputRef.current) {
+      inputRef.current.value = '';
       inputRef.current.style.height = '40px';
     }
     
