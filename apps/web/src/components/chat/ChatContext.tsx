@@ -107,13 +107,11 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     };
     setConversations(prev => [newConv, ...prev]);
     setActiveConversationId(newConv.id);
-    setShowConversationList(false);
   };
 
   // 切換對話
   const switchConversation = (id: string) => {
     setActiveConversationId(id);
-    setShowConversationList(false);
   };
 
   // 刪除對話
