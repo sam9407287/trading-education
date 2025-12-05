@@ -47,9 +47,17 @@ export default function ChatSidebar() {
     // 保存訊息後立即清空
     const messageToSend = trimmedInput;
     
-    // 強制重新渲染輸入框
+    // 多重保險清空輸入框
     setInput('');
     setInputKey(prev => prev + 1);
+    
+    // 延遲再次確認清空（解決某些瀏覽器問題）
+    setTimeout(() => {
+      setInput('');
+      if (inputRef.current) {
+        inputRef.current.value = '';
+      }
+    }, 50);
     
     addMessage('user', messageToSend);
     setIsLoading(true);
@@ -240,9 +248,10 @@ export default function ChatSidebar() {
             <button
               type="submit"
               disabled={!input.trim() || isLoading}
-              className="px-4 rounded-lg bg-[var(--accent-gold)] text-[var(--bg-primary)] font-medium hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+              className="px-8 sm:px-10 rounded-lg bg-[var(--accent-gold)] text-[var(--bg-primary)] font-medium hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity flex items-center justify-center gap-2"
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-5 h-5" />
+              <span className="hidden sm:inline text-sm font-semibold">發送</span>
             </button>
           </form>
           <p className="text-xs text-[var(--text-muted)] mt-2 text-center">
