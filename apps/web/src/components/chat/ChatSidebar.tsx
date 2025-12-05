@@ -34,7 +34,10 @@ export default function ChatSidebar() {
   // 自動滾動到底部
   const scrollToBottom = () => {
     if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -288,7 +291,7 @@ export default function ChatSidebar() {
           {/* 對話區域 */}
           <div 
             ref={messagesContainerRef}
-            className="flex-1 overflow-y-auto p-4 pr-2 space-y-4 scrollbar-thin"
+            className="flex-1 overflow-y-auto p-4 pr-2 pb-8 space-y-4 scrollbar-thin"
           >
             {messages.length === 0 ? (
               <div className="flex flex-col h-full">
@@ -370,6 +373,8 @@ export default function ChatSidebar() {
                     </div>
                   </div>
                 )}
+                {/* 底部空白間距 */}
+                <div className="h-4" />
               </>
             )}
           </div>
