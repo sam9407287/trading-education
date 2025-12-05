@@ -31,16 +31,21 @@ export default function ChatSidebar() {
     const trimmedInput = input.trim();
     if (!trimmedInput || isLoading) return;
 
-    // 立即清空輸入框
+    // 保存訊息後立即清空
+    const messageToSend = trimmedInput;
+    
+    // 使用 requestAnimationFrame 確保 DOM 更新
     setInput('');
+    requestAnimationFrame(() => {
+      if (inputRef.current) {
+        inputRef.current.value = '';
+        inputRef.current.style.height = '40px';
+        inputRef.current.blur();
+        inputRef.current.focus();
+      }
+    });
     
-    // 強制清空 textarea 並重置高度
-    if (inputRef.current) {
-      inputRef.current.value = '';
-      inputRef.current.style.height = '40px';
-    }
-    
-    addMessage('user', trimmedInput);
+    addMessage('user', messageToSend);
     setIsLoading(true);
 
     try {
@@ -50,7 +55,7 @@ export default function ChatSidebar() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: trimmedInput,
+          message: messageToSend,
           history: messages,
           currentPage: typeof window !== 'undefined' ? window.location.pathname : '/',
         }),
