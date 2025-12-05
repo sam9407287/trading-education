@@ -38,9 +38,6 @@ interface ChatContextType {
   setIsLoading: (loading: boolean) => void;
   currentPage: string;
   setCurrentPage: (page: string) => void;
-  // 側邊欄顯示
-  showConversationList: boolean;
-  setShowConversationList: (show: boolean) => void;
 }
 
 const STORAGE_KEY = 'trading-edu-chats';
@@ -53,7 +50,6 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState('/');
-  const [showConversationList, setShowConversationList] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
   // 從 localStorage 載入對話
@@ -205,8 +201,6 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         setIsLoading,
         currentPage,
         setCurrentPage,
-        showConversationList,
-        setShowConversationList,
       }}
     >
       {children}
