@@ -16,10 +16,10 @@ function LayoutContent({ children }: { children: ReactNode }) {
         {children}
       </div>
       
-      {/* AI 對話側邊欄 */}
+      {/* AI 對話側邊欄 - 桌面版 */}
       {isOpen && (
-        <div className="hidden lg:block w-[380px] flex-shrink-0">
-          <div className="sticky top-0 h-screen">
+        <div className="hidden lg:block w-[540px] flex-shrink-0 pr-4">
+          <div className="sticky top-0 h-screen py-2">
             <ChatSidebar />
           </div>
         </div>

@@ -155,7 +155,7 @@ export default function ChatSidebar() {
       />
       
       {/* 側邊欄 - 左右兩欄佈局 */}
-      <aside className="fixed lg:relative right-2 sm:right-4 lg:right-0 bottom-0 lg:bottom-auto lg:top-0 h-[70vh] sm:h-[80vh] lg:h-screen w-[calc(100%-16px)] sm:w-[520px] lg:w-[520px] bg-[var(--bg-primary)] border-2 lg:border-l-2 lg:border-y-0 lg:border-r-0 border-[var(--accent-gold)]/30 z-50 lg:z-auto flex shadow-2xl shadow-black/20 rounded-2xl lg:rounded-none">
+      <aside className="fixed lg:relative right-2 sm:right-4 lg:right-0 bottom-0 lg:bottom-auto lg:top-0 h-[70vh] sm:h-[80vh] lg:h-full w-[calc(100%-16px)] sm:w-[520px] lg:w-full bg-[var(--bg-primary)] border-2 border-[var(--accent-gold)]/30 z-50 lg:z-auto flex shadow-2xl shadow-black/20 rounded-2xl lg:rounded-xl overflow-hidden">
         
         {/* 左側：對話列表 */}
         <div className="w-[140px] sm:w-[160px] border-r border-[var(--border-color)] flex flex-col bg-[var(--bg-secondary)]">
