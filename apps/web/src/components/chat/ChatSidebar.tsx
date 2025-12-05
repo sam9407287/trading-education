@@ -309,51 +309,49 @@ export default function ChatSidebar() {
         <div className="flex-1 flex flex-col">
           {/* 標題欄 */}
           <div className="flex items-center justify-between px-3 py-3 border-b border-[var(--border-color)] bg-[var(--bg-secondary)]">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-[var(--accent-gold)]/20 flex items-center justify-center">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-[var(--accent-gold)]/20 flex items-center justify-center">
                 <Bot className="w-5 h-5 text-[var(--accent-gold)]" />
               </div>
-              <div>
-                <h3 className="font-semibold text-[var(--text-primary)] text-sm">AI 助教</h3>
-                {/* 模式選擇器 */}
-                <div className="relative" ref={dropdownRef}>
-                  <button
-                    onClick={() => setShowModeDropdown(!showModeDropdown)}
-                    className="flex items-center gap-1 text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
-                  >
-                    <span className={AI_MODE_CONFIG[aiMode].color}>
-                      {AI_MODE_CONFIG[aiMode].label}
-                    </span>
-                    <ChevronDown className={`w-3 h-3 transition-transform ${showModeDropdown ? 'rotate-180' : ''}`} />
-                  </button>
-                  
-                  {/* 下拉選單 */}
-                  {showModeDropdown && (
-                    <div className="absolute top-full left-0 mt-1 w-40 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-lg shadow-xl z-50 overflow-hidden">
-                      {(Object.keys(AI_MODE_CONFIG) as AIMode[]).map((mode) => (
-                        <button
-                          key={mode}
-                          onClick={() => handleModeChange(mode)}
-                          className={`w-full px-3 py-2.5 text-left text-sm hover:bg-[var(--bg-secondary)] transition-colors flex items-center justify-between ${
-                            aiMode === mode ? 'bg-[var(--bg-secondary)]' : ''
-                          }`}
-                        >
-                          <div>
-                            <span className={AI_MODE_CONFIG[mode].color}>
-                              {AI_MODE_CONFIG[mode].label}
-                            </span>
-                            <p className="text-[10px] text-[var(--text-muted)]">
-                              {AI_MODE_CONFIG[mode].description}
-                            </p>
-                          </div>
-                          {aiMode === mode && (
-                            <div className="w-2 h-2 rounded-full bg-[var(--accent-gold)]" />
-                          )}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+              <h3 className="font-semibold text-[var(--text-primary)] text-base">AI 助教</h3>
+              {/* 模式選擇器 - 放在標題旁邊 */}
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setShowModeDropdown(!showModeDropdown)}
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[var(--bg-card)] border border-[var(--border-color)] hover:border-[var(--accent-gold)]/50 transition-colors"
+                >
+                  <span className={`text-sm font-medium ${AI_MODE_CONFIG[aiMode].color}`}>
+                    {AI_MODE_CONFIG[aiMode].label}
+                  </span>
+                  <ChevronDown className={`w-3.5 h-3.5 text-[var(--text-muted)] transition-transform ${showModeDropdown ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {/* 下拉選單 */}
+                {showModeDropdown && (
+                  <div className="absolute top-full left-0 mt-1 w-44 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-lg shadow-xl z-50 overflow-hidden">
+                    {(Object.keys(AI_MODE_CONFIG) as AIMode[]).map((mode) => (
+                      <button
+                        key={mode}
+                        onClick={() => handleModeChange(mode)}
+                        className={`w-full px-3 py-2.5 text-left hover:bg-[var(--bg-secondary)] transition-colors flex items-center justify-between ${
+                          aiMode === mode ? 'bg-[var(--bg-secondary)]' : ''
+                        }`}
+                      >
+                        <div>
+                          <span className={`text-sm font-medium ${AI_MODE_CONFIG[mode].color}`}>
+                            {AI_MODE_CONFIG[mode].label}
+                          </span>
+                          <p className="text-[10px] text-[var(--text-muted)]">
+                            {AI_MODE_CONFIG[mode].description}
+                          </p>
+                        </div>
+                        {aiMode === mode && (
+                          <div className="w-2 h-2 rounded-full bg-[var(--accent-gold)]" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
             <div className="flex items-center gap-1">
