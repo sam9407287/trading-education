@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Groq from 'groq-sdk';
+import { searchRelevantContent, formatContextForAI, shouldUseRAG } from '@/lib/rag/search';
 
 // System Prompt - 定義 AI 助教的專業身份
 const SYSTEM_PROMPT = `你是一位專業的技術分析與期權交易教育導師，擁有豐富的金融市場實戰經驗。
@@ -27,6 +28,7 @@ const SYSTEM_PROMPT = `你是一位專業的技術分析與期權交易教育導
 4. **風險提醒**：適時提醒交易風險
 5. **循序漸進**：從基礎概念開始，逐步深入
 6. **保持專業但親和**：像一位耐心的導師
+7. **優先參考教學內容**：如果有提供參考資料，優先基於這些資料回答
 
 ## 回答限制
 
@@ -67,8 +69,36 @@ export async function POST(request: NextRequest) {
       { role: 'system', content: SYSTEM_PROMPT },
     ];
 
-    // 添加當前頁面上下文（如果有）
-    if (currentPage && currentPage !== '/') {
+    // RAG：搜索相關內容
+    let ragContext = '';
+    if (shouldUseRAG(message)) {
+      try {
+        const relevantContent = await searchRelevantContent(message, {
+          limit: 5,
+          similarityThreshold: 0.3,
+          currentPage: currentPage,
+        });
+
+        if (relevantContent.length > 0) {
+          ragContext = formatContextForAI(relevantContent);
+          console.log(`[RAG] 找到 ${relevantContent.length} 個相關內容`);
+        }
+      } catch (error) {
+        // RAG 失敗不影響主流程，只記錄日誌
+        console.warn('[RAG] 搜索失敗，使用純 LLM 回答:', error);
+      }
+    }
+
+    // 添加 RAG 上下文（如果有）
+    if (ragContext) {
+      messages.push({
+        role: 'system',
+        content: ragContext,
+      });
+    }
+
+    // 添加當前頁面上下文（如果有且沒有 RAG 結果）
+    if (!ragContext && currentPage && currentPage !== '/') {
       messages.push({
         role: 'system',
         content: `用戶目前正在閱讀的頁面：${currentPage}。如果問題與該頁面主題相關，請優先針對該主題回答。`,
@@ -128,4 +158,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
