@@ -8,12 +8,15 @@ export default function ChatSidebar() {
   const { isOpen, setIsOpen, messages, addMessage, clearMessages, isLoading, setIsLoading } = useChat();
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   // 自動滾動到底部
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  }, [messages, isLoading]);
 
   // 開啟時聚焦輸入框
   useEffect(() => {
@@ -24,11 +27,18 @@ export default function ChatSidebar() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
+    const trimmedInput = input.trim();
+    if (!trimmedInput || isLoading) return;
 
-    const userMessage = input.trim();
+    // 立即清空輸入框
     setInput('');
-    addMessage('user', userMessage);
+    
+    // 重置 textarea 高度
+    if (inputRef.current) {
+      inputRef.current.style.height = '40px';
+    }
+    
+    addMessage('user', trimmedInput);
     setIsLoading(true);
 
     try {
@@ -38,7 +48,7 @@ export default function ChatSidebar() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: userMessage,
+          message: trimmedInput,
           history: messages,
           currentPage: typeof window !== 'undefined' ? window.location.pathname : '/',
         }),
@@ -77,7 +87,7 @@ export default function ChatSidebar() {
       />
       
       {/* 側邊欄 */}
-      <aside className="fixed lg:relative right-0 top-0 lg:top-auto h-full lg:h-auto w-full sm:w-[380px] lg:w-[380px] bg-[var(--bg-primary)] border-l border-[var(--border-color)] z-50 lg:z-auto flex flex-col">
+      <aside className="fixed lg:relative right-0 top-0 lg:top-auto h-full lg:h-auto w-full sm:w-[380px] lg:w-[380px] bg-[var(--bg-primary)] border-l-2 border-[var(--accent-gold)]/30 z-50 lg:z-auto flex flex-col shadow-2xl shadow-black/20">
         {/* 標題欄 */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-color)] bg-[var(--bg-secondary)]">
           <div className="flex items-center gap-2">
@@ -106,8 +116,12 @@ export default function ChatSidebar() {
           </div>
         </div>
 
-        {/* 對話區域 */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {/* 對話區域 - 可滾動 */}
+        <div 
+          ref={messagesContainerRef}
+          className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-[var(--border-color)] scrollbar-track-transparent"
+          style={{ maxHeight: 'calc(100vh - 140px)' }}
+        >
           {messages.length === 0 ? (
             <div className="text-center py-12">
               <div className="w-16 h-16 rounded-full bg-[var(--accent-gold)]/10 flex items-center justify-center mx-auto mb-4">
@@ -178,7 +192,6 @@ export default function ChatSidebar() {
                   </div>
                 </div>
               )}
-              <div ref={messagesEndRef} />
             </>
           )}
         </div>
