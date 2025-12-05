@@ -288,20 +288,20 @@ export default function ChatSidebar() {
             className="flex-1 overflow-y-auto p-4 pr-2 space-y-4 scrollbar-thin"
           >
             {messages.length === 0 ? (
-              <div className="text-center py-8">
-                <div className="w-14 h-14 rounded-full bg-[var(--accent-gold)]/10 flex items-center justify-center mx-auto mb-3">
-                  <Bot className="w-7 h-7 text-[var(--accent-gold)]" />
+              <div className="flex flex-col h-full">
+                <div className="flex-1 flex flex-col items-center justify-center">
+                  <div className="w-14 h-14 rounded-full bg-[var(--accent-gold)]/10 flex items-center justify-center mb-3">
+                    <Bot className="w-7 h-7 text-[var(--accent-gold)]" />
+                  </div>
+                  <h4 className="font-medium text-[var(--text-primary)] text-sm">歡迎使用 AI 助教</h4>
                 </div>
-                <h4 className="font-medium text-[var(--text-primary)] mb-2 text-sm">歡迎使用 AI 助教</h4>
-                <p className="text-xs text-[var(--text-muted)] max-w-[200px] mx-auto">
-                  我是你的技術分析學習助手！
-                </p>
-                <div className="mt-4 space-y-1.5">
-                  <p className="text-[10px] text-[var(--text-muted)]">試試這些問題：</p>
+                <div className="pb-2 space-y-1.5">
+                  <p className="text-[10px] text-[var(--text-muted)] text-center">試試這些問題：</p>
                   {[
                     'KDJ 指標怎麼用？',
                     '什麼是道氏理論？',
                     '如何判斷超買超賣？',
+                    '什麼是備兌看漲期權（Covered Call）？',
                   ].map((q) => (
                     <button
                       key={q}
