@@ -18,9 +18,9 @@ export const AI_MODE_CONFIG = {
     color: 'text-blue-400',
   },
   stable: {
-    label: '🔒 穩定',
-    description: '服務最可靠',
-    color: 'text-green-400',
+    label: '📦 舊版',
+    description: '限額較大',
+    color: 'text-gray-400',
   },
 };
 
