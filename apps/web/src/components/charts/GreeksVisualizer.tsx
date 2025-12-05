@@ -230,10 +230,10 @@ export default function GreeksVisualizer({
           <button
             key={greek}
             onClick={() => setSelectedGreek(greek)}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+            className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all border-2 ${
               selectedGreek === greek
-                ? 'bg-[var(--accent-gold)] text-[var(--bg-primary)]'
-                : 'bg-[var(--bg-secondary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                ? 'bg-[var(--accent-gold)] text-[var(--bg-primary)] border-[var(--accent-gold)] shadow-lg shadow-[var(--accent-gold)]/20'
+                : 'bg-[var(--bg-card)] text-[var(--text-secondary)] border-[var(--border-color)] hover:border-[var(--accent-gold)]/50 hover:text-[var(--text-primary)]'
             }`}
           >
             {greekInfo[greek].name}
@@ -255,20 +255,20 @@ export default function GreeksVisualizer({
       <div className="flex gap-2 mb-4">
         <button
           onClick={() => setViewMode('price')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all border-2 ${
             viewMode === 'price'
-              ? 'bg-[var(--accent-blue)] text-white'
-              : 'bg-[var(--bg-secondary)] text-[var(--text-muted)]'
+              ? 'bg-blue-500 text-white border-blue-500 shadow-lg shadow-blue-500/20'
+              : 'bg-[var(--bg-card)] text-[var(--text-muted)] border-[var(--border-color)] hover:border-blue-500/50 hover:text-[var(--text-primary)]'
           }`}
         >
           vs 股價
         </button>
         <button
           onClick={() => setViewMode('time')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all border-2 ${
             viewMode === 'time'
-              ? 'bg-[var(--accent-blue)] text-white'
-              : 'bg-[var(--bg-secondary)] text-[var(--text-muted)]'
+              ? 'bg-blue-500 text-white border-blue-500 shadow-lg shadow-blue-500/20'
+              : 'bg-[var(--bg-card)] text-[var(--text-muted)] border-[var(--border-color)] hover:border-blue-500/50 hover:text-[var(--text-primary)]'
           }`}
         >
           vs 時間
