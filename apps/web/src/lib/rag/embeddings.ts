@@ -2,88 +2,70 @@
  * 使用 HuggingFace Inference API 生成文本向量
  * 模型：sentence-transformers/all-MiniLM-L6-v2
  * 維度：384
- * 免費額度：每月 1000 請求
  */
 
-const HF_API_URL = 'https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2';
+import { HfInference } from '@huggingface/inference';
+
+const EMBEDDING_MODEL = 'sentence-transformers/all-MiniLM-L6-v2';
+
+// 單例 HuggingFace 客戶端
+let hfClient: HfInference | null = null;
+
+function getHfClient(): HfInference {
+  if (!hfClient) {
+    const apiKey = process.env.HUGGINGFACE_API_KEY;
+    if (!apiKey) {
+      throw new Error('HUGGINGFACE_API_KEY is not set');
+    }
+    hfClient = new HfInference(apiKey);
+  }
+  return hfClient;
+}
 
 /**
  * 生成單個文本的向量
  */
 export async function generateEmbedding(text: string): Promise<number[]> {
-  const apiKey = process.env.HUGGINGFACE_API_KEY;
-  
-  if (!apiKey) {
-    throw new Error('HUGGINGFACE_API_KEY is not set');
-  }
+  const client = getHfClient();
 
-  const response = await fetch(HF_API_URL, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      inputs: text,
-      options: {
-        wait_for_model: true,
-      },
-    }),
+  const result = await client.featureExtraction({
+    model: EMBEDDING_MODEL,
+    inputs: text,
   });
 
-  if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`HuggingFace API error: ${error}`);
-  }
-
-  const embedding = await response.json();
-  
-  // API 返回的是嵌套數組，需要展平
-  if (Array.isArray(embedding) && Array.isArray(embedding[0])) {
-    return embedding[0];
+  // 結果可能是嵌套數組
+  if (Array.isArray(result) && Array.isArray(result[0])) {
+    return result[0] as number[];
   }
   
-  return embedding;
+  return result as number[];
 }
 
 /**
- * 批量生成向量（HuggingFace 支持批量請求）
+ * 批量生成向量
  */
 export async function generateEmbeddings(texts: string[]): Promise<number[][]> {
-  const apiKey = process.env.HUGGINGFACE_API_KEY;
-  
-  if (!apiKey) {
-    throw new Error('HUGGINGFACE_API_KEY is not set');
-  }
+  const client = getHfClient();
+  const results: number[][] = [];
 
   // HuggingFace 免費層有請求限制，分批處理
-  const batchSize = 10;
-  const results: number[][] = [];
+  const batchSize = 5;
 
   for (let i = 0; i < texts.length; i += batchSize) {
     const batch = texts.slice(i, i + batchSize);
     
-    const response = await fetch(HF_API_URL, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        inputs: batch,
-        options: {
-          wait_for_model: true,
-        },
-      }),
-    });
+    for (const text of batch) {
+      const result = await client.featureExtraction({
+        model: EMBEDDING_MODEL,
+        inputs: text,
+      });
 
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`HuggingFace API error: ${error}`);
+      if (Array.isArray(result) && Array.isArray(result[0])) {
+        results.push(result[0] as number[]);
+      } else {
+        results.push(result as number[]);
+      }
     }
-
-    const embeddings = await response.json();
-    results.push(...embeddings);
 
     // 避免超過速率限制
     if (i + batchSize < texts.length) {
@@ -113,4 +95,3 @@ export function preprocessText(text: string, maxLength: number = 500): string {
   
   return processed || text.slice(0, maxLength);
 }
-

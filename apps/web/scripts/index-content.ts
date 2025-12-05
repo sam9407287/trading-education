@@ -11,9 +11,10 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
+import { HfInference } from '@huggingface/inference';
 
-// 直接導入而不是從 src/lib/rag，因為路徑問題
-const HF_API_URL = 'https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2';
+// 使用官方 HuggingFace Inference SDK
+const EMBEDDING_MODEL = 'sentence-transformers/all-MiniLM-L6-v2';
 
 // 頁面內容定義
 interface PageContent {
@@ -299,34 +300,26 @@ const PAGE_CONTENTS: PageContent[] = [
   },
 ];
 
+// HuggingFace 客戶端實例
+let hfClient: HfInference | null = null;
+
 // 生成 embedding 的函數
 async function generateEmbedding(text: string, apiKey: string): Promise<number[]> {
-  const response = await fetch(HF_API_URL, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      inputs: text,
-      options: {
-        wait_for_model: true,
-      },
-    }),
+  if (!hfClient) {
+    hfClient = new HfInference(apiKey);
+  }
+
+  const result = await hfClient.featureExtraction({
+    model: EMBEDDING_MODEL,
+    inputs: text,
   });
 
-  if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`HuggingFace API error: ${error}`);
-  }
-
-  const embedding = await response.json();
-  
-  if (Array.isArray(embedding) && Array.isArray(embedding[0])) {
-    return embedding[0];
+  // 結果可能是嵌套數組
+  if (Array.isArray(result) && Array.isArray(result[0])) {
+    return result[0] as number[];
   }
   
-  return embedding;
+  return result as number[];
 }
 
 // 主函數
