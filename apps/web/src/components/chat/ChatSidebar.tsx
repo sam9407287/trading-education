@@ -1,15 +1,34 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { X, Send, Trash2, Bot, User, Loader2 } from 'lucide-react';
+import { X, Send, Trash2, Bot, User, Loader2, Plus, MessageSquare, ChevronLeft, Pencil, Check } from 'lucide-react';
 import { useChat } from './ChatContext';
 import TypingEffect from './TypingEffect';
 
 export default function ChatSidebar() {
-  const { isOpen, setIsOpen, messages, addMessage, clearMessages, isLoading, setIsLoading } = useChat();
+  const { 
+    isOpen, 
+    setIsOpen, 
+    messages, 
+    addMessage, 
+    clearMessages, 
+    isLoading, 
+    setIsLoading,
+    conversations,
+    activeConversationId,
+    createConversation,
+    switchConversation,
+    deleteConversation,
+    renameConversation,
+    showConversationList,
+    setShowConversationList,
+  } = useChat();
+  
   const [input, setInput] = useState('');
   const [inputKey, setInputKey] = useState(0);
   const [typingMessageId, setTypingMessageId] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editTitle, setEditTitle] = useState('');
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -34,24 +53,21 @@ export default function ChatSidebar() {
 
   // 開啟時聚焦輸入框
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && !showConversationList) {
       setTimeout(() => inputRef.current?.focus(), 100);
     }
-  }, [isOpen]);
+  }, [isOpen, showConversationList]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmedInput = input.trim();
     if (!trimmedInput || isLoading) return;
 
-    // 保存訊息後立即清空
     const messageToSend = trimmedInput;
     
-    // 多重保險清空輸入框
     setInput('');
     setInputKey(prev => prev + 1);
     
-    // 延遲再次確認清空（解決某些瀏覽器問題）
     setTimeout(() => {
       setInput('');
       if (inputRef.current) {
@@ -99,6 +115,19 @@ export default function ChatSidebar() {
     }
   };
 
+  const startEditing = (id: string, title: string) => {
+    setEditingId(id);
+    setEditTitle(title);
+  };
+
+  const saveTitle = () => {
+    if (editingId && editTitle.trim()) {
+      renameConversation(editingId, editTitle.trim());
+    }
+    setEditingId(null);
+    setEditTitle('');
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -109,157 +138,281 @@ export default function ChatSidebar() {
         onClick={() => setIsOpen(false)}
       />
       
-      {/* 側邊欄 - 手機版從底部彈出，桌面版固定高度 */}
-      <aside className="fixed lg:relative right-0 bottom-0 lg:bottom-auto lg:top-0 h-[70vh] sm:h-[80vh] lg:h-screen w-full sm:w-[380px] lg:w-[380px] bg-[var(--bg-primary)] border-t-2 lg:border-t-0 lg:border-l-2 border-[var(--accent-gold)]/30 z-50 lg:z-auto flex flex-col shadow-2xl shadow-black/20 rounded-t-2xl lg:rounded-none">
-        {/* 標題欄 */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-color)] bg-[var(--bg-secondary)]">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[var(--accent-gold)]/20 flex items-center justify-center">
-              <Bot className="w-5 h-5 text-[var(--accent-gold)]" />
+      {/* 側邊欄 */}
+      <aside className="fixed lg:relative right-0 bottom-0 lg:bottom-auto lg:top-0 h-[70vh] sm:h-[80vh] lg:h-screen w-full sm:w-[420px] lg:w-[420px] bg-[var(--bg-primary)] border-t-2 lg:border-t-0 lg:border-l-2 border-[var(--accent-gold)]/30 z-50 lg:z-auto flex flex-col shadow-2xl shadow-black/20 rounded-t-2xl lg:rounded-none">
+        
+        {/* 對話列表面板 */}
+        {showConversationList ? (
+          <>
+            {/* 標題欄 */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-color)] bg-[var(--bg-secondary)]">
+              <div className="flex items-center gap-2">
+                <MessageSquare className="w-5 h-5 text-[var(--accent-gold)]" />
+                <h3 className="font-semibold text-[var(--text-primary)] text-sm">對話歷史</h3>
+              </div>
+              <button
+                onClick={() => setShowConversationList(false)}
+                className="p-2 rounded-lg hover:bg-[var(--bg-card)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </div>
-            <div>
-              <h3 className="font-semibold text-[var(--text-primary)] text-sm">AI 助教</h3>
-              <p className="text-xs text-[var(--text-muted)]">技術分析專家</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-1">
-            <button
-              onClick={clearMessages}
-              className="p-2 rounded-lg hover:bg-[var(--bg-card)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
-              title="清除對話"
-            >
-              <Trash2 className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="p-2 rounded-lg hover:bg-[var(--bg-card)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
 
-        {/* 對話區域 - 可滾動 */}
-        <div 
-          ref={messagesContainerRef}
-          className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-[var(--border-color)] scrollbar-track-transparent"
-        >
-          {messages.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="w-16 h-16 rounded-full bg-[var(--accent-gold)]/10 flex items-center justify-center mx-auto mb-4">
-                <Bot className="w-8 h-8 text-[var(--accent-gold)]" />
-              </div>
-              <h4 className="font-medium text-[var(--text-primary)] mb-2">歡迎使用 AI 助教</h4>
-              <p className="text-sm text-[var(--text-muted)] max-w-[250px] mx-auto">
-                我是你的技術分析學習助手，有任何問題都可以問我！
-              </p>
-              <div className="mt-6 space-y-2">
-                <p className="text-xs text-[var(--text-muted)]">試試這些問題：</p>
-                {[
-                  'KDJ 指標怎麼用？',
-                  '什麼是道氏理論？',
-                  '如何判斷超買超賣？',
-                ].map((q) => (
-                  <button
-                    key={q}
-                    onClick={() => {
-                      setInput(q);
-                      inputRef.current?.focus();
-                    }}
-                    className="block w-full text-left text-sm px-3 py-2 rounded-lg bg-[var(--bg-secondary)] hover:bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--accent-gold)] transition-colors"
-                  >
-                    {q}
-                  </button>
-                ))}
-              </div>
+            {/* 新對話按鈕 */}
+            <div className="p-3 border-b border-[var(--border-color)]">
+              <button
+                onClick={createConversation}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-[var(--accent-gold)] text-[var(--bg-primary)] font-medium hover:opacity-90 transition-opacity"
+              >
+                <Plus className="w-5 h-5" />
+                新對話
+              </button>
             </div>
-          ) : (
-            <>
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex gap-3 ${message.role === 'user' ? 'flex-row-reverse' : ''}`}
-                >
+
+            {/* 對話列表 */}
+            <div className="flex-1 overflow-y-auto p-3 space-y-2">
+              {conversations.length === 0 ? (
+                <div className="text-center py-12">
+                  <MessageSquare className="w-12 h-12 text-[var(--text-muted)] mx-auto mb-3 opacity-50" />
+                  <p className="text-sm text-[var(--text-muted)]">還沒有對話</p>
+                  <p className="text-xs text-[var(--text-muted)] mt-1">點擊「新對話」開始</p>
+                </div>
+              ) : (
+                conversations.map((conv) => (
                   <div
-                    className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                      message.role === 'user'
-                        ? 'bg-blue-500/20'
-                        : 'bg-[var(--accent-gold)]/20'
+                    key={conv.id}
+                    className={`group relative rounded-lg p-3 cursor-pointer transition-colors ${
+                      conv.id === activeConversationId
+                        ? 'bg-[var(--accent-gold)]/20 border border-[var(--accent-gold)]/30'
+                        : 'bg-[var(--bg-secondary)] hover:bg-[var(--bg-card)] border border-transparent'
                     }`}
                   >
-                    {message.role === 'user' ? (
-                      <User className="w-4 h-4 text-blue-400" />
+                    {editingId === conv.id ? (
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          value={editTitle}
+                          onChange={(e) => setEditTitle(e.target.value)}
+                          onKeyDown={(e) => e.key === 'Enter' && saveTitle()}
+                          autoFocus
+                          className="flex-1 bg-[var(--bg-card)] border border-[var(--border-color)] rounded px-2 py-1 text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-gold)]"
+                        />
+                        <button
+                          onClick={saveTitle}
+                          className="p-1 rounded bg-[var(--accent-gold)] text-[var(--bg-primary)]"
+                        >
+                          <Check className="w-4 h-4" />
+                        </button>
+                      </div>
                     ) : (
-                      <Bot className="w-4 h-4 text-[var(--accent-gold)]" />
+                      <div onClick={() => switchConversation(conv.id)}>
+                        <p className="text-sm text-[var(--text-primary)] truncate pr-16">
+                          {conv.title}
+                        </p>
+                        <p className="text-xs text-[var(--text-muted)] mt-1">
+                          {conv.messages.length} 則訊息 · {new Date(conv.updatedAt).toLocaleDateString('zh-TW')}
+                        </p>
+                      </div>
+                    )}
+                    
+                    {/* 操作按鈕 */}
+                    {editingId !== conv.id && (
+                      <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            startEditing(conv.id, conv.title);
+                          }}
+                          className="p-1.5 rounded hover:bg-[var(--bg-card)] text-[var(--text-muted)] hover:text-[var(--accent-gold)]"
+                          title="編輯標題"
+                        >
+                          <Pencil className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (confirm('確定要刪除這個對話嗎？')) {
+                              deleteConversation(conv.id);
+                            }
+                          }}
+                          className="p-1.5 rounded hover:bg-[var(--bg-card)] text-[var(--text-muted)] hover:text-red-400"
+                          title="刪除對話"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     )}
                   </div>
-                  <div
-                    className={`max-w-[85%] rounded-lg px-3 py-2 ${
-                      message.role === 'user'
-                        ? 'bg-blue-500/20 text-[var(--text-primary)]'
-                        : 'bg-[var(--bg-secondary)] text-[var(--text-primary)]'
-                    }`}
-                  >
-                    <p className="text-sm whitespace-pre-wrap">
-                      {message.role === 'assistant' && 
-                       messages.indexOf(message) === messages.length - 1 && 
-                       typingMessageId ? (
-                        <TypingEffect 
-                          text={message.content} 
-                          speed={10}
-                          onComplete={() => setTypingMessageId(null)}
-                        />
-                      ) : (
-                        message.content
-                      )}
-                    </p>
-                  </div>
-                </div>
-              ))}
-              {isLoading && (
-                <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[var(--accent-gold)]/20 flex items-center justify-center flex-shrink-0">
-                    <Bot className="w-4 h-4 text-[var(--accent-gold)]" />
-                  </div>
-                  <div className="bg-[var(--bg-secondary)] rounded-lg px-3 py-2">
-                    <Loader2 className="w-4 h-4 text-[var(--text-muted)] animate-spin" />
-                  </div>
-                </div>
+                ))
               )}
-            </>
-          )}
-        </div>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* 標題欄 */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-color)] bg-[var(--bg-secondary)]">
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setShowConversationList(true)}
+                  className="p-1.5 rounded-lg hover:bg-[var(--bg-card)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+                  title="對話列表"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <div className="w-8 h-8 rounded-lg bg-[var(--accent-gold)]/20 flex items-center justify-center">
+                  <Bot className="w-5 h-5 text-[var(--accent-gold)]" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-[var(--text-primary)] text-sm">AI 助教</h3>
+                  <p className="text-xs text-[var(--text-muted)]">技術分析專家</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={createConversation}
+                  className="p-2 rounded-lg hover:bg-[var(--bg-card)] text-[var(--text-muted)] hover:text-[var(--accent-gold)] transition-colors"
+                  title="新對話"
+                >
+                  <Plus className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={clearMessages}
+                  className="p-2 rounded-lg hover:bg-[var(--bg-card)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+                  title="清除對話"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-2 rounded-lg hover:bg-[var(--bg-card)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
 
-        {/* 輸入區域 */}
-        <div className="p-4 border-t border-[var(--border-color)] bg-[var(--bg-secondary)]">
-          <form onSubmit={handleSubmit} className="flex gap-2">
-            <textarea
-              key={inputKey}
-              ref={inputRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="輸入你的問題..."
-              rows={1}
-              autoFocus
-              className="flex-1 resize-none rounded-lg bg-[var(--bg-card)] border border-[var(--border-color)] px-3 py-2 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-gold)] transition-colors"
-              style={{ minHeight: '40px', maxHeight: '120px' }}
-            />
-            <button
-              type="submit"
-              disabled={!input.trim() || isLoading}
-              className="px-8 sm:px-10 rounded-lg bg-[var(--accent-gold)] text-[var(--bg-primary)] font-medium hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity flex items-center justify-center gap-2"
+            {/* 對話區域 */}
+            <div 
+              ref={messagesContainerRef}
+              className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-[var(--border-color)] scrollbar-track-transparent"
             >
-              <Send className="w-5 h-5" />
-              <span className="hidden sm:inline text-sm font-semibold">發送</span>
-            </button>
-          </form>
-          <p className="text-xs text-[var(--text-muted)] mt-2 text-center">
-            按 Enter 發送，Shift + Enter 換行
-          </p>
-        </div>
+              {messages.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 rounded-full bg-[var(--accent-gold)]/10 flex items-center justify-center mx-auto mb-4">
+                    <Bot className="w-8 h-8 text-[var(--accent-gold)]" />
+                  </div>
+                  <h4 className="font-medium text-[var(--text-primary)] mb-2">歡迎使用 AI 助教</h4>
+                  <p className="text-sm text-[var(--text-muted)] max-w-[250px] mx-auto">
+                    我是你的技術分析學習助手，有任何問題都可以問我！
+                  </p>
+                  <div className="mt-6 space-y-2">
+                    <p className="text-xs text-[var(--text-muted)]">試試這些問題：</p>
+                    {[
+                      'KDJ 指標怎麼用？',
+                      '什麼是道氏理論？',
+                      '如何判斷超買超賣？',
+                    ].map((q) => (
+                      <button
+                        key={q}
+                        onClick={() => {
+                          setInput(q);
+                          inputRef.current?.focus();
+                        }}
+                        className="block w-full text-left text-sm px-3 py-2 rounded-lg bg-[var(--bg-secondary)] hover:bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--accent-gold)] transition-colors"
+                      >
+                        {q}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {messages.map((message) => (
+                    <div
+                      key={message.id}
+                      className={`flex gap-3 ${message.role === 'user' ? 'flex-row-reverse' : ''}`}
+                    >
+                      <div
+                        className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                          message.role === 'user'
+                            ? 'bg-blue-500/20'
+                            : 'bg-[var(--accent-gold)]/20'
+                        }`}
+                      >
+                        {message.role === 'user' ? (
+                          <User className="w-4 h-4 text-blue-400" />
+                        ) : (
+                          <Bot className="w-4 h-4 text-[var(--accent-gold)]" />
+                        )}
+                      </div>
+                      <div
+                        className={`max-w-[85%] rounded-lg px-3 py-2 ${
+                          message.role === 'user'
+                            ? 'bg-blue-500/20 text-[var(--text-primary)]'
+                            : 'bg-[var(--bg-secondary)] text-[var(--text-primary)]'
+                        }`}
+                      >
+                        <p className="text-sm whitespace-pre-wrap">
+                          {message.role === 'assistant' && 
+                           messages.indexOf(message) === messages.length - 1 && 
+                           typingMessageId ? (
+                            <TypingEffect 
+                              text={message.content} 
+                              speed={10}
+                              onComplete={() => setTypingMessageId(null)}
+                            />
+                          ) : (
+                            message.content
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                  {isLoading && (
+                    <div className="flex gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-[var(--accent-gold)]/20 flex items-center justify-center flex-shrink-0">
+                        <Bot className="w-4 h-4 text-[var(--accent-gold)]" />
+                      </div>
+                      <div className="bg-[var(--bg-secondary)] rounded-lg px-3 py-2">
+                        <Loader2 className="w-4 h-4 text-[var(--text-muted)] animate-spin" />
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+
+            {/* 輸入區域 */}
+            <div className="p-4 border-t border-[var(--border-color)] bg-[var(--bg-secondary)]">
+              <form onSubmit={handleSubmit} className="flex gap-2">
+                <textarea
+                  key={inputKey}
+                  ref={inputRef}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="輸入你的問題..."
+                  rows={1}
+                  autoFocus
+                  className="flex-1 resize-none rounded-lg bg-[var(--bg-card)] border border-[var(--border-color)] px-3 py-2 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-gold)] transition-colors"
+                  style={{ minHeight: '40px', maxHeight: '120px' }}
+                />
+                <button
+                  type="submit"
+                  disabled={!input.trim() || isLoading}
+                  className="px-8 sm:px-10 rounded-lg bg-[var(--accent-gold)] text-[var(--bg-primary)] font-medium hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity flex items-center justify-center gap-2"
+                >
+                  <Send className="w-5 h-5" />
+                  <span className="hidden sm:inline text-sm font-semibold">發送</span>
+                </button>
+              </form>
+              <p className="text-xs text-[var(--text-muted)] mt-2 text-center">
+                按 Enter 發送，Shift + Enter 換行
+              </p>
+            </div>
+          </>
+        )}
       </aside>
     </>
   );
 }
-
