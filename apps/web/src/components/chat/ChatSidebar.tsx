@@ -13,11 +13,23 @@ export default function ChatSidebar() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   // 自動滾動到底部
-  useEffect(() => {
+  const scrollToBottom = () => {
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
     }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
   }, [messages, isLoading]);
+
+  // 打字動畫時持續滾動
+  useEffect(() => {
+    if (typingMessageId) {
+      const interval = setInterval(scrollToBottom, 100);
+      return () => clearInterval(interval);
+    }
+  }, [typingMessageId]);
 
   // 開啟時聚焦輸入框
   useEffect(() => {
@@ -95,8 +107,8 @@ export default function ChatSidebar() {
         onClick={() => setIsOpen(false)}
       />
       
-      {/* 側邊欄 */}
-      <aside className="fixed lg:relative right-0 top-0 lg:top-auto h-full lg:h-auto w-full sm:w-[380px] lg:w-[380px] bg-[var(--bg-primary)] border-l-2 border-[var(--accent-gold)]/30 z-50 lg:z-auto flex flex-col shadow-2xl shadow-black/20">
+      {/* 側邊欄 - 手機版從底部彈出 */}
+      <aside className="fixed lg:relative right-0 bottom-0 lg:bottom-auto lg:top-auto h-[70vh] sm:h-[80vh] lg:h-auto w-full sm:w-[380px] lg:w-[380px] bg-[var(--bg-primary)] border-t-2 lg:border-t-0 lg:border-l-2 border-[var(--accent-gold)]/30 z-50 lg:z-auto flex flex-col shadow-2xl shadow-black/20 rounded-t-2xl lg:rounded-none">
         {/* 標題欄 */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-color)] bg-[var(--bg-secondary)]">
           <div className="flex items-center gap-2">
@@ -129,7 +141,6 @@ export default function ChatSidebar() {
         <div 
           ref={messagesContainerRef}
           className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-[var(--border-color)] scrollbar-track-transparent"
-          style={{ maxHeight: 'calc(100vh - 140px)' }}
         >
           {messages.length === 0 ? (
             <div className="text-center py-12">
