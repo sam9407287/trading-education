@@ -237,16 +237,15 @@ export default function HomePage() {
               <h3 className="font-bold text-2xl sm:text-3xl md:text-4xl text-[var(--accent-green)] mb-3">Android</h3>
               <p className="text-sm sm:text-base text-[var(--text-muted)] mb-5 sm:mb-6">APK 直接安裝，無需商店</p>
               <a 
-                href="https://expo.dev/artifacts/eas/icDr4GpfC29iVkysShYRFP.apk"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/downloads/trading-education.apk"
+                download="trading-education.apk"
                 className="inline-flex items-center gap-2 bg-[var(--accent-green)] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium hover:opacity-90 transition-opacity text-base sm:text-lg"
               >
                 <Download className="w-5 h-5 sm:w-6 sm:h-6" />
                 下載 APK
               </a>
               <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-4 sm:mt-5">
-                版本 1.0.0 · 約 50MB
+                版本 1.0.0 · 約 79MB
               </p>
             </div>
 

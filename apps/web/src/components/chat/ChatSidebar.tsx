@@ -3,10 +3,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { X, Send, Trash2, Bot, User, Loader2 } from 'lucide-react';
 import { useChat } from './ChatContext';
+import TypingEffect from './TypingEffect';
 
 export default function ChatSidebar() {
   const { isOpen, setIsOpen, messages, addMessage, clearMessages, isLoading, setIsLoading } = useChat();
   const [input, setInput] = useState('');
+  const [typingMessageId, setTypingMessageId] = useState<string | null>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -60,6 +62,8 @@ export default function ChatSidebar() {
         throw new Error(data.error || '發生錯誤');
       }
 
+      const newMessageId = Date.now().toString();
+      setTypingMessageId(newMessageId);
       addMessage('assistant', data.reply);
     } catch (error) {
       console.error('Chat error:', error);
@@ -178,7 +182,19 @@ export default function ChatSidebar() {
                         : 'bg-[var(--bg-secondary)] text-[var(--text-primary)]'
                     }`}
                   >
-                    <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                    <p className="text-sm whitespace-pre-wrap">
+                      {message.role === 'assistant' && 
+                       messages.indexOf(message) === messages.length - 1 && 
+                       typingMessageId ? (
+                        <TypingEffect 
+                          text={message.content} 
+                          speed={10}
+                          onComplete={() => setTypingMessageId(null)}
+                        />
+                      ) : (
+                        message.content
+                      )}
+                    </p>
                   </div>
                 </div>
               ))}
