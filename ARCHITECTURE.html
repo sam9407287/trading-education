@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trading Education - 系統架構圖</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #0f0f1a 100%);
+      color: #e0e0e0;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, #f0b90b, #fcd535);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    
+    .subtitle {
+      text-align: center;
+      color: #888;
+      margin-bottom: 40px;
+      font-size: 0.9rem;
+    }
+    
+    .section {
+      margin-bottom: 60px;
+    }
+    
+    .section-title {
+      font-size: 1.5rem;
+      color: #f0b90b;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #f0b90b33;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    /* 架構圖容器 */
+    .diagram {
+      background: #1a1a2e;
+      border-radius: 16px;
+      padding: 30px;
+      border: 1px solid #333;
+      overflow-x: auto;
+    }
+    
+    /* 流程圖 */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+    
+    .flow-row {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .box {
+      padding: 16px 24px;
+      border-radius: 12px;
+      text-align: center;
+      min-width: 140px;
+      position: relative;
+    }
+    
+    .box-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+    
+    .box-desc {
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+    
+    /* 顏色主題 */
+    .box-user {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border: 2px solid #60a5fa;
+    }
+    
+    .box-frontend {
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+      border: 2px solid #a78bfa;
+    }
+    
+    .box-api {
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: 2px solid #34d399;
+    }
+    
+    .box-ai {
+      background: linear-gradient(135deg, #f0b90b, #d4a00a);
+      border: 2px solid #fcd535;
+      color: #1a1a2e;
+    }
+    
+    .box-database {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      border: 2px solid #f87171;
+    }
+    
+    .box-external {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      border: 2px solid #818cf8;
+    }
+    
+    .box-storage {
+      background: linear-gradient(135deg, #ec4899, #db2777);
+      border: 2px solid #f472b6;
+    }
+    
+    /* 箭頭 */
+    .arrow {
+      color: #f0b90b;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .arrow-down {
+      font-size: 2rem;
+    }
+    
+    /* 分組框 */
+    .group {
+      border: 2px dashed #444;
+      border-radius: 16px;
+      padding: 20px;
+      position: relative;
+    }
+    
+    .group-label {
+      position: absolute;
+      top: -12px;
+      left: 20px;
+      background: #1a1a2e;
+      padding: 0 10px;
+      font-size: 0.8rem;
+      color: #888;
+    }
+    
+    /* 技術棧表格 */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    
+    .tech-card {
+      background: #252540;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #333;
+    }
+    
+    .tech-card-title {
+      font-size: 1.1rem;
+      color: #f0b90b;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .tech-list {
+      list-style: none;
+    }
+    
+    .tech-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .tech-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .tech-name {
+      font-weight: 500;
+    }
+    
+    .tech-desc {
+      font-size: 0.8rem;
+      color: #888;
+    }
+    
+    /* AI 模式表格 */
+    .mode-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .mode-table th,
+    .mode-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #333;
+    }
+    
+    .mode-table th {
+      background: #252540;
+      color: #f0b90b;
+    }
+    
+    .mode-table tr:hover {
+      background: #252540;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .badge-yellow { background: #f0b90b33; color: #f0b90b; }
+    .badge-blue { background: #3b82f633; color: #60a5fa; }
+    .badge-green { background: #10b98133; color: #34d399; }
+    
+    /* 目錄結構 */
+    .tree {
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 0.85rem;
+      line-height: 1.8;
+      background: #0f0f1a;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    
+    .tree-folder {
+      color: #f0b90b;
+    }
+    
+    .tree-file {
+      color: #888;
+    }
+    
+    .tree-comment {
+      color: #555;
+      margin-left: 20px;
+    }
+    
+    /* 更新日誌 */
+    .changelog {
+      background: #252540;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    
+    .changelog-item {
+      padding: 12px 0;
+      border-bottom: 1px solid #333;
+    }
+    
+    .changelog-item:last-child {
+      border-bottom: none;
+    }
+    
+    .changelog-date {
+      color: #f0b90b;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+    }
+    
+    .changelog-content {
+      color: #ccc;
+    }
+    
+    /* 響應式 */
+    @media (max-width: 768px) {
+      h1 { font-size: 1.8rem; }
+      .flow-row { flex-direction: column; }
+      .arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📊 Trading Education Platform</h1>
+    <p class="subtitle">交易教育平台 - 系統架構文檔 | 最後更新：2024-12-05</p>
+    
+    <!-- 整體架構 -->
+    <section class="section">
+      <h2 class="section-title">🏗️ 整體系統架構</h2>
+      <div class="diagram">
+        <div class="flow">
+          <!-- 用戶層 -->
+          <div class="flow-row">
+            <div class="box box-user">
+              <div class="box-title">👤 用戶</div>
+              <div class="box-desc">Web / Mobile</div>
+            </div>
+          </div>
+          
+          <div class="arrow arrow-down">↓</div>
+          
+          <!-- 前端層 -->
+          <div class="group" style="width: 100%; max-width: 800px;">
+            <span class="group-label">Frontend</span>
+            <div class="flow-row">
+              <div class="box box-frontend">
+                <div class="box-title">Next.js 15</div>
+                <div class="box-desc">React 19 + App Router</div>
+              </div>
+              <div class="box box-frontend">
+                <div class="box-title">AI Chat Sidebar</div>
+                <div class="box-desc">多模型切換</div>
+              </div>
+              <div class="box box-frontend">
+                <div class="box-title">Interactive Charts</div>
+                <div class="box-desc">Recharts 視覺化</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="arrow arrow-down">↓</div>
+          
+          <!-- API 層 -->
+          <div class="group" style="width: 100%; max-width: 800px;">
+            <span class="group-label">API Routes</span>
+            <div class="flow-row">
+              <div class="box box-api">
+                <div class="box-title">/api/chat</div>
+                <div class="box-desc">AI 對話 API</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="arrow arrow-down">↓</div>
+          
+          <!-- 服務層 -->
+          <div class="group" style="width: 100%; max-width: 1000px;">
+            <span class="group-label">External Services</span>
+            <div class="flow-row">
+              <div class="box box-ai">
+                <div class="box-title">💡 Google Gemini</div>
+                <div class="box-desc">聰明模式</div>
+              </div>
+              <div class="box box-ai">
+                <div class="box-title">⚡ Groq</div>
+                <div class="box-desc">快速模式</div>
+              </div>
+              <div class="box box-ai">
+                <div class="box-title">🔒 Cloudflare AI</div>
+                <div class="box-desc">穩定模式</div>
+              </div>
+              <div class="box box-database">
+                <div class="box-title">Supabase</div>
+                <div class="box-desc">Vector DB (RAG)</div>
+              </div>
+              <div class="box box-external">
+                <div class="box-title">HuggingFace</div>
+                <div class="box-desc">Embeddings</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- RAG 流程 -->
+    <section class="section">
+      <h2 class="section-title">🔍 RAG (檢索增強生成) 流程</h2>
+      <div class="diagram">
+        <div class="flow">
+          <div class="flow-row">
+            <div class="box box-user">
+              <div class="box-title">用戶提問</div>
+              <div class="box-desc">"什麼是 MACD？"</div>
+            </div>
+            <div class="arrow">→</div>
+            <div class="box box-api">
+              <div class="box-title">生成 Embedding</div>
+              <div class="box-desc">HuggingFace API</div>
+            </div>
+            <div class="arrow">→</div>
+            <div class="box box-database">
+              <div class="box-title">向量搜索</div>
+              <div class="box-desc">Supabase pgvector</div>
+            </div>
+          </div>
+          
+          <div class="arrow arrow-down">↓</div>
+          
+          <div class="flow-row">
+            <div class="box box-storage">
+              <div class="box-title">相關內容 (Top 5)</div>
+              <div class="box-desc">教學頁面內容片段</div>
+            </div>
+            <div class="arrow">→</div>
+            <div class="box box-ai">
+              <div class="box-title">LLM 生成回答</div>
+              <div class="box-desc">結合 Context + Question</div>
+            </div>
+            <div class="arrow">→</div>
+            <div class="box box-user">
+              <div class="box-title">回覆用戶</div>
+              <div class="box-desc">精準、有依據的答案</div>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-top: 30px; padding: 20px; background: #0f0f1a; border-radius: 8px;">
+          <h4 style="color: #f0b90b; margin-bottom: 10px;">📚 內容索引</h4>
+          <p style="color: #888; font-size: 0.9rem;">
+            網站內容在部署時自動索引到 Supabase Vector Database。<br>
+            目前已索引：<strong style="color: #fff;">52 個內容片段</strong>，涵蓋技術分析、期權交易等主題。
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- AI 模式 -->
+    <section class="section">
+      <h2 class="section-title">🤖 AI 模式配置</h2>
+      <div class="diagram">
+        <table class="mode-table">
+          <thead>
+            <tr>
+              <th>模式</th>
+              <th>服務商</th>
+              <th>模型</th>
+              <th>特點</th>
+              <th>每日限額</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-yellow">💡 聰明</span></td>
+              <td>Google AI Studio</td>
+              <td>Gemini 2.0 Flash</td>
+              <td>回答最精準，理解力強</td>
+              <td>~1,500 次</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-blue">⚡ 快速</span></td>
+              <td>Groq</td>
+              <td>Llama 3.3 70B</td>
+              <td>回應最迅速，延遲低</td>
+              <td>~14,000 次</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-green">🔒 穩定</span></td>
+              <td>Cloudflare Workers AI</td>
+              <td>Llama 3.1 70B</td>
+              <td>服務最可靠，限額大</td>
+              <td>4,000 次 (軟限制)</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <div style="margin-top: 20px; padding: 15px; background: #252540; border-radius: 8px; border-left: 4px solid #f0b90b;">
+          <p style="font-size: 0.9rem; color: #ccc;">
+            💡 <strong>預設模式：</strong>快速 (Groq)<br>
+            用戶選擇的模式會保存在瀏覽器 localStorage 中。
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 技術棧 -->
+    <section class="section">
+      <h2 class="section-title">⚙️ 技術棧</h2>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h3 class="tech-card-title">🎨 Frontend</h3>
+          <ul class="tech-list">
+            <li><span class="tech-name">Next.js 15</span><span class="tech-desc">React Framework</span></li>
+            <li><span class="tech-name">React 19</span><span class="tech-desc">UI Library</span></li>
+            <li><span class="tech-name">TypeScript</span><span class="tech-desc">Type Safety</span></li>
+            <li><span class="tech-name">Tailwind CSS</span><span class="tech-desc">Styling</span></li>
+            <li><span class="tech-name">Recharts</span><span class="tech-desc">Data Visualization</span></li>
+            <li><span class="tech-name">Lucide Icons</span><span class="tech-desc">Icon Library</span></li>
+          </ul>
+        </div>
+        
+        <div class="tech-card">
+          <h3 class="tech-card-title">🔧 Backend</h3>
+          <ul class="tech-list">
+            <li><span class="tech-name">Next.js API Routes</span><span class="tech-desc">Serverless Functions</span></li>
+            <li><span class="tech-name">Groq SDK</span><span class="tech-desc">Fast LLM API</span></li>
+            <li><span class="tech-name">Google Generative AI</span><span class="tech-desc">Gemini API</span></li>
+            <li><span class="tech-name">Cloudflare Workers AI</span><span class="tech-desc">Edge AI</span></li>
+          </ul>
+        </div>
+        
+        <div class="tech-card">
+          <h3 class="tech-card-title">🗄️ Database & RAG</h3>
+          <ul class="tech-list">
+            <li><span class="tech-name">Supabase</span><span class="tech-desc">PostgreSQL + pgvector</span></li>
+            <li><span class="tech-name">HuggingFace Inference</span><span class="tech-desc">Text Embeddings</span></li>
+            <li><span class="tech-name">all-MiniLM-L6-v2</span><span class="tech-desc">Embedding Model</span></li>
+          </ul>
+        </div>
+        
+        <div class="tech-card">
+          <h3 class="tech-card-title">🚀 Deployment</h3>
+          <ul class="tech-list">
+            <li><span class="tech-name">Railway</span><span class="tech-desc">Web Hosting</span></li>
+            <li><span class="tech-name">GitHub</span><span class="tech-desc">Version Control</span></li>
+            <li><span class="tech-name">pnpm</span><span class="tech-desc">Package Manager</span></li>
+            <li><span class="tech-name">Monorepo</span><span class="tech-desc">apps/web + apps/mobile</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 目錄結構 -->
+    <section class="section">
+      <h2 class="section-title">📁 專案結構</h2>
+      <div class="diagram">
+        <pre class="tree">
+<span class="tree-folder">trading-education/</span>
+├── <span class="tree-folder">apps/</span>
+│   ├── <span class="tree-folder">web/</span>                          <span class="tree-comment"># Next.js 網站</span>
+│   │   ├── <span class="tree-folder">src/</span>
+│   │   │   ├── <span class="tree-folder">app/</span>                  <span class="tree-comment"># App Router 頁面</span>
+│   │   │   │   ├── <span class="tree-folder">api/chat/</span>         <span class="tree-comment"># AI 對話 API</span>
+│   │   │   │   ├── <span class="tree-folder">technical-analysis/</span> <span class="tree-comment"># 技術分析頁面</span>
+│   │   │   │   └── <span class="tree-folder">options/</span>          <span class="tree-comment"># 期權教學頁面</span>
+│   │   │   ├── <span class="tree-folder">components/</span>
+│   │   │   │   ├── <span class="tree-folder">chat/</span>             <span class="tree-comment"># AI 聊天元件</span>
+│   │   │   │   │   ├── <span class="tree-file">ChatContext.tsx</span>   <span class="tree-comment"># 狀態管理</span>
+│   │   │   │   │   ├── <span class="tree-file">ChatSidebar.tsx</span>   <span class="tree-comment"># 對話介面</span>
+│   │   │   │   │   └── <span class="tree-file">TypingEffect.tsx</span>  <span class="tree-comment"># 打字動畫</span>
+│   │   │   │   └── <span class="tree-folder">charts/</span>           <span class="tree-comment"># 互動圖表</span>
+│   │   │   └── <span class="tree-folder">lib/</span>
+│   │   │       └── <span class="tree-folder">rag/</span>              <span class="tree-comment"># RAG 系統</span>
+│   │   │           ├── <span class="tree-file">embeddings.ts</span>    <span class="tree-comment"># 向量生成</span>
+│   │   │           ├── <span class="tree-file">search.ts</span>        <span class="tree-comment"># 向量搜索</span>
+│   │   │           └── <span class="tree-file">content.ts</span>       <span class="tree-comment"># 內容定義</span>
+│   │   └── <span class="tree-folder">scripts/</span>
+│   │       └── <span class="tree-file">index-content.ts</span>      <span class="tree-comment"># 內容索引腳本</span>
+│   └── <span class="tree-folder">mobile/</span>                       <span class="tree-comment"># Expo React Native (開發中)</span>
+├── <span class="tree-folder">packages/</span>
+│   └── <span class="tree-folder">shared/</span>                       <span class="tree-comment"># 共享代碼</span>
+│       ├── <span class="tree-folder">lib/options/</span>              <span class="tree-comment"># 期權計算邏輯</span>
+│       └── <span class="tree-folder">constants/</span>                <span class="tree-comment"># 共享常量</span>
+├── <span class="tree-file">pnpm-workspace.yaml</span>              <span class="tree-comment"># Monorepo 配置</span>
+└── <span class="tree-file">ARCHITECTURE.html</span>                <span class="tree-comment"># 本文件</span>
+        </pre>
+      </div>
+    </section>
+    
+    <!-- 環境變數 -->
+    <section class="section">
+      <h2 class="section-title">🔐 環境變數</h2>
+      <div class="diagram">
+        <table class="mode-table">
+          <thead>
+            <tr>
+              <th>變數名稱</th>
+              <th>用途</th>
+              <th>必需</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>GROQ_API_KEY</code></td>
+              <td>Groq API (快速模式)</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td><code>GOOGLE_AI_API_KEY</code></td>
+              <td>Google Gemini API (聰明模式)</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td><code>CF_ACCOUNT_ID</code></td>
+              <td>Cloudflare Account ID (穩定模式)</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td><code>CF_API_TOKEN</code></td>
+              <td>Cloudflare Workers AI Token (穩定模式)</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td><code>SUPABASE_URL</code></td>
+              <td>Supabase 專案 URL (RAG)</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td><code>SUPABASE_SERVICE_KEY</code></td>
+              <td>Supabase Service Role Key (RAG)</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td><code>HUGGINGFACE_API_KEY</code></td>
+              <td>HuggingFace API Token (Embeddings)</td>
+              <td>✅</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    
+    <!-- 更新日誌 -->
+    <section class="section">
+      <h2 class="section-title">📝 更新日誌</h2>
+      <div class="changelog">
+        <div class="changelog-item">
+          <div class="changelog-date">2024-12-05</div>
+          <div class="changelog-content">
+            ✨ 新增多模型 AI 支援（聰明/快速/穩定三種模式）<br>
+            ✨ 新增 Cloudflare Workers AI 整合<br>
+            ✨ 新增 Google Gemini 2.0 Flash 整合<br>
+            🔒 新增 Cloudflare 每日 4000 次軟限制
+          </div>
+        </div>
+        <div class="changelog-item">
+          <div class="changelog-date">2024-12-04</div>
+          <div class="changelog-content">
+            ✨ 實作 RAG 系統（Supabase + HuggingFace）<br>
+            ✨ 新增 AI 對話側邊欄<br>
+            ✨ 新增多對話管理功能<br>
+            ✨ 新增對話記錄 localStorage 持久化
+          </div>
+        </div>
+        <div class="changelog-item">
+          <div class="changelog-date">2024-12-03</div>
+          <div class="changelog-content">
+            🏗️ 建立 Monorepo 架構<br>
+            📱 新增 Mobile App 專案 (Expo)<br>
+            🎨 完成期權策略頁面
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <footer style="text-align: center; padding: 40px 0; color: #555; font-size: 0.85rem;">
+      <p>Trading Education Platform © 2025</p>
+      <p style="margin-top: 5px;">本文件僅供內部參考，不對外公開</p>
+    </footer>
+  </div>
+</body>
+</html>
+
