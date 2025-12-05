@@ -31,7 +31,8 @@ interface ChatContextType {
   deleteConversation: (id: string) => void;
   renameConversation: (id: string, newTitle: string) => void;
   // 訊息操作
-  addMessage: (role: 'user' | 'assistant', content: string) => void;
+  addMessage: (role: 'user' | 'assistant', content: string) => string; // 返回對話 ID
+  addMessageToConversation: (convId: string, role: 'user' | 'assistant', content: string) => void;
   clearMessages: () => void;
   // 狀態
   isLoading: boolean;
@@ -130,8 +131,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     ));
   };
 
-  // 添加訊息
-  const addMessage = (role: 'user' | 'assistant', content: string) => {
+  // 添加訊息 - 返回對話 ID
+  const addMessage = (role: 'user' | 'assistant', content: string): string => {
     const newMessage: Message = {
       id: Date.now().toString(),
       role,
@@ -141,15 +142,17 @@ export function ChatProvider({ children }: { children: ReactNode }) {
 
     // 如果沒有活躍對話，創建一個
     if (!activeConversationId) {
+      const newConvId = (Date.now() + 1).toString(); // +1 避免與 message ID 衝突
       const newConv: Conversation = {
-        id: Date.now().toString(),
+        id: newConvId,
         title: content.slice(0, 20) + (content.length > 20 ? '...' : ''),
         messages: [newMessage],
         createdAt: new Date(),
         updatedAt: new Date(),
       };
       setConversations(prev => [newConv, ...prev]);
-      setActiveConversationId(newConv.id);
+      setActiveConversationId(newConvId);
+      return newConvId; // 返回新對話 ID
     } else {
       setConversations(prev => prev.map(conv => {
         if (conv.id === activeConversationId) {
@@ -167,7 +170,29 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         }
         return conv;
       }));
+      return activeConversationId; // 返回當前對話 ID
     }
+  };
+
+  // 添加訊息到指定對話（用於確保 AI 回覆加到正確的對話）
+  const addMessageToConversation = (convId: string, role: 'user' | 'assistant', content: string) => {
+    const newMessage: Message = {
+      id: Date.now().toString(),
+      role,
+      content,
+      timestamp: new Date(),
+    };
+    
+    setConversations(prev => prev.map(conv => {
+      if (conv.id === convId) {
+        return {
+          ...conv,
+          messages: [...conv.messages, newMessage],
+          updatedAt: new Date(),
+        };
+      }
+      return conv;
+    }));
   };
 
   // 清除當前對話訊息
@@ -194,6 +219,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         deleteConversation,
         renameConversation,
         addMessage,
+        addMessageToConversation,
         clearMessages,
         isLoading,
         setIsLoading,

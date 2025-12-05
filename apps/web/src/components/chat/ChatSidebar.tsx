@@ -10,7 +10,8 @@ export default function ChatSidebar() {
     isOpen, 
     setIsOpen, 
     messages, 
-    addMessage, 
+    addMessage,
+    addMessageToConversation,
     clearMessages, 
     isLoading, 
     setIsLoading,
@@ -87,7 +88,8 @@ export default function ChatSidebar() {
       }
     }, 50);
     
-    addMessage('user', messageToSend);
+    // 保存對話 ID，確保 AI 回覆加到同一個對話
+    const convId = addMessage('user', messageToSend);
     setIsLoading(true);
 
     try {
@@ -113,10 +115,12 @@ export default function ChatSidebar() {
       const newMessageId = Date.now().toString();
       setTypingMessageId(newMessageId);
       setLastMessageId(newMessageId);
-      addMessage('assistant', data.reply);
+      // 使用保存的對話 ID，確保 AI 回覆加到正確的對話
+      addMessageToConversation(convId, 'assistant', data.reply);
     } catch (error) {
       console.error('Chat error:', error);
-      addMessage('assistant', '抱歉，發生錯誤。請稍後再試。');
+      // 使用保存的對話 ID
+      addMessageToConversation(convId, 'assistant', '抱歉，發生錯誤。請稍後再試。');
     } finally {
       setIsLoading(false);
     }
