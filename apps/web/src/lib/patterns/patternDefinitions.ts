@@ -11,6 +11,8 @@ export const reversalPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Head and Shoulders Top',
     type: 'reversal',
     trend: 'bearish',
+    useAdvancedChart: true,
+    chartType: 'head-and-shoulders-top',
     definition: '頭肩頂反轉型態形成於上升趨勢之後，其完成標誌著趨勢的反轉。該型態包含三個連續的高峰，中間的高峰（頭部）最高，兩側的高峰（肩部）較低且高度大致相等。',
     characteristics: [
       '三個連續峰值：左肩、頭部（最高）、右肩',

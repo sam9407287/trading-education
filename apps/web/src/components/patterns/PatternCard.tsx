@@ -1,6 +1,13 @@
 'use client';
 
 import { CheckCircle2, AlertTriangle, Target, Zap, Activity } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+// 動態導入圖表組件（避免 SSR 問題）
+const HeadAndShouldersChart = dynamic(
+  () => import('@/components/charts/HeadAndShouldersChart'),
+  { ssr: false }
+);
 
 export interface PatternCardProps {
   id: string;
@@ -17,8 +24,10 @@ export interface PatternCardProps {
   };
   tradingStrategies: string[];
   keyInsights?: string[];
-  // 移除 patternData，改用圖片
   imageUrl?: string;
+  // 新增：使用專業圖表
+  useAdvancedChart?: boolean;
+  chartType?: 'head-and-shoulders-top' | 'head-and-shoulders-bottom';
 }
 
 export default function PatternCard({
@@ -34,6 +43,8 @@ export default function PatternCard({
   tradingStrategies,
   keyInsights,
   imageUrl,
+  useAdvancedChart,
+  chartType,
 }: PatternCardProps) {
   // 趨勢配置
   const trendConfig = {
@@ -112,13 +123,20 @@ export default function PatternCard({
 
         {/* 圖表 */}
         <div className="p-6 bg-[var(--bg-secondary)]">
-          {imageUrl ? (
+          {useAdvancedChart && chartType ? (
+            // 使用專業圖表
+            <HeadAndShouldersChart 
+              type={chartType === 'head-and-shoulders-top' ? 'top' : 'bottom'} 
+            />
+          ) : imageUrl ? (
+            // 使用圖片
             <img 
               src={imageUrl} 
               alt={`${title}型態示意圖`}
               className="w-full h-auto rounded-lg border border-[var(--border-color)]"
             />
           ) : (
+            // 佔位符
             getPatternIllustration()
           )}
         </div>
