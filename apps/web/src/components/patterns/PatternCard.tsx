@@ -1,8 +1,6 @@
 'use client';
 
-import { TrendingUp, TrendingDown, Activity, CheckCircle2, AlertTriangle, Target, Zap } from 'lucide-react';
-import PatternChart from '@/components/charts/PatternChart';
-import type { PatternData } from '@/lib/patterns/dataGenerator';
+import { CheckCircle2, AlertTriangle, Target, Zap, Activity } from 'lucide-react';
 
 export interface PatternCardProps {
   id: string;
@@ -18,8 +16,9 @@ export interface PatternCardProps {
     commonPitfalls: string[];
   };
   tradingStrategies: string[];
-  patternData: PatternData;
   keyInsights?: string[];
+  // 移除 patternData，改用圖片
+  imageUrl?: string;
 }
 
 export default function PatternCard({
@@ -33,20 +32,20 @@ export default function PatternCard({
   volumeProfile,
   reliability,
   tradingStrategies,
-  patternData,
   keyInsights,
+  imageUrl,
 }: PatternCardProps) {
   // 趨勢配置
   const trendConfig = {
     bullish: {
       label: '看漲',
-      icon: TrendingUp,
+      icon: Activity,
       color: 'bg-green-500/10 text-green-400 border-green-500/30',
       gradient: 'from-green-500/20 to-emerald-500/20',
     },
     bearish: {
       label: '看跌',
-      icon: TrendingDown,
+      icon: Activity,
       color: 'bg-red-500/10 text-red-400 border-red-500/30',
       gradient: 'from-red-500/20 to-rose-500/20',
     },
@@ -66,6 +65,19 @@ export default function PatternCard({
     reversal: '反轉型態',
     continuation: '連續型態',
     'short-term': '短期型態',
+  };
+
+  // 使用預設的示意圖（暫時用顏色塊代替）
+  const getPatternIllustration = () => {
+    return (
+      <div className="w-full h-64 bg-gradient-to-br from-[var(--bg-secondary)] to-[var(--bg-primary)] rounded-lg border border-[var(--border-color)] flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4">{trend === 'bullish' ? '📈' : trend === 'bearish' ? '📉' : '📊'}</div>
+          <p className="text-sm text-[var(--text-muted)]">{title} 型態示意圖</p>
+          <p className="text-xs text-[var(--text-muted)] mt-2">圖表即將更新</p>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -100,14 +112,15 @@ export default function PatternCard({
 
         {/* 圖表 */}
         <div className="p-6 bg-[var(--bg-secondary)]">
-          <PatternChart
-            candles={patternData.candles}
-            annotations={patternData.annotations}
-            breakoutIndex={patternData.breakoutIndex}
-            title={`${title}形成過程`}
-            autoPlay={false}
-            playSpeed={120}
-          />
+          {imageUrl ? (
+            <img 
+              src={imageUrl} 
+              alt={`${title}型態示意圖`}
+              className="w-full h-auto rounded-lg border border-[var(--border-color)]"
+            />
+          ) : (
+            getPatternIllustration()
+          )}
         </div>
 
         {/* 內容區塊 */}
@@ -157,9 +170,9 @@ export default function PatternCard({
                   <Activity className="w-5 h-5 text-blue-400" />
                   成交量分析
                 </h4>
-                <p className="text-sm text-[var(--text-secondary)] leading-relaxed bg-[var(--bg-secondary)] p-4 rounded-lg border border-[var(--border-color)]">
+                <div className="text-sm text-[var(--text-secondary)] leading-relaxed bg-[var(--bg-secondary)] p-4 rounded-lg border border-[var(--border-color)] whitespace-pre-line">
                   {volumeProfile}
-                </p>
+                </div>
               </div>
             </div>
 
@@ -221,4 +234,3 @@ export default function PatternCard({
     </div>
   );
 }
-

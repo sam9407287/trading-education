@@ -1,17 +1,4 @@
 import type { PatternCardProps } from '@/components/patterns/PatternCard';
-import {
-  generateHeadAndShouldersTop,
-  generateHeadAndShouldersBottom,
-  generateSymmetricalTriangle,
-  generateAscendingTriangle,
-  generateDescendingTriangle,
-  generateDoubleTop,
-  generateDoubleBottom,
-  generateRectangle,
-  generateFlag,
-  generatePennant,
-  generateCupWithHandle,
-} from './dataGenerator';
 
 // ============================================
 // 反轉型態 (Reversal Patterns)
@@ -731,35 +718,16 @@ export const shortTermPatterns: Omit<PatternCardProps, 'patternData'>[] = [
   },
 ];
 
-// 生成完整的型態數據（包含圖表數據）
+// 生成完整的型態數據（使用簡化版本）
 export function getReversalPatternsWithData(): PatternCardProps[] {
-  return [
-    { ...reversalPatterns[0], patternData: generateHeadAndShouldersTop() },
-    { ...reversalPatterns[1], patternData: generateHeadAndShouldersBottom() },
-    { ...reversalPatterns[2], patternData: generateSymmetricalTriangle('bullish-reversal') },
-    { ...reversalPatterns[3], patternData: generateAscendingTriangle('reversal') },
-    { ...reversalPatterns[4], patternData: generateDescendingTriangle('reversal') },
-    { ...reversalPatterns[5], patternData: generateDoubleTop() },
-    { ...reversalPatterns[6], patternData: generateDoubleBottom() },
-  ];
+  return reversalPatterns as PatternCardProps[];
 }
 
 export function getContinuationPatternsWithData(): PatternCardProps[] {
-  return [
-    { ...continuationPatterns[0], patternData: generateSymmetricalTriangle('bullish-continuation') },
-    { ...continuationPatterns[1], patternData: generateAscendingTriangle('continuation') },
-    { ...continuationPatterns[2], patternData: generateDescendingTriangle('continuation') },
-    { ...continuationPatterns[3], patternData: generateRectangle('bullish-continuation') },
-    { ...continuationPatterns[4], patternData: generateCupWithHandle() },
-  ];
+  return continuationPatterns as PatternCardProps[];
 }
 
 export function getShortTermPatternsWithData(): PatternCardProps[] {
-  return [
-    { ...shortTermPatterns[0], patternData: generateFlag('bull') },
-    { ...shortTermPatterns[1], patternData: generateFlag('bear') },
-    { ...shortTermPatterns[2], patternData: generatePennant('bull') },
-    { ...shortTermPatterns[3], patternData: generatePennant('bear') },
-  ];
+  return shortTermPatterns as PatternCardProps[];
 }
 
