@@ -110,59 +110,179 @@ export default function ShortTermPatternsPage() {
 
       {/* 可靠性準則總結 */}
       <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl p-8">
-          <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">
-            短期型態的可靠性準則總結
+        <div className="bg-[var(--bg-card)] border-2 border-[var(--accent-gold)]/30 rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-2 flex items-center gap-3">
+            <span className="text-3xl">📚</span>
+            CMT 考試重點總結
           </h2>
+          <p className="text-sm text-[var(--text-muted)] mb-6">
+            這些是 CMT Level 1/2 考試中關於短期型態的高頻考點
+          </p>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            <div>
-              <h3 className="font-semibold text-[var(--text-primary)] mb-3 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-full bg-[var(--accent-gold)]/20 text-[var(--accent-gold)] flex items-center justify-center text-sm font-bold">1</span>
-                旗桿條件
-              </h3>
-              <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
-                <li>• 必須形成於急劇且大幅度的上漲或下跌之後</li>
-                <li>• 旗桿的成交量應該很高</li>
-                <li>• 旗桿的角度應該接近垂直</li>
-                <li>• 旗桿是整個型態的動力來源</li>
-              </ul>
+          {/* Duration Rule */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-red-500/10 to-transparent border-l-4 border-red-500 rounded-r-lg">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
+              <span className="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm font-bold">必考</span>
+              Duration Rule（時間限制規則）
+            </h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-[var(--bg-secondary)] p-4 rounded-lg">
+                <p className="font-semibold text-[var(--text-primary)] mb-2">Flag / Pennant（旗型/三角旗型）</p>
+                <p className="text-2xl font-bold text-green-400 mb-1">&lt; 4 Weeks</p>
+                <p className="text-sm text-[var(--text-secondary)]">短於 4 週</p>
+              </div>
+              <div className="bg-[var(--bg-secondary)] p-4 rounded-lg">
+                <p className="font-semibold text-[var(--text-primary)] mb-2">Rectangle / Triangle（矩形/三角形）</p>
+                <p className="text-2xl font-bold text-blue-400 mb-1">&gt; 4 Weeks</p>
+                <p className="text-sm text-[var(--text-secondary)]">長於 4 週</p>
+              </div>
             </div>
-
-            <div>
-              <h3 className="font-semibold text-[var(--text-primary)] mb-3 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-full bg-[var(--accent-gold)]/20 text-[var(--accent-gold)] flex items-center justify-center text-sm font-bold">2</span>
-                旗幟/三角旗條件
-              </h3>
-              <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
-                <li>• 成交量必須顯著下降</li>
-                <li>• 形態應該小型且緊湊</li>
-                <li>• 旗型：平行邊界，稍微傾斜</li>
-                <li>• 三角旗：收斂邊界</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-[var(--text-primary)] mb-3 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-full bg-[var(--accent-gold)]/20 text-[var(--accent-gold)] flex items-center justify-center text-sm font-bold">3</span>
-                突破條件
-              </h3>
-              <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
-                <li>• 必須在 4 週內突破</li>
-                <li>• 突破時成交量應顯著增加</li>
-                <li>• 突破後的走勢通常與旗桿相似</li>
-                <li>• 突破方向與旗桿方向一致</li>
-              </ul>
+            <div className="mt-4 p-4 bg-[var(--bg-primary)] rounded-lg">
+              <p className="font-semibold text-red-400 mb-2">⚠️ 考題陷阱</p>
+              <p className="text-sm text-[var(--text-secondary)]">
+                題目給出一個持續了 <span className="font-bold text-[var(--text-primary)]">6 週</span> 的平行通道盤整，
+                問這是什麼型態？<br/>
+                <span className="text-red-400">❌ 錯誤答案：Flag（旗型）</span><br/>
+                <span className="text-green-400">✓ 正確答案：Rectangle 或 Channel</span>
+              </p>
             </div>
           </div>
 
+          {/* Volume Profile */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-blue-500/10 to-transparent border-l-4 border-blue-500 rounded-r-lg">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] mb-3">Volume Profile（成交量特徵）</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="bg-[var(--bg-secondary)] p-4 rounded-lg">
+                <p className="font-semibold text-[var(--text-primary)] mb-2">1️⃣ Before（旗桿形成時）</p>
+                <p className="text-sm text-green-400 font-semibold mb-1">Heavy / High Volume</p>
+                <p className="text-xs text-[var(--text-muted)]">急劇上漲/下跌伴隨高量</p>
+              </div>
+              <div className="bg-[var(--bg-secondary)] p-4 rounded-lg">
+                <p className="font-semibold text-[var(--text-primary)] mb-2">2️⃣ During（旗型形成時）</p>
+                <p className="text-sm text-blue-400 font-semibold mb-1">Drying up / Shrinking</p>
+                <p className="text-xs text-[var(--text-muted)]">成交量顯著萎縮</p>
+              </div>
+              <div className="bg-[var(--bg-secondary)] p-4 rounded-lg">
+                <p className="font-semibold text-[var(--text-primary)] mb-2">3️⃣ After（突破時）</p>
+                <p className="text-sm text-orange-400 font-semibold mb-1">Explodes / Increases</p>
+                <p className="text-xs text-[var(--text-muted)]">成交量激增</p>
+              </div>
+            </div>
+            <div className="mt-4 p-4 bg-[var(--bg-primary)] rounded-lg">
+              <p className="font-semibold text-blue-400 mb-2">💡 邏輯</p>
+              <p className="text-sm text-[var(--text-secondary)]">
+                旗型代表市場「喘口氣」(Pause)。如果喘氣時成交量還很大，
+                代表<span className="text-red-400 font-semibold">出貨或換手</span>，
+                而不是單純的獲利回吐，型態容易失敗。
+              </p>
+            </div>
+          </div>
+
+          {/* Shape Differentiation */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-purple-500/10 to-transparent border-l-4 border-purple-500 rounded-r-lg">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] mb-3">Shape Differentiation（形狀區分）</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-[var(--bg-secondary)] p-4 rounded-lg border-2 border-purple-500/30">
+                <p className="font-semibold text-[var(--text-primary)] mb-2">Flag（旗型）</p>
+                <p className="text-lg text-purple-400 font-semibold mb-2">Parallelogram</p>
+                <p className="text-sm text-[var(--text-secondary)] mb-3">平行四邊形 → 兩條邊界平行</p>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
+                  <span className="w-16 h-8 border-2 border-purple-400 transform -skew-y-6"></span>
+                  <span>平行邊界</span>
+                </div>
+              </div>
+              <div className="bg-[var(--bg-secondary)] p-4 rounded-lg border-2 border-pink-500/30">
+                <p className="font-semibold text-[var(--text-primary)] mb-2">Pennant（三角旗型）</p>
+                <p className="text-lg text-pink-400 font-semibold mb-2">Small Triangle</p>
+                <p className="text-sm text-[var(--text-secondary)] mb-3">小三角形 → 兩條邊界收斂</p>
+                <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
+                  <span className="w-16 h-8 border-t-2 border-b-2 border-r-2 border-pink-400 transform origin-left scale-x-50"></span>
+                  <span>收斂邊界</span>
+                </div>
+              </div>
+            </div>
+            <div className="mt-4 p-4 bg-[var(--bg-primary)] rounded-lg">
+              <p className="text-sm text-[var(--text-secondary)]">
+                <span className="font-semibold text-[var(--text-primary)]">注意：</span>
+                它們的<span className="text-green-400 font-semibold">功能和意義完全一樣</span>，
+                只是形狀不同。兩者都是高可靠性的短期連續型態。
+              </p>
+            </div>
+          </div>
+
+          {/* Directional Bias */}
+          <div className="mb-8 p-6 bg-gradient-to-r from-amber-500/10 to-transparent border-l-4 border-amber-500 rounded-r-lg">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] mb-3">Directional Bias（方向偏見）</h3>
+            <div className="space-y-3">
+              <div className="bg-[var(--bg-secondary)] p-4 rounded-lg">
+                <p className="font-semibold text-[var(--text-primary)] mb-2">理想特徵：Sloping against the trend（逆勢傾斜）</p>
+                <div className="grid md:grid-cols-2 gap-4 mt-3">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">📈</span>
+                    <div>
+                      <p className="text-sm font-semibold text-green-400">牛市旗型</p>
+                      <p className="text-xs text-[var(--text-muted)]">通常向下傾斜 (Slope down)</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">📉</span>
+                    <div>
+                      <p className="text-sm font-semibold text-red-400">熊市旗型</p>
+                      <p className="text-xs text-[var(--text-muted)]">通常向上傾斜 (Slope up)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 bg-[var(--bg-primary)] rounded-lg">
+                <p className="text-sm text-[var(--text-secondary)]">
+                  <span className="font-semibold text-amber-400">例外：</span>
+                  雖然文獻提到可能是「稍微傾斜或平坦」，但最理想的旗型通常是逆勢傾斜的。
+                  這種逆勢傾斜反映了獲利回吐的壓力。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Target Measurement */}
+          <div className="p-6 bg-gradient-to-r from-green-500/10 to-transparent border-l-4 border-green-500 rounded-r-lg">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] mb-3">Target Measurement（目標測量）</h3>
+            <div className="bg-[var(--bg-secondary)] p-4 rounded-lg mb-3">
+              <p className="font-semibold text-[var(--text-primary)] mb-2">Measured Move（測量幅度）</p>
+              <p className="text-sm text-[var(--text-secondary)] mb-3">
+                旗型通常發生在行情的<span className="text-green-400 font-semibold">「半山腰」(Half-mast)</span>位置。
+              </p>
+              <div className="p-4 bg-[var(--bg-primary)] rounded-lg">
+                <p className="text-xs text-[var(--text-muted)] mb-2">公式</p>
+                <p className="text-base font-mono text-[var(--text-primary)]">
+                  突破後的漲幅/跌幅 = 旗型之前的旗桿長度
+                </p>
+              </div>
+            </div>
+            <div className="p-4 bg-[var(--bg-primary)] rounded-lg border border-yellow-500/30">
+              <p className="font-semibold text-yellow-400 mb-2">⚠️ 重要提醒</p>
+              <p className="text-sm text-[var(--text-secondary)]">
+                這是<span className="text-[var(--text-primary)] font-semibold">常見的目標價位</span>，
+                不代表價格一定會到達該位置。應視為<span className="text-green-400">「最小預期目標」</span>，
+                實際走勢可能更強或更弱，需要結合其他技術指標和市場環境判斷。
+              </p>
+            </div>
+          </div>
+
+          {/* 總結 */}
           <div className="mt-6 pt-6 border-t border-[var(--border-color)]">
-            <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-              <span className="font-semibold text-[var(--text-primary)]">關鍵洞察：</span>
-              短期型態是最適合短線交易的圖表型態。它們的高可靠性來自於明確的結構和嚴格的條件。
-              遵守四週規則是確保這些型態有效性的關鍵。如果型態符合所有條件，
-              其成功率通常超過 80%，這使它們成為技術分析中最受歡迎的交易工具之一。
-            </p>
+            <div className="flex items-start gap-3">
+              <span className="text-2xl">🎯</span>
+              <div>
+                <h4 className="font-semibold text-[var(--text-primary)] mb-2">CMT 考試策略</h4>
+                <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
+                  <li>• <span className="font-semibold text-[var(--text-primary)]">時間是關鍵：</span>看到平行通道，第一件事是檢查持續時間</li>
+                  <li>• <span className="font-semibold text-[var(--text-primary)]">成交量是確認：</span>Before(高) → During(低) → After(高)</li>
+                  <li>• <span className="font-semibold text-[var(--text-primary)]">形狀要明確：</span>Parallelogram vs. Small Triangle</li>
+                  <li>• <span className="font-semibold text-[var(--text-primary)]">逆勢傾斜更佳：</span>牛市旗向下傾斜，熊市旗向上傾斜</li>
+                  <li>• <span className="font-semibold text-[var(--text-primary)]">目標價是參考：</span>Measured Move = 旗桿長度</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>
