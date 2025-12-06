@@ -1,0 +1,763 @@
+import type { PatternCardProps } from '@/components/patterns/PatternCard';
+import {
+  generateHeadAndShouldersTop,
+  generateHeadAndShouldersBottom,
+  generateSymmetricalTriangle,
+  generateAscendingTriangle,
+  generateDescendingTriangle,
+  generateDoubleTop,
+  generateDoubleBottom,
+  generateRectangle,
+  generateFlag,
+  generatePennant,
+  generateCupWithHandle,
+} from './dataGenerator';
+
+// ============================================
+// 反轉型態 (Reversal Patterns)
+// ============================================
+
+export const reversalPatterns: Omit<PatternCardProps, 'patternData'>[] = [
+  {
+    id: 'head-and-shoulders-top',
+    title: '頭肩頂',
+    titleEn: 'Head and Shoulders Top',
+    type: 'reversal',
+    trend: 'bearish',
+    definition: '頭肩頂反轉型態形成於上升趨勢之後，其完成標誌著趨勢的反轉。該型態包含三個連續的高峰，中間的高峰（頭部）最高，兩側的高峰（肩部）較低且高度大致相等。',
+    characteristics: [
+      '三個連續峰值：左肩、頭部（最高）、右肩',
+      '頸線連接回調低點，作為關鍵支撐',
+      '理想情況下，兩個肩部的高度和寬度應相等',
+      '必須有明確的上升趨勢作為前提',
+      '頸線跌破才算完成型態',
+    ],
+    volumeProfile: '左肩形成時成交量高，頭部形成時成交量遞減，右肩時成交量進一步減少。跌破頸線時成交量可以低（股票因自身重量而下跌），但成交量增加會提高可靠性。',
+    reliability: {
+      conditions: [
+        '必須有明確且穩定的上升趨勢',
+        '頸線被跌破才算完成（收盤價跌破）',
+        '兩肩對稱性越好越可靠',
+        '頸線最好接近水平',
+        '整個型態持續時間至少數週',
+      ],
+      commonPitfalls: [
+        '假跌破：價格短暫跌破頸線後又回升',
+        '頭部識別錯誤：可能是更大型態的一部分',
+        '過早入場：在頸線跌破前就做空',
+        '忽略成交量：雖然不是必要條件，但成交量確認更可靠',
+      ],
+    },
+    tradingStrategies: [
+      '入場點：頸線跌破並收盤確認',
+      '止損：頸線上方或右肩高點上方',
+      '目標價：頸線到頭部高度的垂直距離',
+      '激進策略：在右肩形成時提前佈局',
+      '保守策略：等待回測頸線（變阻力）後再入場',
+    ],
+    keyInsights: [
+      '頭肩頂是最可靠的頂部反轉型態之一',
+      '完整形成時間通常為 3-6 個月（日線圖）',
+      '跌破頸線後，約 60% 的情況會有回測動作',
+    ],
+  },
+  {
+    id: 'head-and-shoulders-bottom',
+    title: '頭肩底',
+    titleEn: 'Head and Shoulders Bottom (Inverse Head and Shoulders)',
+    type: 'reversal',
+    trend: 'bullish',
+    definition: '頭肩底，也稱為倒頭肩型態，形成於下降趨勢之後，其完成標誌著趨勢的改變。該型態包含三個連續的價格低點，中間的低點（頭部）最低，兩側的低點（肩部）形成於比頭部更高的位置。',
+    characteristics: [
+      '三個連續低點：左肩、頭部（最低）、右肩',
+      '頸線連接反彈高點，作為關鍵阻力',
+      '理想情況下，兩個肩部的深度和寬度應相等',
+      '必須有明確的下降趨勢作為前提',
+      '頸線突破才算完成型態',
+    ],
+    volumeProfile: '頭部開始時成交量顯示上升趨勢特徵，右肩發展時成交量繼續增加。突破頸線時成交量必須顯著放大（推高需要買盤），這是與頭肩頂的關鍵差異。',
+    reliability: {
+      conditions: [
+        '必須有明確的下降趨勢',
+        '頸線被突破才算完成（收盤價突破）',
+        '突破時成交量必須顯著增加',
+        '兩肩對稱性越好越可靠',
+        '通常比頭肩頂需要更長時間形成',
+      ],
+      commonPitfalls: [
+        '假突破：價格短暫突破頸線後又回落',
+        '成交量不足：沒有成交量支持的突破不可信',
+        '過早入場：在頸線突破前就做多',
+        '忽略前期下跌幅度：下跌幅度不足可能只是反彈',
+      ],
+    },
+    tradingStrategies: [
+      '入場點：頸線突破並收盤確認，且成交量放大',
+      '止損：頸線下方或右肩低點下方',
+      '目標價：頸線到頭部深度的垂直距離',
+      '分批入場：突破時一半，回測確認後另一半',
+      '注意成交量：成交量是底部反轉的關鍵確認',
+    ],
+    keyInsights: [
+      '頭肩底通常比頭肩頂形成時間更長',
+      '成交量是頭肩底最重要的確認因素',
+      '突破後回測頸線的機率較頭肩頂低',
+    ],
+  },
+  {
+    id: 'symmetrical-triangle-reversal',
+    title: '對稱三角形（反轉）',
+    titleEn: 'Symmetrical Triangle (Reversal)',
+    type: 'reversal',
+    trend: 'both',
+    definition: '對稱三角形由兩條收斂的趨勢線構成，需要至少四個次級趨勢反轉點才能確認。當形成於長期穩定趨勢之後時，常作為反轉型態出現。',
+    characteristics: [
+      '兩條收斂的趨勢線（上邊界向下，下邊界向上）',
+      '至少需要 4 個次級反轉點（2 高 2 低）',
+      '成交量在整個型態期間遞減',
+      '形成於長期穩定趨勢之後',
+      '突破方向與原趨勢相反',
+    ],
+    volumeProfile: '整個三角形形成期間成交量持續遞減，顯示市場猶豫不決。突破時如果向上則成交量應顯著增加，向下突破則成交量可以較低。',
+    reliability: {
+      conditions: [
+        '前期趨勢必須長且穩定',
+        '最佳突破點在三角形 1/2 到 3/4 處',
+        '越靠近頂點突破，動能越弱',
+        '突破必須有明確的收盤價確認',
+        '成交量配合（向上突破時尤其重要）',
+      ],
+      commonPitfalls: [
+        '過於接近頂點才突破，動能不足',
+        '假突破：價格短暫突破邊界後又回到三角形內',
+        '邊界需要重繪：價格輕微違反邊界',
+        '誤判為連續型態：未考慮前期趨勢長度',
+      ],
+    },
+    tradingStrategies: [
+      '入場點：突破任一邊界並收盤確認',
+      '止損：三角形內部的另一邊界',
+      '目標價：三角形最寬處的高度',
+      '避免在頂點附近交易',
+      '可在三角形內部高拋低吸（風險較高）',
+    ],
+    keyInsights: [
+      '區分反轉或連續的關鍵在於前期趨勢的長度和強度',
+      '對稱三角形是最常見的盤整型態之一',
+      '三角形會變形，邊界可能需要多次調整',
+    ],
+  },
+  {
+    id: 'ascending-triangle-reversal',
+    title: '上升三角形（底部反轉）',
+    titleEn: 'Ascending Triangle (Bottom Reversal)',
+    type: 'reversal',
+    trend: 'bullish',
+    definition: '上升三角形在下降趨勢之後發展時，可充當底部反轉型態。其特點是水平阻力線和向上傾斜的支撐線，顯示買方力量逐漸增強。',
+    characteristics: [
+      '水平上邊界（阻力位）',
+      '向上傾斜的下邊界（支撐線）',
+      '形成於下降趨勢之後',
+      '水平阻力被多次測試',
+      '每次回調低點逐步墊高',
+    ],
+    volumeProfile: '整個型態期間成交量遞減，但突破水平阻力時成交量應顯著增加。水平邊界被測試的次數越多，突破時的成交量通常越大。',
+    reliability: {
+      conditions: [
+        '必須有明確的前期下降趨勢',
+        '水平阻力至少被測試 3 次',
+        '突破水平邊界比突破對角線更可靠',
+        '突破時成交量必須顯著增加',
+        '最好等待收盤價突破確認',
+      ],
+      commonPitfalls: [
+        '對角線假突破：價格突破下邊界但未跌破水平支撐',
+        '水平阻力假突破：短暫突破後又回落',
+        '過早入場：在突破前就做多',
+        '忽略成交量：沒有成交量支持的突破不可靠',
+      ],
+    },
+    tradingStrategies: [
+      '入場點：突破水平阻力並收盤確認',
+      '止損：最近一次回調低點下方',
+      '目標價：三角形高度加上突破點',
+      '激進策略：在水平阻力附近提前佈局',
+      '回測交易：等待回測水平阻力（變支撐）',
+    ],
+    keyInsights: [
+      '上升三角形有明確的看漲傾向',
+      '水平阻力的測試次數越多，突破後漲幅通常越大',
+      '這是機構積累的常見型態',
+    ],
+  },
+  {
+    id: 'descending-triangle-reversal',
+    title: '下降三角形（頂部反轉）',
+    titleEn: 'Descending Triangle (Top Reversal)',
+    type: 'reversal',
+    trend: 'bearish',
+    definition: '下降三角形在上升趨勢之後發展時，可充當頂部反轉型態。其特點是水平支撐線和向下傾斜的阻力線，顯示賣方力量逐漸增強。',
+    characteristics: [
+      '水平下邊界（支撐位）',
+      '向下傾斜的上邊界（阻力線）',
+      '形成於上升趨勢之後',
+      '水平支撐被多次測試',
+      '每次反彈高點逐步降低',
+    ],
+    volumeProfile: '整個型態期間成交量遞減，跌破水平支撐時成交量增加確認賣壓。但下跌可以在低成交量下發生（股票因自身重量而跌）。',
+    reliability: {
+      conditions: [
+        '必須有明確的前期上升趨勢',
+        '水平支撐至少被測試 3 次',
+        '跌破水平邊界比跌破對角線更可靠',
+        '跌破時最好有成交量增加',
+        '等待收盤價跌破確認',
+      ],
+      commonPitfalls: [
+        '對角線假跌破：價格跌破上邊界但未跌破水平支撐',
+        '水平支撐假跌破：短暫跌破後又回升',
+        '過早入場：在跌破前就做空',
+        '忽略回測：跌破後可能回測水平支撐（變阻力）',
+      ],
+    },
+    tradingStrategies: [
+      '入場點：跌破水平支撐並收盤確認',
+      '止損：最近一次反彈高點上方',
+      '目標價：三角形高度加上跌破點',
+      '空方最佳策略：等待跌破水平支撐',
+      '回測交易：跌破後回測水平支撐（變阻力）',
+    ],
+    keyInsights: [
+      '下降三角形有明確的看跌傾向',
+      '水平支撐的測試次數越多，跌破後跌幅通常越大',
+      '賣方在同一價位持續出貨的跡象',
+    ],
+  },
+  {
+    id: 'double-top',
+    title: '雙重頂',
+    titleEn: 'Double Top',
+    type: 'reversal',
+    trend: 'bearish',
+    definition: '雙重頂是矩形頂部反轉型態的一種。股票在高成交量下兩次達到大致相同的價格高點，中間有明顯的回調，最終跌破頸線完成反轉。',
+    characteristics: [
+      '兩次在高成交量下上漲至相同高度',
+      '兩個頂部之間的回調深度約 20%',
+      '兩個頂部之間的時間間隔超過數天',
+      '形成於長期上升趨勢之後',
+      '跌破頸線（回調低點）完成型態',
+    ],
+    volumeProfile: '第一個頂部成交量高，第二個頂部成交量相對較低或相似。跌破頸線時成交量增加會提高可靠性，但不是必要條件。',
+    reliability: {
+      conditions: [
+        '前期上升趨勢必須長且強勁',
+        '回調深度至少 20%（以百分比計）',
+        '兩個頂部之間時間間隔足夠長',
+        '兩個頂部高度應該接近（誤差 3% 內）',
+        '跌破頸線收盤確認',
+      ],
+      commonPitfalls: [
+        '時間間隔太短：可能只是短期波動',
+        '回調深度不足：可能是持續上漲的中繼',
+        '假跌破：短暫跌破頸線後又回升',
+        '第二個頂部高度差異過大',
+      ],
+    },
+    tradingStrategies: [
+      '入場點：跌破頸線並收盤確認',
+      '止損：頸線上方或第二個頂部上方',
+      '目標價：頸線到頂部的垂直距離',
+      '回測交易：跌破後回測頸線（變阻力）',
+      '分批入場：跌破時一半，回測確認後另一半',
+    ],
+    keyInsights: [
+      '雙重頂是最常見的頂部反轉型態',
+      '兩次高成交量上漲耗盡了買方力量',
+      '約 40-50% 的情況會有回測頸線的動作',
+    ],
+  },
+  {
+    id: 'double-bottom',
+    title: '雙重底',
+    titleEn: 'Double Bottom',
+    type: 'reversal',
+    trend: 'bullish',
+    definition: '雙重底是矩形底部反轉型態。股票兩次下跌至大致相同的價格低點，中間有明顯的反彈，最終突破頸線完成反轉。',
+    characteristics: [
+      '兩次下跌至相同低點',
+      '兩個底部之間的反彈形成頸線',
+      '兩個底部之間的時間間隔超過數天',
+      '形成於下降趨勢之後',
+      '突破頸線（反彈高點）完成型態',
+    ],
+    volumeProfile: '底部和間隔期間的成交量通常較低。突破頸線時成交量應顯著增加，這是確認買方力量的關鍵。',
+    reliability: {
+      conditions: [
+        '前期下降趨勢必須明確',
+        '兩個底部高度應該接近（誤差 3% 內）',
+        '兩個底部之間時間間隔足夠長',
+        '突破頸線時成交量必須顯著增加',
+        '突破頸線收盤確認',
+      ],
+      commonPitfalls: [
+        '時間間隔太短：可能只是短期反彈',
+        '成交量不足：沒有成交量支持的突破不可靠',
+        '假突破：短暫突破頸線後又回落',
+        '第二個底部深度差異過大',
+      ],
+    },
+    tradingStrategies: [
+      '入場點：突破頸線並收盤確認，成交量放大',
+      '止損：頸線下方或第二個底部下方',
+      '目標價：頸線到底部的垂直距離',
+      '回測交易：突破後回測頸線（變支撐）',
+      '注意成交量：底部型態必須有成交量確認',
+    ],
+    keyInsights: [
+      '雙重底是最可靠的底部反轉型態之一',
+      '第二次測試低點顯示賣方力量衰竭',
+      '成交量是底部反轉最重要的確認因素',
+    ],
+  },
+];
+
+// ============================================
+// 連續型態 (Continuation Patterns)
+// ============================================
+
+export const continuationPatterns: Omit<PatternCardProps, 'patternData'>[] = [
+  {
+    id: 'symmetrical-triangle-continuation',
+    title: '對稱三角形（連續）',
+    titleEn: 'Symmetrical Triangle (Continuation)',
+    type: 'continuation',
+    trend: 'both',
+    definition: '對稱三角形作為連續型態出現時，通常形成於短期且較弱的初始走勢之後，是買賣雙方猶豫不決的結果，最終價格將沿原趨勢方向突破。',
+    characteristics: [
+      '兩條收斂的趨勢線',
+      '至少 4 個次級反轉點',
+      '成交量遞減',
+      '形成於短期趨勢之後',
+      '突破方向與原趨勢一致',
+    ],
+    volumeProfile: '整個三角形期間成交量持續遞減。向上突破（上升趨勢延續）時成交量應增加，向下突破（下跌趨勢延續）可以在低成交量下發生。',
+    reliability: {
+      conditions: [
+        '前期趨勢較短且有力',
+        '最佳突破點在三角形 1/2 到 3/4 處',
+        '突破方向與前期趨勢一致',
+        '成交量配合突破方向',
+        '避免在頂點附近交易',
+      ],
+      commonPitfalls: [
+        '誤判為反轉型態',
+        '過於接近頂點才突破',
+        '假突破後反向運動',
+        '成交量不配合',
+      ],
+    },
+    tradingStrategies: [
+      '順勢交易：等待沿原趨勢方向突破',
+      '入場點：突破確認',
+      '止損：三角形內部的另一邊界',
+      '目標價：三角形最寬處的高度',
+      '注意前期趨勢的強度',
+    ],
+    keyInsights: [
+      '連續三角形通常在趨勢中期出現',
+      '是市場暫時休息和能量積累的階段',
+      '突破後通常會延續前期趨勢的幅度',
+    ],
+  },
+  {
+    id: 'ascending-triangle-continuation',
+    title: '上升三角形（看漲連續）',
+    titleEn: 'Ascending Triangle (Bullish Continuation)',
+    type: 'continuation',
+    trend: 'bullish',
+    definition: '上升三角形在上升趨勢中形成時，預測型態完成後上升運動將繼續。買方在越來越高的價位積極介入，最終突破水平阻力。',
+    characteristics: [
+      '水平阻力線',
+      '向上傾斜的支撐線',
+      '形成於上升趨勢中期',
+      '整個型態成交量遞減',
+      '突破時成交量放大',
+    ],
+    volumeProfile: '型態期間成交量遞減，但突破水平阻力時成交量應顯著增加，確認買方力量和趨勢延續。',
+    reliability: {
+      conditions: [
+        '前期上升趨勢明確但不過長',
+        '水平阻力被多次測試',
+        '突破水平邊界最可靠',
+        '突破時成交量顯著增加',
+        '常出現回測確認',
+      ],
+      commonPitfalls: [
+        '假突破水平阻力',
+        '成交量不足的突破',
+        '在對角線突破時入場',
+        '忽略前期趨勢強度',
+      ],
+    },
+    tradingStrategies: [
+      '入場點：突破水平阻力',
+      '加碼點：回測水平阻力（變支撐）',
+      '止損：最近回調低點',
+      '目標價：三角形高度加上突破點',
+      '順勢加倉策略適用',
+    ],
+    keyInsights: [
+      '上升三角形連續型態成功率很高',
+      '常出現在牛市的中期階段',
+      '極性轉換原則經常生效',
+    ],
+  },
+  {
+    id: 'descending-triangle-continuation',
+    title: '下降三角形（看跌連續）',
+    titleEn: 'Descending Triangle (Bearish Continuation)',
+    type: 'continuation',
+    trend: 'bearish',
+    definition: '下降三角形在下降趨勢中形成時，意味著趨勢將繼續下跌。賣方在水平支撐附近持續出貨，最終支撐被跌破。',
+    characteristics: [
+      '水平支撐線',
+      '向下傾斜的阻力線',
+      '形成於下跌趨勢中期',
+      '整個型態成交量遞減',
+      '跌破時成交量增加',
+    ],
+    volumeProfile: '型態期間成交量遞減，跌破水平支撐時成交量增加確認趨勢延續。但下跌可以在相對低的成交量下發生。',
+    reliability: {
+      conditions: [
+        '前期下跌趨勢明確',
+        '水平支撐被多次測試',
+        '跌破水平邊界最可靠',
+        '跌破時最好有成交量增加',
+        '避免逆勢搶反彈',
+      ],
+      commonPitfalls: [
+        '假跌破水平支撐',
+        '逆勢抄底',
+        '在對角線跌破時入場',
+        '忽略整體市場環境',
+      ],
+    },
+    tradingStrategies: [
+      '入場點：跌破水平支撐',
+      '加碼點：回測水平支撐（變阻力）',
+      '止損：最近反彈高點',
+      '目標價：三角形高度加上跌破點',
+      '空頭加倉策略適用',
+    ],
+    keyInsights: [
+      '下降三角形連續型態確認趨勢力量',
+      '水平支撐每次測試都在削弱其強度',
+      '適合做空或等待更低價位',
+    ],
+  },
+  {
+    id: 'rectangle-continuation',
+    title: '矩形（連續）',
+    titleEn: 'Rectangle (Continuation)',
+    type: 'continuation',
+    trend: 'both',
+    definition: '矩形作為連續型態出現的頻率高於作為反轉型態。它們更常發生在主要長期趨勢的早期階段，代表低波動期間組織良好的積累或派發。',
+    characteristics: [
+      '水平上下邊界',
+      '邊界被多次測試',
+      '形成於趨勢早期或中期',
+      '整個型態成交量相對平穩',
+      '突破時成交量顯著增加',
+    ],
+    volumeProfile: '矩形內部成交量相對穩定但偏低，顯示市場處於平衡狀態。突破時成交量應顯著增加，確認新趨勢階段的開始。',
+    reliability: {
+      conditions: [
+        '邊界定義清晰',
+        '至少 2-3 次觸及每條邊界',
+        '持續時間不宜過長（否則失去連續意義）',
+        '突破時成交量顯著增加',
+        '突破方向與前期趨勢一致',
+      ],
+      commonPitfalls: [
+        '過早突破（未充分測試邊界）',
+        '假突破後反向運動',
+        '在矩形內部交易風險大',
+        '持續時間過長可能變質',
+      ],
+    },
+    tradingStrategies: [
+      '突破交易：等待突破任一邊界',
+      '區間交易：在邊界附近高拋低吸（風險較高）',
+      '回測交易：突破後回測邊界',
+      '止損：矩形內部的另一邊界',
+      '目標價：矩形高度加上突破點',
+    ],
+    keyInsights: [
+      '矩形是最常見的連續型態',
+      '機構常在矩形內部積累或派發',
+      '突破後很少立即反向，回測更常見',
+    ],
+  },
+  {
+    id: 'cup-with-handle',
+    title: '杯柄型態',
+    titleEn: 'Cup with Handle',
+    type: 'continuation',
+    trend: 'bullish',
+    definition: '杯柄型態由 William O\'Neil 提出，包含兩部分：杯子（U 形底部，高波動期）和柄（旗型/三角旗/矩形，低波動期）。這是一個強勁的看漲連續型態。',
+    characteristics: [
+      '杯子：U 形圓底（非 V 形）',
+      '柄：杯子右側的小幅整理',
+      '柄可以是旗型、三角旗或矩形',
+      '必須有先前的上升趨勢',
+      '杯子深度通常為前期漲幅的 30-50%',
+    ],
+    volumeProfile: '杯子形成期間成交量遞減，顯示賣壓減弱。柄部期間成交量顯著下降。突破杯口時成交量激增，確認買方力量。',
+    reliability: {
+      conditions: [
+        '杯子必須是 U 形，不是 V 形',
+        '必須有明確的前期上升趨勢',
+        '柄部整理時間不宜過長（1-4 週）',
+        '突破杯口時成交量必須放大',
+        '柄部回調不應超過杯子深度的 50%',
+      ],
+      commonPitfalls: [
+        'V 形底誤認為杯子',
+        '柄部時間過長失去動能',
+        '柄部回調過深',
+        '突破時成交量不足',
+        '在柄部未形成前就入場',
+      ],
+    },
+    tradingStrategies: [
+      '入場點：突破杯口阻力且成交量放大',
+      '激進入場：柄部形成時提前佈局',
+      '止損：柄部低點下方',
+      '目標價：杯子深度加上突破點',
+      '適合成長股',
+    ],
+    keyInsights: [
+      '這是成長股最常見的型態之一',
+      '杯子代表健康的修正和築底',
+      '柄部是最後一批弱手出局',
+      '突破後通常有較大的上漲空間',
+    ],
+  },
+];
+
+// ============================================
+// 短期型態 (Short-term Patterns)
+// ============================================
+
+export const shortTermPatterns: Omit<PatternCardProps, 'patternData'>[] = [
+  {
+    id: 'bull-flag',
+    title: '牛市旗型',
+    titleEn: 'Bull Flag',
+    type: 'short-term',
+    trend: 'bullish',
+    definition: '旗型形成於急劇且大幅度的上漲之後，獲利回吐導致趨勢暫停，價格形成一個小型、緊湊且稍微向下傾斜的平行四邊形。',
+    characteristics: [
+      '長旗桿：急劇上漲（高成交量）',
+      '旗幟：小型矩形，稍微向下傾斜',
+      '旗幟內成交量萎縮',
+      '持續時間：1-4 週（日線圖）',
+      '突破向上，延續漲勢',
+    ],
+    volumeProfile: '旗桿形成時成交量非常高。旗幟期間成交量顯著萎縮，顯示賣方力量衰竭。向上突破旗幟時成交量應再次激增。',
+    reliability: {
+      conditions: [
+        '必須有急劇且大幅的上漲（旗桿）',
+        '旗幟期間成交量必須顯著下降',
+        '突破應在 4 週內發生',
+        '突破時成交量應顯著增加',
+        '突破後漲幅通常與旗桿相似',
+      ],
+      commonPitfalls: [
+        '旗桿不夠急劇',
+        '旗幟持續時間超過 4 週',
+        '成交量沒有萎縮',
+        '突破時成交量不足',
+        '誤判為較大型態的一部分',
+      ],
+    },
+    tradingStrategies: [
+      '入場點：突破旗幟上邊界',
+      '激進入場：旗幟下邊界附近',
+      '止損：旗幟下邊界下方',
+      '目標價：旗桿高度加上突破點',
+      '適合短線交易',
+    ],
+    keyInsights: [
+      '旗型是最可靠的短期連續型態',
+      '四週規則非常重要',
+      '突破後的漲幅通常與旗桿相似',
+      '適合追漲強勢股',
+    ],
+  },
+  {
+    id: 'bear-flag',
+    title: '熊市旗型',
+    titleEn: 'Bear Flag',
+    type: 'short-term',
+    trend: 'bearish',
+    definition: '熊市旗型形成於急劇下跌之後，是一個小型、緊湊且稍微向上傾斜的平行四邊形，代表空頭趨勢中的短暫休息。',
+    characteristics: [
+      '旗桿：急劇下跌（成交量升高）',
+      '旗幟：小型矩形，稍微向上傾斜',
+      '旗幟內成交量萎縮',
+      '持續時間：1-4 週（日線圖）',
+      '跌破向下，延續跌勢',
+    ],
+    volumeProfile: '旗桿形成時成交量較高。旗幟期間成交量萎縮。跌破旗幟時成交量增加確認賣壓，但下跌可以在相對低的成交量下發生。',
+    reliability: {
+      conditions: [
+        '必須有急劇的下跌（旗桿）',
+        '旗幟期間成交量萎縮',
+        '跌破應在 4 週內發生',
+        '跌破時最好有成交量增加',
+        '跌幅通常與旗桿相似',
+      ],
+      commonPitfalls: [
+        '旗桿下跌不夠急劇',
+        '旗幟持續時間超過 4 週',
+        '逆勢抄底',
+        '誤判為反轉型態',
+      ],
+    },
+    tradingStrategies: [
+      '入場點：跌破旗幟下邊界',
+      '止損：旗幟上邊界上方',
+      '目標價：旗桿高度加上跌破點',
+      '避免逆勢做多',
+      '適合空頭市場',
+    ],
+    keyInsights: [
+      '熊市旗型確認空頭趨勢力量',
+      '四週規則同樣適用',
+      '跌破後的跌幅通常與旗桿相似',
+      '是空頭趨勢中加碼做空的好機會',
+    ],
+  },
+  {
+    id: 'bull-pennant',
+    title: '牛市三角旗型',
+    titleEn: 'Bull Pennant',
+    type: 'short-term',
+    trend: 'bullish',
+    definition: '三角旗型與旗型唯一的重要區別在於，前者由收斂的邊界線界定。它是一個小型、緊湊的三角形，形成於急劇上漲之後。',
+    characteristics: [
+      '旗桿：急劇上漲',
+      '三角旗：小型收斂三角形',
+      '成交量持續萎縮',
+      '持續時間：1-3 週（比旗型更短）',
+      '突破向上延續漲勢',
+    ],
+    volumeProfile: '旗桿期間成交量高。三角旗期間成交量持續萎縮，顯示市場能量積累。突破時成交量激增。',
+    reliability: {
+      conditions: [
+        '必須有急劇上漲',
+        '三角旗期間成交量顯著下降',
+        '突破應在 4 週內發生（通常更快）',
+        '突破時成交量顯著增加',
+        '四週規則同樣適用',
+      ],
+      commonPitfalls: [
+        '旗桿不夠急劇',
+        '三角旗持續時間過長',
+        '成交量特徵不符',
+        '誤判為較大的三角形型態',
+      ],
+    },
+    tradingStrategies: [
+      '入場點：突破三角旗上邊界',
+      '止損：三角旗下邊界',
+      '目標價：旗桿高度加上突破點',
+      '適合短線快速交易',
+      '動能通常很強',
+    ],
+    keyInsights: [
+      '三角旗型通常比旗型形成更快',
+      '是強勢股的典型特徵',
+      '突破後動能通常很強',
+      '適合追逐短期動能',
+    ],
+  },
+  {
+    id: 'bear-pennant',
+    title: '熊市三角旗型',
+    titleEn: 'Bear Pennant',
+    type: 'short-term',
+    trend: 'bearish',
+    definition: '熊市三角旗型形成於急劇下跌之後，是一個小型收斂三角形，代表空頭趨勢中的短暫整理。',
+    characteristics: [
+      '旗桿：急劇下跌',
+      '三角旗：小型收斂三角形',
+      '成交量持續萎縮',
+      '持續時間：1-3 週',
+      '跌破向下延續跌勢',
+    ],
+    volumeProfile: '旗桿期間成交量升高。三角旗期間成交量持續萎縮。跌破時成交量增加確認趨勢延續。',
+    reliability: {
+      conditions: [
+        '必須有急劇下跌',
+        '三角旗期間成交量萎縮',
+        '跌破應在 4 週內發生',
+        '跌破時成交量增加',
+        '避免逆勢操作',
+      ],
+      commonPitfalls: [
+        '旗桿下跌不夠急劇',
+        '三角旗持續時間過長',
+        '逆勢抄底',
+        '成交量特徵不符',
+      ],
+    },
+    tradingStrategies: [
+      '入場點：跌破三角旗下邊界',
+      '止損：三角旗上邊界',
+      '目標價：旗桿高度加上跌破點',
+      '適合空頭市場加碼',
+      '避免做多',
+    ],
+    keyInsights: [
+      '熊市三角旗型確認下跌動能',
+      '形成速度通常很快',
+      '跌破後下跌通常迅速',
+      '是弱勢股的典型特徵',
+    ],
+  },
+];
+
+// 生成完整的型態數據（包含圖表數據）
+export function getReversalPatternsWithData(): PatternCardProps[] {
+  return [
+    { ...reversalPatterns[0], patternData: generateHeadAndShouldersTop() },
+    { ...reversalPatterns[1], patternData: generateHeadAndShouldersBottom() },
+    { ...reversalPatterns[2], patternData: generateSymmetricalTriangle('bullish-reversal') },
+    { ...reversalPatterns[3], patternData: generateAscendingTriangle('reversal') },
+    { ...reversalPatterns[4], patternData: generateDescendingTriangle('reversal') },
+    { ...reversalPatterns[5], patternData: generateDoubleTop() },
+    { ...reversalPatterns[6], patternData: generateDoubleBottom() },
+  ];
+}
+
+export function getContinuationPatternsWithData(): PatternCardProps[] {
+  return [
+    { ...continuationPatterns[0], patternData: generateSymmetricalTriangle('bullish-continuation') },
+    { ...continuationPatterns[1], patternData: generateAscendingTriangle('continuation') },
+    { ...continuationPatterns[2], patternData: generateDescendingTriangle('continuation') },
+    { ...continuationPatterns[3], patternData: generateRectangle('bullish-continuation') },
+    { ...continuationPatterns[4], patternData: generateCupWithHandle() },
+  ];
+}
+
+export function getShortTermPatternsWithData(): PatternCardProps[] {
+  return [
+    { ...shortTermPatterns[0], patternData: generateFlag('bull') },
+    { ...shortTermPatterns[1], patternData: generateFlag('bear') },
+    { ...shortTermPatterns[2], patternData: generatePennant('bull') },
+    { ...shortTermPatterns[3], patternData: generatePennant('bear') },
+  ];
+}
+
