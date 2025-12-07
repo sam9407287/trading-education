@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Supabase 客戶端配置
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_SERVICE_KEY!;
+// Supabase 客戶端配置（構建時可能沒有環境變數）
+const supabaseUrl = process.env.SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseKey = process.env.SUPABASE_SERVICE_KEY || 'placeholder-key';
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 

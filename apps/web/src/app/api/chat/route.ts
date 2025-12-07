@@ -43,10 +43,10 @@ const SYSTEM_PROMPT = `你是一位專業的技術分析與期權交易教育導
 
 記住：你的目標是幫助學習者建立扎實的交易知識體系，而非提供投資建議。`;
 
-// 初始化 Groq 客戶端
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+// 初始化 Groq 客戶端（構建時可能沒有 API key）
+const groq = process.env.GROQ_API_KEY 
+  ? new Groq({ apiKey: process.env.GROQ_API_KEY })
+  : null;
 
 // 初始化 Google AI 客戶端
 const googleAI = process.env.GOOGLE_AI_API_KEY 
@@ -85,6 +85,10 @@ async function callGoogleAI(prompt: string, history: { role: string; content: st
 
 // 使用 Groq (快速模式)
 async function callGroqAI(messages: { role: 'system' | 'user' | 'assistant'; content: string }[]): Promise<string> {
+  if (!groq) {
+    throw new Error('Groq AI not configured');
+  }
+  
   const completion = await groq.chat.completions.create({
     model: 'llama-3.3-70b-versatile',
     messages,
