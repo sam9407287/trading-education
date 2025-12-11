@@ -35,8 +35,8 @@ async function getChapterContent(bookId: string, chapterId: string): Promise<Cha
     return {
       content,
       title: data.title || chapterId,
-      date: data.date,
-      tags: data.tags,
+      date: data.date ? (data.date instanceof Date ? data.date.toISOString().split('T')[0] : String(data.date)) : undefined,
+      tags: Array.isArray(data.tags) ? data.tags : undefined,
     };
   } catch (error) {
     console.error('Error reading chapter:', error);
