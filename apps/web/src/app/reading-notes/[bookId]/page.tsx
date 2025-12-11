@@ -104,7 +104,7 @@ export default async function BookPage({ params }: PageProps) {
             {chapters.map((chapter, index) => (
               <Link
                 key={chapter.id}
-                href={`/reading-notes/${encodeURIComponent(bookId)}/${encodeURIComponent(chapter.id)}`}
+                href={`/reading-notes/${bookId}/${chapter.id}`}
                 className="group bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl p-6 hover:border-[var(--accent-gold)]/50 transition-all card-hover"
               >
                 <div className="flex items-center gap-4">
