@@ -17,8 +17,11 @@ import {
   Download,
   Share2,
   Plus,
-  ExternalLink
+  ExternalLink,
+  FileText
 } from 'lucide-react';
+import fs from 'fs';
+import path from 'path';
 
 // 技術分析子分類
 const technicalSubCategories = [
@@ -105,6 +108,34 @@ const optionsSubCategories = [
   },
 ];
 
+// 獲取學習筆記書籍
+function getReadingNotes() {
+  try {
+    const contentPath = path.join(process.cwd(), 'src/content/reading-notes');
+    const books = fs.readdirSync(contentPath)
+      .filter(item => {
+        const fullPath = path.join(contentPath, item);
+        return fs.statSync(fullPath).isDirectory() && !item.startsWith('.');
+      })
+      .map(bookId => {
+        const bookPath = path.join(contentPath, bookId);
+        const chapters = fs.readdirSync(bookPath).filter(file => file.endsWith('.md'));
+        
+        return {
+          title: bookId,
+          titleEn: 'Reading Notes',
+          href: `/reading-notes/${encodeURIComponent(bookId)}`,
+          icon: FileText,
+          description: `${chapters.length} 個章節`,
+        };
+      });
+    
+    return books;
+  } catch (error) {
+    return [];
+  }
+}
+
 // 課程卡片組件
 function CourseCard({ 
   title, 
@@ -144,6 +175,8 @@ function CourseCard({
 }
 
 export default function HomePage() {
+  const readingNotes = getReadingNotes();
+  
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -192,7 +225,7 @@ export default function HomePage() {
       </section>
 
       {/* Options Section */}
-      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 pb-12 sm:pb-16 md:pb-20">
+      <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
         <div className="flex items-center justify-between mb-6 sm:mb-8">
           <div className="flex-1">
             <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[var(--text-primary)]">期權教學課程</h2>
@@ -214,6 +247,32 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Reading Notes Section */}
+      {readingNotes.length > 0 && (
+        <section className="max-w-[1600px] 2xl:max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
+          <div className="flex items-center justify-between mb-6 sm:mb-8">
+            <div className="flex-1">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[var(--text-primary)]">學習筆記</h2>
+              <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-0.5 sm:mt-1">Reading Notes</p>
+            </div>
+            <Link
+              href="/reading-notes"
+              className="text-xs sm:text-sm text-[var(--accent-gold)] hover:underline flex items-center gap-1 flex-shrink-0"
+            >
+              <span className="hidden sm:inline">查看全部</span>
+              <span className="sm:hidden">全部</span>
+              <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+            {readingNotes.map((note, index) => (
+              <CourseCard key={note.href} {...note} index={index} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Download App Section */}
       <section className="border-t border-[var(--border-color)] bg-gradient-to-b from-transparent to-[var(--bg-secondary)]/30">

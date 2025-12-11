@@ -22,13 +22,17 @@
     "@supabase/supabase-js": "^2.86.2",
     "@trading-edu/shared": "workspace:*",
     "clsx": "^2.1.1",
+    "gray-matter": "^4.0.3",
     "groq-sdk": "^0.37.0",
     "lightweight-charts": "^5.0.9",
     "lucide-react": "^0.555.0",
     "next": "16.0.7",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "react-markdown": "^10.1.0",
     "recharts": "^3.5.1",
+    "rehype-highlight": "^7.0.2",
+    "remark-gfm": "^4.0.1",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
