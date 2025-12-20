@@ -11,6 +11,7 @@ export const reversalPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Head and Shoulders Top',
     type: 'reversal',
     trend: 'bearish',
+    imageUrl: '/images/patterns/reversal/head-and-shoulders-top.jpg',
     definition: '頭肩頂反轉型態形成於上升趨勢之後，其完成標誌著趨勢的反轉。該型態包含三個連續的高峰，中間的高峰（頭部）最高，兩側的高峰（肩部）較低且高度大致相等。',
     characteristics: [
       '三個連續峰值：左肩、頭部（最高）、右肩',
@@ -54,6 +55,7 @@ export const reversalPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Head and Shoulders Bottom (Inverse Head and Shoulders)',
     type: 'reversal',
     trend: 'bullish',
+    imageUrl: '/images/patterns/reversal/head-and-shoulders-bottom.jpg',
     definition: '頭肩底，也稱為倒頭肩型態，形成於下降趨勢之後，其完成標誌著趨勢的改變。該型態包含三個連續的價格低點，中間的低點（頭部）最低，兩側的低點（肩部）形成於比頭部更高的位置。',
     characteristics: [
       '三個連續低點：左肩、頭部（最低）、右肩',
@@ -97,6 +99,7 @@ export const reversalPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Symmetrical Triangle (Reversal)',
     type: 'reversal',
     trend: 'both',
+    imageUrl: '/images/patterns/reversal/symmetrical-triangle-reversal.jpg',
     definition: '對稱三角形由兩條收斂的趨勢線構成，需要至少四個次級趨勢反轉點才能確認。當形成於長期穩定趨勢之後時，常作為反轉型態出現。',
     characteristics: [
       '兩條收斂的趨勢線（上邊界向下，下邊界向上）',
@@ -140,6 +143,7 @@ export const reversalPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Ascending Triangle (Bottom Reversal)',
     type: 'reversal',
     trend: 'bullish',
+    imageUrl: '/images/patterns/reversal/ascending-triangle-reversal.jpg',
     definition: '上升三角形在下降趨勢之後發展時，可充當底部反轉型態。其特點是水平阻力線和向上傾斜的支撐線，顯示買方力量逐漸增強。',
     characteristics: [
       '水平上邊界（阻力位）',
@@ -183,6 +187,7 @@ export const reversalPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Descending Triangle (Top Reversal)',
     type: 'reversal',
     trend: 'bearish',
+    imageUrl: '/images/patterns/reversal/descending-triangle-reversal.jpg',
     definition: '下降三角形在上升趨勢之後發展時，可充當頂部反轉型態。其特點是水平支撐線和向下傾斜的阻力線，顯示賣方力量逐漸增強。',
     characteristics: [
       '水平下邊界（支撐位）',
@@ -226,6 +231,7 @@ export const reversalPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Double Top',
     type: 'reversal',
     trend: 'bearish',
+    imageUrl: '/images/patterns/reversal/double-top.jpg',
     definition: '雙重頂是矩形頂部反轉型態的一種。股票在高成交量下兩次達到大致相同的價格高點，中間有明顯的回調，最終跌破頸線完成反轉。',
     characteristics: [
       '兩次在高成交量下上漲至相同高度',
@@ -269,6 +275,7 @@ export const reversalPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Double Bottom',
     type: 'reversal',
     trend: 'bullish',
+    imageUrl: '/images/patterns/reversal/double-bottom.jpg',
     definition: '雙重底是矩形底部反轉型態。股票兩次下跌至大致相同的價格低點，中間有明顯的反彈，最終突破頸線完成反轉。',
     characteristics: [
       '兩次下跌至相同低點',
@@ -319,6 +326,7 @@ export const continuationPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Symmetrical Triangle (Continuation)',
     type: 'continuation',
     trend: 'both',
+    imageUrl: '/images/patterns/continuation/symmetrical-triangle-continuation.jpg',
     definition: '對稱三角形作為連續型態出現時，通常形成於短期且較弱的初始走勢之後，是買賣雙方猶豫不決的結果，最終價格將沿原趨勢方向突破。',
     characteristics: [
       '兩條收斂的趨勢線',
@@ -362,6 +370,7 @@ export const continuationPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Ascending Triangle (Bullish Continuation)',
     type: 'continuation',
     trend: 'bullish',
+    imageUrl: '/images/patterns/continuation/ascending-triangle-continuation.jpg',
     definition: '上升三角形在上升趨勢中形成時，預測型態完成後上升運動將繼續。買方在越來越高的價位積極介入，最終突破水平阻力。',
     characteristics: [
       '水平阻力線',
@@ -405,6 +414,7 @@ export const continuationPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Descending Triangle (Bearish Continuation)',
     type: 'continuation',
     trend: 'bearish',
+    imageUrl: '/images/patterns/continuation/descending-triangle-continuation.jpg',
     definition: '下降三角形在下降趨勢中形成時，意味著趨勢將繼續下跌。賣方在水平支撐附近持續出貨，最終支撐被跌破。',
     characteristics: [
       '水平支撐線',
@@ -448,6 +458,7 @@ export const continuationPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Rectangle (Continuation)',
     type: 'continuation',
     trend: 'both',
+    imageUrl: '/images/patterns/continuation/rectangle-continuation.jpg',
     definition: '矩形作為連續型態出現的頻率高於作為反轉型態。它們更常發生在主要長期趨勢的早期階段，代表低波動期間組織良好的積累或派發。',
     characteristics: [
       '水平上下邊界',
@@ -491,6 +502,7 @@ export const continuationPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Cup with Handle',
     type: 'continuation',
     trend: 'bullish',
+    imageUrl: '/images/patterns/continuation/cup-with-handle.jpg',
     definition: '杯柄型態由 William O\'Neil 提出，包含兩部分：杯子（U 形底部，高波動期）和柄（旗型/三角旗/矩形，低波動期）。這是一個強勁的看漲連續型態。',
     characteristics: [
       '杯子：U 形圓底（非 V 形）',
@@ -543,6 +555,7 @@ export const shortTermPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Bull Flag',
     type: 'short-term',
     trend: 'bullish',
+    imageUrl: '/images/patterns/short-term/bull-flag.jpg',
     definition: '旗型形成於急劇且大幅度的上漲之後，獲利回吐導致趨勢暫停，價格形成一個小型、緊湊的平行四邊形（Parallelogram）。理想情況下向下傾斜（逆勢傾斜），代表市場「喘口氣」的階段。',
     characteristics: [
       '長旗桿：急劇上漲（Heavy Volume，接近垂直）',
@@ -589,6 +602,7 @@ export const shortTermPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Bear Flag',
     type: 'short-term',
     trend: 'bearish',
+    imageUrl: '/images/patterns/short-term/bear-flag.jpg',
     definition: '熊市旗型形成於急劇下跌之後，是一個小型、緊湊的平行四邊形。理想情況下向上傾斜（逆勢傾斜），代表空頭趨勢中的短暫休息。',
     characteristics: [
       '旗桿：急劇下跌（成交量升高）',
@@ -634,6 +648,7 @@ export const shortTermPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Bull Pennant',
     type: 'short-term',
     trend: 'bullish',
+    imageUrl: '/images/patterns/short-term/bull-pennant.jpg',
     definition: '三角旗型與旗型唯一的重要區別在於形狀：三角旗是小型收斂三角形（Small Triangle），而旗型是平行四邊形。功能和意義完全一樣。',
     characteristics: [
       '旗桿：急劇上漲（Heavy Volume）',
@@ -678,6 +693,7 @@ export const shortTermPatterns: Omit<PatternCardProps, 'patternData'>[] = [
     titleEn: 'Bear Pennant',
     type: 'short-term',
     trend: 'bearish',
+    imageUrl: '/images/patterns/short-term/bear-pennant.jpg',
     definition: '熊市三角旗型形成於急劇下跌之後，是一個小型收斂三角形，代表空頭趨勢中的短暫整理。功能與熊市旗型相同，僅形狀不同。',
     characteristics: [
       '旗桿：急劇下跌',
